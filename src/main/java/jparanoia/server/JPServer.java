@@ -2,6 +2,13 @@ package jparanoia.server;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.lang.invoke.MethodHandles;
+import static java.lang.invoke.MethodHandles.lookup;
+import java.util.Objects;
 import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -213,7 +220,7 @@ public class JPServer extends JParanoia {
 
         /*  259 */
         frame.setIconImage( java.awt.Toolkit.getDefaultToolkit()
-                .getImage( getClass().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
+                .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
 
 
 
@@ -2195,7 +2202,9 @@ public class JPServer extends JParanoia {
         String str1 = "";
         try {
             /* 1628 */
-            java.io.BufferedReader localBufferedReader = new java.io.BufferedReader( new java.io.FileReader( "announcement.txt" ) );
+            final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
+            final File file = new File( Objects.requireNonNull( classLoader.getResource( "announcement.txt" ) ).getFile() );
+            BufferedReader localBufferedReader = new BufferedReader( new InputStreamReader(new FileInputStream( file )) );
 
             /* 1630 */
             String str2 = null;

@@ -2,7 +2,13 @@
 package http;
 /*    */
 /*    */
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.invoke.MethodHandles;
+import java.util.Objects;
 
 /*    */
 /*    */ public class PageSpewer
@@ -19,7 +25,9 @@ import java.io.PrintWriter;
         try
             /*    */ {
             /* 15 */
-            reader = new java.io.BufferedReader( new java.io.FileReader( paramString ) );
+            final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
+            final File file = new File( Objects.requireNonNull( classLoader.getResource( paramString ) ).getFile() );
+            reader = new BufferedReader( new InputStreamReader(new FileInputStream( file )) );
             /*    */
             /* 17 */
             while ( line != null )

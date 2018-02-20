@@ -1,7 +1,12 @@
 package jparanoia.server;
 import java.awt.Color;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.lang.invoke.MethodHandles;
+import java.util.Objects;
 import java.util.StringTokenizer;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -100,7 +105,9 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
     public void readCharacterSheetFile() {
         try {
             /* 118 */
-            this.reader = new BufferedReader( new java.io.FileReader( this.dataFile ) );
+            final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
+            final File file = new File( Objects.requireNonNull( classLoader.getResource( dataFile ) ).getFile() );
+            this.reader = new BufferedReader( new InputStreamReader(new FileInputStream( file )) );
         } catch ( Exception localException1 ) {
             /* 123 */
             System.out.println( "An exception occured while attemping to access " + this.dataFile );
@@ -1111,9 +1118,11 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
         specificSend( "400" );
         try {
             /* 793 */
-            this.reader = new BufferedReader( new java.io.FileReader( this.dataFile ) );
+            final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
+            final File file = new File( Objects.requireNonNull( classLoader.getResource( dataFile ) ).getFile() );
+            this.reader = new BufferedReader( new InputStreamReader(new FileInputStream( file )) );
             /* 794 */
-            StringBuffer localStringBuffer = new StringBuffer();
+            StringBuilder localStringBuffer = new StringBuilder();
             /* 795 */
             String str = this.reader.readLine();
             /* 796 */
@@ -1122,7 +1131,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
             while ( str != null ) {
                 /* 799 */
                 if ( !str.startsWith( "#" ) ) {
-                    localStringBuffer.append( str + "\n" );
+                    localStringBuffer.append( str ).append( "\n" );
                 }
                 /* 800 */
                 str = this.reader.readLine();

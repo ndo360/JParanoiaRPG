@@ -3,7 +3,9 @@ package jparanoia.shared;
 /*    */
 /*    */
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Date;
 
@@ -123,7 +125,8 @@ import java.util.Date;
         try
             /*    */ {
             /* 75 */
-            BufferedReader localBufferedReader = new BufferedReader( new java.io.FileReader( this.logFile ) );
+
+            BufferedReader localBufferedReader = new BufferedReader( new InputStreamReader( new FileInputStream( logFile ) ) );
             /*    */
             /*    */
             /* 78 */

@@ -1,5 +1,6 @@
 package jparanoia.client;
 import java.awt.event.KeyEvent;
+import static java.lang.invoke.MethodHandles.lookup;
 import javax.swing.JTextField;
 
 public class CombatTurnFrame extends javax.swing.JFrame {
@@ -33,7 +34,7 @@ public class CombatTurnFrame extends javax.swing.JFrame {
         setResizable( false );
         /*  29 */
         setIconImage( java.awt.Toolkit.getDefaultToolkit()
-                .getImage( getClass().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
+                .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
 
         /*  31 */
         this.publicLabel = new javax.swing.JLabel( "Public text:" );

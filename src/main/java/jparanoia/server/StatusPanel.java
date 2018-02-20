@@ -1,4 +1,5 @@
 package jparanoia.server;
+import static java.lang.invoke.MethodHandles.lookup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.Timer;
@@ -10,13 +11,13 @@ public class StatusPanel extends javax.swing.JPanel {
     ServerPlayer player;
     JButton statusButton;
     JButton newMessageLabel;
-    /*  20 */ ImageIcon notConnectedIcon = new ImageIcon( getClass().getResource( "graphics/notConnectedIcon.jpg" ) );
-    /*  21 */ ImageIcon connectedIcon = new ImageIcon( getClass().getResource( "graphics/connectedIcon.jpg" ) );
-    /*  22 */ ImageIcon mutedIcon = new ImageIcon( getClass().getResource( "graphics/mutedIcon.jpg" ) );
-    /*  23 */ ImageIcon frozenIcon = new ImageIcon( getClass().getResource( "graphics/frozenIcon.jpg" ) );
-    /*  24 */ ImageIcon combatIcon = new ImageIcon( getClass().getResource( "graphics/combatIcon.jpg" ) );
-    /*  26 */ ImageIcon nullMessageIcon = new ImageIcon( getClass().getResource( "graphics/nullMessageIcon.jpg" ) );
-    /*  27 */ ImageIcon newMessageIcon = new ImageIcon( getClass().getResource( "graphics/newMessageIcon.jpg" ) );
+    /*  20 */ ImageIcon notConnectedIcon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/notConnectedIcon.jpg" ) );
+    /*  21 */ ImageIcon connectedIcon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/connectedIcon.jpg" ) );
+    /*  22 */ ImageIcon mutedIcon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/mutedIcon.jpg" ) );
+    /*  23 */ ImageIcon frozenIcon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/frozenIcon.jpg" ) );
+    /*  24 */ ImageIcon combatIcon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/combatIcon.jpg" ) );
+    /*  26 */ ImageIcon nullMessageIcon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/nullMessageIcon.jpg" ) );
+    /*  27 */ ImageIcon newMessageIcon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/newMessageIcon.jpg" ) );
     boolean freshTimer;
 
     public StatusPanel( ServerPlayer paramServerPlayer ) {

@@ -2,6 +2,7 @@ package jparanoia.client;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
+import static java.lang.invoke.MethodHandles.lookup;
 import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -29,7 +30,7 @@ public class PrivateMessageFrame extends javax.swing.JFrame {
 
         /*  28 */
         setIconImage( java.awt.Toolkit.getDefaultToolkit()
-                .getImage( getClass().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
+                .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
 
         /*  30 */
         addItemToMenu();

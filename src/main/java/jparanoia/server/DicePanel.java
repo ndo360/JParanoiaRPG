@@ -2,6 +2,7 @@ package jparanoia.server;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static java.lang.invoke.MethodHandles.lookup;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -31,11 +32,11 @@ public class DicePanel extends javax.swing.JPanel {
 
 
         /*  35 */
-        this.d10Icon = new ImageIcon( getClass().getResource( "graphics/d10.jpg" ) );
+        this.d10Icon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/d10.jpg" ) );
         /*  36 */
-        this.d20Icon = new ImageIcon( getClass().getResource( "graphics/d20.jpg" ) );
+        this.d20Icon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/d20.jpg" ) );
         /*  37 */
-        this.d100Icon = new ImageIcon( getClass().getResource( "graphics/d100.jpg" ) );
+        this.d100Icon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/d100.jpg" ) );
 
 
         /*  40 */

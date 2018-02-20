@@ -1,14 +1,15 @@
 package jparanoia.server;
 import java.awt.Dimension;
+import static java.lang.invoke.MethodHandles.lookup;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
 public class Spinner extends javax.swing.JPanel {
     /*   9 */ JTextField textField = new JTextField( 4 );
     /*  12 */ JButton plus = new JButton( new javax.swing.ImageIcon( java.awt.Toolkit.getDefaultToolkit()
-            .getImage( getClass().getResource( "graphics/plusIcon.jpg" ) ) ) );
+            .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/plusIcon.jpg" ) ) ) );
     /*  15 */ JButton minus = new JButton( new javax.swing.ImageIcon( java.awt.Toolkit.getDefaultToolkit()
-            .getImage( getClass().getResource( "graphics/minusIcon.jpg" ) ) ) );
+            .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/minusIcon.jpg" ) ) ) );
     /*  18 */ javax.swing.JLabel label = new javax.swing.JLabel( "NO LABEL" );
     /*  26 */ int value = 0;
     /*  28 */ int minValue = 0;

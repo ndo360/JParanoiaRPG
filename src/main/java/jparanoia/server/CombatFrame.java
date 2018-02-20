@@ -3,6 +3,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import static java.lang.invoke.MethodHandles.lookup;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import javax.swing.JButton;
@@ -64,7 +65,7 @@ public class CombatFrame extends JFrame {
         } );
         /*  70 */
         setIconImage( java.awt.Toolkit.getDefaultToolkit()
-                .getImage( getClass().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
+                .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
 
         /*  72 */
         setSize( 500, 260 );

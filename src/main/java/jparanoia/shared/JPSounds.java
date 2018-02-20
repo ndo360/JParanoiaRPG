@@ -1,5 +1,7 @@
 package jparanoia.shared;
 import java.io.File;
+import static java.lang.invoke.MethodHandles.lookup;
+import java.util.Objects;
 
 public class JPSounds {
     public static final int STARTUP = 0;
@@ -28,63 +30,45 @@ public class JPSounds {
     public static final int COMBAT_MUSIC = 22;
     SoundManager manager;
     /*  36 */ int deathCounter = 0;
+    ClassLoader loader = lookup().lookupClass()
+            .getClassLoader();
 
     public JPSounds() {
         /*  44 */
         System.out.println( "JPSoundPlayer started\n\n" );
-
         /*  46 */
         File[] arrayOfFile = new File[23];
 
-        /*  48 */
-        arrayOfFile[0] = new File( "sounds/programLaunch.wav" );
-        /*  49 */
-        arrayOfFile[1] = new File( "sounds/connected.wav" );
-        /*  50 */
-        arrayOfFile[2] = new File( "sounds/disconnected.wav" );
-        /*  51 */
-        arrayOfFile[3] = new File( "sounds/loggedIn.wav" );
-        /*  52 */
-        arrayOfFile[4] = new File( "sounds/badLogin.wav" );
-        /*  53 */
-        arrayOfFile[5] = new File( "sounds/playerJoin.wav" );
-        /*  54 */
-        arrayOfFile[6] = new File( "sounds/playerLeave.wav" );
-        /*  55 */
-        arrayOfFile[7] = new File( "sounds/newText.wav" );
-        /*  56 */
-        arrayOfFile[8] = new File( "sounds/muted.wav" );
-        /*  57 */
-        arrayOfFile[9] = new File( "sounds/unmuted.wav" );
-        /*  58 */
-        arrayOfFile[10] = new File( "sounds/freeze.wav" );
-        /*  59 */
-        arrayOfFile[11] = new File( "sounds/unfreeze.wav" );
-        /*  60 */
-        arrayOfFile[12] = new File( "sounds/promoted.wav" );
-        /*  61 */
-        arrayOfFile[13] = new File( "sounds/demoted.wav" );
-        /*  62 */
-        arrayOfFile[14] = new File( "sounds/scream0.wav" );
-        /*  63 */
-        arrayOfFile[15] = new File( "sounds/scream1.wav" );
-        /*  64 */
-        arrayOfFile[16] = new File( "sounds/scream2.wav" );
-        /*  65 */
-        arrayOfFile[17] = new File( "sounds/scream3.wav" );
-        /*  66 */
-        arrayOfFile[18] = new File( "sounds/scream4.wav" );
-        /*  67 */
-        arrayOfFile[19] = new File( "sounds/newPrivateMessage.wav" );
-        /*  68 */
-        arrayOfFile[20] = new File( "sounds/charsheetUpdate.wav" );
-        /*  69 */
-        arrayOfFile[21] = new File( "sounds/combatAlert.wav" );
-        /*  70 */
-        arrayOfFile[22] = new File( "sounds/combatMusic.wav" );
+        arrayOfFile[0] =  getFile("sounds/programLaunch.wav" );
+        arrayOfFile[1] =  getFile("sounds/connected.wav" );
+        arrayOfFile[2] =  getFile("sounds/disconnected.wav" );
+        arrayOfFile[3] =  getFile("sounds/loggedIn.wav" );
+        arrayOfFile[4] =  getFile("sounds/badLogin.wav" );
+        arrayOfFile[5] =  getFile("sounds/playerJoin.wav" );
+        arrayOfFile[6] =  getFile("sounds/playerLeave.wav" );
+        arrayOfFile[7] =  getFile("sounds/newText.wav" );
+        arrayOfFile[8] =  getFile("sounds/muted.wav" );
+        arrayOfFile[9] =  getFile("sounds/unmuted.wav" );
+        arrayOfFile[10] = getFile( "sounds/freeze.wav" );
+        arrayOfFile[11] = getFile( "sounds/unfreeze.wav" );
+        arrayOfFile[12] = getFile( "sounds/promoted.wav" );
+        arrayOfFile[13] = getFile( "sounds/demoted.wav" );
+        arrayOfFile[14] = getFile( "sounds/scream0.wav" );
+        arrayOfFile[15] = getFile( "sounds/scream1.wav" );
+        arrayOfFile[16] = getFile( "sounds/scream2.wav" );
+        arrayOfFile[17] = getFile( "sounds/scream3.wav" );
+        arrayOfFile[18] = getFile( "sounds/scream4.wav" );
+        arrayOfFile[19] = getFile( "sounds/newPrivateMessage.wav" );
+        arrayOfFile[20] = getFile( "sounds/charsheetUpdate.wav" );
+        arrayOfFile[21] = getFile( "sounds/combatAlert.wav" );
+        arrayOfFile[22] = getFile( "sounds/combatMusic.wav" );
 
         /*  72 */
         this.manager = new SoundManager( arrayOfFile );
+    }
+
+    private File getFile( final String filename ) {
+        return new File( Objects.requireNonNull( loader.getResource( filename ) ).getFile());
     }
 
     public void play( int paramInt ) {

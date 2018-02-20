@@ -1,6 +1,7 @@
 package jparanoia.client;
 import java.awt.Color;
 import java.io.PrintWriter;
+import static java.lang.invoke.MethodHandles.lookup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -141,7 +142,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
         myTitle = new jparanoia.shared.TitleClass( "JParanoia Client", VERSION_NAME, true );
         /*  180 */
         frame.setIconImage( java.awt.Toolkit.getDefaultToolkit()
-                .getImage( getClass().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
+                .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
 
         /*  182 */
         frame.addWindowListener( new java.awt.event.WindowAdapter() {
@@ -458,21 +459,21 @@ public class JPClient extends jparanoia.shared.JParanoia {
         statusPanel.setLayout( new javax.swing.BoxLayout( statusPanel, 0 ) );
 
         /*  379 */
-        notConnectedIcon = new javax.swing.ImageIcon( getClass().getResource( "graphics/notConnectedIcon.jpg" ) );
+        notConnectedIcon = new javax.swing.ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/notConnectedIcon.jpg" ) );
         /*  380 */
-        connectedIcon = new javax.swing.ImageIcon( getClass().getResource( "graphics/connectedIcon.jpg" ) );
+        connectedIcon = new javax.swing.ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/connectedIcon.jpg" ) );
         /*  381 */
-        mutedIcon = new javax.swing.ImageIcon( getClass().getResource( "graphics/mutedIcon.jpg" ) );
+        mutedIcon = new javax.swing.ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/mutedIcon.jpg" ) );
         /*  382 */
-        frozenIcon = new javax.swing.ImageIcon( getClass().getResource( "graphics/frozenIcon.jpg" ) );
+        frozenIcon = new javax.swing.ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/frozenIcon.jpg" ) );
         /*  383 */
-        nullMsgIcon = new javax.swing.ImageIcon( getClass().getResource( "graphics/nullMsgIcon.jpg" ) );
+        nullMsgIcon = new javax.swing.ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/nullMsgIcon.jpg" ) );
         /*  384 */
-        incomingMsgIcon = new javax.swing.ImageIcon( getClass().getResource( "graphics/incomingMsgIcon.jpg" ) );
+        incomingMsgIcon = new javax.swing.ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/incomingMsgIcon.jpg" ) );
         /*  385 */
-        gmSendingMsgIcon = new javax.swing.ImageIcon( getClass().getResource( "graphics/gmSendingMsgIcon.jpg" ) );
+        gmSendingMsgIcon = new javax.swing.ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/gmSendingMsgIcon.jpg" ) );
         /*  386 */
-        combatIcon = new javax.swing.ImageIcon( getClass().getResource( "graphics/combatIcon.jpg" ) );
+        combatIcon = new javax.swing.ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/combatIcon.jpg" ) );
 
         /*  388 */
         connectionStatusLabel = new JLabel( notConnectedIcon );
@@ -561,7 +562,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
 
         /*  439 */
         charsheetFrame.setIconImage( java.awt.Toolkit.getDefaultToolkit()
-                .getImage( getClass().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
+                .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
 
         /*  441 */
         charsheetArea = new JTextPane();
