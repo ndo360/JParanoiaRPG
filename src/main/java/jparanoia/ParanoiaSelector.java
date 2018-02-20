@@ -3,10 +3,9 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import static java.lang.invoke.MethodHandles.lookup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,16 +31,6 @@ public class ParanoiaSelector {
         /*  46 */
         System.out.println( "JPCLIENT VERSION: " + JPClient.getVersionName() );
 
-
-
-
-
-
-
-
-
-
-
         /*  58 */
         contentPane.setLayout( null );
 
@@ -60,15 +49,13 @@ public class ParanoiaSelector {
         frame.setLocation( i / 2 - frame.getWidth() / 2, j / 2 - frame.getHeight() / 2 );
 
 
-
-
         /*  72 */
         ImageIcon localImageIcon = null;
         try {
             /*  75 */
-            localImageIcon = new ImageIcon( Toolkit.getDefaultToolkit()
-                    .getImage( Class.forName( "jparanoia.ParanoiaSelector" )
-                            .getResource( "shared/graphics/jpsplash.jpg" ) ) );
+            localImageIcon = new ImageIcon(
+                    Toolkit.getDefaultToolkit()
+                            .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jpsplash.jpg" ) ) );
             /*  76 */
         } catch ( Exception localException1 ) {
             localException1.printStackTrace();
@@ -92,25 +79,20 @@ public class ParanoiaSelector {
 
 
         /*  90 */
-        serverButton.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  92 */
-                ParanoiaSelector.frame.dispose();
-                /*  93 */
-                JPServer.main( null );
-            }
-            /*  95 */
+        /*  95 */
+        serverButton.addActionListener( paramAnonymousActionEvent -> {
+            /*  92 */
+            ParanoiaSelector.frame.dispose();
+            /*  93 */
+            JPServer.main( null );
         } );
         /*  96 */
-        clientButton.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  98 */
-                ParanoiaSelector.frame.dispose();
-                /*  99 */
-                JPClient.main( null );
-            }
-
-            /* 102 */
+        /* 102 */
+        clientButton.addActionListener( paramAnonymousActionEvent -> {
+            /*  98 */
+            ParanoiaSelector.frame.dispose();
+            /*  99 */
+            JPClient.main( null );
         } );
         /* 103 */
         contentPane.add( localJLabel );
@@ -126,8 +108,9 @@ public class ParanoiaSelector {
         try {
             /* 111 */
             frame.setIconImage( Toolkit.getDefaultToolkit()
-                    .getImage( Class.forName( "jparanoia.ParanoiaSelector" )
-                            .getResource( "server/graphics/jparanoiaIcon.jpg" ) ) );
+                    .getImage( lookup().lookupClass()
+                            .getClassLoader()
+                            .getResource( "graphics/jparanoiaIcon.jpg" ) ) );
             /* 112 */
         } catch ( Exception localException2 ) {
             localException2.printStackTrace();

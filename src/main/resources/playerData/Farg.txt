@@ -1,0 +1,12 @@
+Farg-U-MAN-1
+Service Group: R&D	Secret Society: Anti-Mutant
+Power: Precognition
+
+Strength: 6		Carrying Capacity: 3
+Endurance: 2	Macho Bonus: 2
+Agility: 8		Damage Bonus: 1
+
+
+
+
+.

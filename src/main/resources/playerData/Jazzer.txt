@@ -1,0 +1,11 @@
+Jazz-U-RRR-1
+Service Group: CPU	Secret Society: Illuminati
+Power: Machine Empathy
+
+Strength: 11		Carrying Capacity: 5
+Endurance: 7	Macho Bonus: 2
+Agility: 6		Damage Bonus: 2
+
+
+
+.

@@ -1,0 +1,11 @@
+Costik-Y-ANN-1
+Service Group: Power	Secret Society: Romantics
+Power: Polymorphism
+
+Strength: 8		Carrying Capacity: 6
+Endurance: 2	Macho Bonus: 2
+Agility: 2		Damage Bonus: 5
+
+
+
+.

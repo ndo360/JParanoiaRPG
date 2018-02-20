@@ -1,0 +1,14 @@
+Nory-U-BEE-1
+Service Group: CPU	Secret Society: Computer Phreaks
+Power: Matter Eater
+
+Strength: 19		Carrying Capacity: 5
+Endurance: 9	Macho Bonus: 3
+Agility: 4		Damage Bonus: 9
+
+
+tre/* here's some stuff that shou
+ldn't show up.*/ason
+
+This is a test
+.

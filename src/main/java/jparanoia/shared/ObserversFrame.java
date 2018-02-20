@@ -26,7 +26,7 @@ import javax.swing.JTable;
         /*    */
         /* 17 */
         setIconImage( java.awt.Toolkit.getDefaultToolkit()
-                .getImage( getClass().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
+                .getImage( getClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
         /*    */
         /* 19 */
         Vector localVector = new Vector( 0 );

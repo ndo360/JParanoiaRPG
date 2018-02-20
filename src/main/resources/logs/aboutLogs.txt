@@ -1,0 +1,10 @@
+
+A note about logs:
+
+Logs are named with a timestamp in the format yyyyMMddhhmmss.txt according to when the server is launched (for servers) or when you login to a server (for clients).
+
+Logs containing private message text begin with uv_ while logs that have been sanitized begin with red_
+
+Logging of games is enabled by defualt. If you wish to change that defualt setting, you can do so by editing the relevant line in the jpConfig.ini file.
+
+HTML logging of games is also enabled by default. If you wish to generate plain-text only logs, set bHtmlLogs=false in jpConfig.ini

@@ -1,0 +1,145 @@
+
+#
+# playerList.txt
+#
+# This is the JParanoia player list file
+#
+# The only practical limit to the number of player characters in the game
+# is the resolution of your monitor. If your game will include more or less
+# than 6 players, just add or delete lines in the PCs section as appropriate.
+#
+# Keep in mind that if you run more than 6 players, you will need to resize
+# your window to view all of the private message panes.
+#
+# Player data should be in the following format for the GM and PCs:
+#
+# Name (for reference) | is PC / NPC (p/n) | password | name of player's file
+
+
+# GM
+#
+# Note that the GM MUST be the first entry in this file.
+
+
+GM|p|asdf|gm.txt
+
+
+
+# PCs (Player Characters)
+#
+# The "names" (the first entry in each line) are not important
+# and are only there to help you keep track of who has which password.
+# The player's names and clone numbers are parsed from the first line
+# of the character sheet files.
+
+
+high programmer NoryB|p|asdf|Nory.txt
+
+Jazzer|p|asdf|Jazzer.txt
+
+Fargmania|p|asdf|Farg.txt
+
+Greg Costikyan|p|asdf|Greg.txt
+
+Eric Goldberg|p|asdf|Eric.txt
+
+Allen Varney|p|asdf|Allen.txt
+
+
+
+# NPCs (Non-Player Characters)
+#
+# Please note that The Computer *MUST* be the first NPC listed here
+# in order for the special font size increase to be associated
+# with it.
+# 
+# The reason you want to list your NPCs here is so you can spoof them
+# during the game. So instead of:
+#
+# GM: A random clone walks up to you.
+#
+# You can do:
+#
+# * A random clone walks up to you. *
+#
+#
+# IMPORTANT: Since NPCs don't have character sheet files, whatever you
+# put for the name HERE is exactly how their names will appear in-game.
+
+
+The Computer|n
+
+
+A Docbot|n
+
+The Docbot|n
+
+
+A Jackobot|n
+
+The Jackobot|n
+
+
+A Scrubot|n
+
+The Scrubot|n
+
+
+A Guardbot|n
+
+The Guardbot|n
+
+
+A Vulture Squadron Goon|n
+
+The Vulture Squadron Goon|n
+
+
+An IntSec Guard|n
+
+The IntSec Guard|n
+
+
+Some random clone|n
+
+The random clone|n
+
+
+An Infrared grunt|n
+
+The Infrared grunt|n
+
+
+A commie mutant traitor|n
+
+The commie mutant traitor|n
+
+
+# Spare NPCs
+#
+# Any character name starting with "spareNPC" will be loaded as a spare NPC.
+# All this means is that an entry will appear in the Spare NPCs menu, allowing
+# you to rename a spare NPC in the event that you need an NPC you did not
+# anticipate.
+#
+# You can have as few or as many spares as you need, however bear in mind
+# spare NPCs will appear in your spoof list just like the normal NPCs, so in
+# order to avoid clutter you will not want a needlessly large list of spares.
+#
+# These entries do NOT need to be at the end of this file.
+
+spareNPC 1|n
+
+spareNPC 2|n
+
+spareNPC 3|n
+
+spareNPC 4|n
+
+spareNPC 5|n
+
+spareNPC 6|n
+
+spareNPC 7|n
+
+spareNPC 8|n
