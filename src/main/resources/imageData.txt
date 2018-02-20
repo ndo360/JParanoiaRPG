@@ -1,0 +1,49 @@
+
+#
+# Image data file
+# -----------------------------
+#
+# Entries should follow this example:
+#
+# Vulture wreckage|http://www.someserver.net/~myusername/images/wreckage.jpg
+#
+# (description for players to see)|(URL of image)
+#
+
+# If you have any images you think would be useful for any GM using JParanoia, you can
+# post to the forums at http://www.paranoia-live.net/forum/viewforum.php?f=7
+# to suggest it be included in future versions of this file.
+
+
+# You may want to change these descriptions before starting your game.
+
+The Computer |http://www.paranoia-live.net/jpgallery/fc.jpg
+
+Smoking boot |http://www.paranoia-live.net/jpgallery/boot.jpg
+
+Algae chips |http://www.paranoia-live.net/jpgallery/algaechips.jpg
+
+Cold fun |http://www.paranoia-live.net/jpgallery/coldfun.jpg
+
+Docbot |http://www.paranoia-live.net/jpgallery/docbot.jpg
+
+Happiness Bar |http://www.paranoia-live.net/jpgallery/happinessbar.jpg
+
+Hot Fun |http://www.paranoia-live.net/jpgallery/hotfun.jpg
+
+IntSec guard |http://www.paranoia-live.net/jpgallery/intsec.jpg
+
+Petbot |http://www.paranoia-live.net/jpgallery/petbot.jpg
+
+Scrubot |http://www.paranoia-live.net/jpgallery/scrubot.jpg
+
+Spybot |http://www.paranoia-live.net/jpgallery/spybot.jpg
+
+Tella-O-MLY |http://www.paranoia-live.net/jpgallery/teela.jpg
+
+Ultraviolet |http://www.paranoia-live.net/jpgallery/uv.jpg
+
+B3 can |http://www.paranoia-live.net/jpgallery/b3.jpg
+
+Vulture goon |http://www.paranoia-live.net/jpgallery/vulture.jpg
+

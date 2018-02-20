@@ -1,13 +1,11 @@
 package jparanoia.shared;
-
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import javax.swing.DefaultFocusManager;
 
-public class NoTabFocusManager
-  extends DefaultFocusManager
-{
-  public void processKeyEvent(Component paramComponent, KeyEvent paramKeyEvent) {}
+public class NoTabFocusManager extends DefaultFocusManager {
+    public void processKeyEvent( Component paramComponent, KeyEvent paramKeyEvent ) {
+    }
 }
 
 

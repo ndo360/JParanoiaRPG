@@ -1,10 +1,8 @@
 package jparanoia.shared;
-
 import java.awt.Color;
 
-public abstract class JPPlayer
-{
-  public abstract Color getChatColor();
+public abstract class JPPlayer {
+    public abstract Color getChatColor();
 }
 
 
