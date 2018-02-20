@@ -71,13 +71,13 @@ import java.io.StringReader;
         /*    */
         /*    */
         /* 47 */
-        if ( paramString.indexOf( "<head>" ) != -1 || paramString.indexOf( "<HEAD>" ) != -1 )
+        if (paramString.contains("<head>") || paramString.contains("<HEAD>"))
             /*    */ {
             /* 49 */
             System.out.println( "In <head>..." );
             /*    */
             /* 51 */
-            while ( reader.readLine().indexOf( "</head>" ) == -1 ) {
+            while (!reader.readLine().contains("</head>")) {
             }
             /*    */
             /*    */
@@ -90,13 +90,13 @@ import java.io.StringReader;
         }
         /*    */
         /* 59 */
-        if ( paramString.indexOf( "<script" ) != -1 || paramString.indexOf( "<SCRIPT" ) != -1 )
+        if (paramString.contains("<script") || paramString.contains("<SCRIPT"))
             /*    */ {
             /* 61 */
             System.out.println( "In <script..." );
             /*    */
             /* 63 */
-            while ( reader.readLine().indexOf( "</script>" ) == -1 ) {
+            while (!reader.readLine().contains("</script>")) {
             }
             /*    */
             /*    */
@@ -109,14 +109,14 @@ import java.io.StringReader;
         }
         /*    */
         /* 71 */
-        if ( paramString.indexOf( "<!--" ) != -1 )
+        if (paramString.contains("<!--"))
             /*    */ {
             /* 73 */
             System.out.println( "In <!--..." );
             /*    */
             /* 75 */
-            while ( paramString.indexOf( "-->" ) == -1 &&
-                    /* 76 */         reader.readLine().indexOf( "-->" ) == -1 ) {
+            while (!paramString.contains("-->") &&
+                    /* 76 */         !reader.readLine().contains("-->")) {
             }
             /*    */
             /*    */

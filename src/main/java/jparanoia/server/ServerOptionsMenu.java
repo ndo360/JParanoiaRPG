@@ -40,15 +40,13 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         /*  26 */
         this.autoScrollMenuItem.setSelected( JPServer.autoScroll );
         /*  27 */
-        this.autoScrollMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  29 */
-                JPServer.autoScroll = !JPServer.autoScroll;
-                /*  30 */
-                System.out.println( "AUTO SCROLL = " + JPServer.autoScroll );
-            }
-            /*  32 */
-        } );
+        /*  32 */
+        this.autoScrollMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  29 */
+            JPServer.autoScroll = !JPServer.autoScroll;
+            /*  30 */
+            System.out.println( "AUTO SCROLL = " + JPServer.autoScroll );
+        });
         /*  33 */
         this.makeLogMenuItem = new javax.swing.JCheckBoxMenuItem( "Log Game" );
         /*  34 */
@@ -58,27 +56,25 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         /*  37 */
         this.makeLogMenuItem.setSelected( ( (Boolean) JPServer.prefs.getPref( 20 ) ).booleanValue() );
         /*  38 */
-        this.makeLogMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  40 */
-                JPServer.keepLog = !JPServer.keepLog;
-                /*  41 */
-                System.out.println( "KEEP LOG = " + JPServer.keepLog );
-                /*  42 */
-                if ( JPServer.keepLog ) {
-                    JPServer.logger = new jparanoia.shared.GameLogger();
-                } else
-                    /*  43 */ {
-                    JPServer.logger.closeLog();
-                }
-                /*  44 */
-                if ( JPServer.logBroken ) {
-                    ServerOptionsMenu.this.makeLogMenuItem.setEnabled( false );
-                    ServerOptionsMenu.this.makeLogMenuItem.setSelected( false );
-                }
-                /*  46 */
+        this.makeLogMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  40 */
+            JPServer.keepLog = !JPServer.keepLog;
+            /*  41 */
+            System.out.println( "KEEP LOG = " + JPServer.keepLog );
+            /*  42 */
+            if ( JPServer.keepLog ) {
+                JPServer.logger = new jparanoia.shared.GameLogger();
+            } else
+                /*  43 */ {
+                JPServer.logger.closeLog();
             }
-        } );
+            /*  44 */
+            if ( JPServer.logBroken ) {
+                ServerOptionsMenu.this.makeLogMenuItem.setEnabled( false );
+                ServerOptionsMenu.this.makeLogMenuItem.setSelected( false );
+            }
+            /*  46 */
+        });
         /*  47 */
         this.quickCharsheetMenuItem = new javax.swing.JCheckBoxMenuItem( "Quick Charsheet" );
         /*  48 */
@@ -95,13 +91,11 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         this.showTimeStampsMenuItem.setSelected( ( (Boolean) JPServer.prefs.getPref( 24 ) ).booleanValue() );
 
         /*  58 */
-        this.showTimeStampsMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  60 */
-                JPServer.showTimeStamps = !JPServer.showTimeStamps;
-                /*  62 */
-            }
-        } );
+        this.showTimeStampsMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  60 */
+            JPServer.showTimeStamps = !JPServer.showTimeStamps;
+            /*  62 */
+        });
         /*  63 */
         this.bigComputerFontMenuItem = new javax.swing.JCheckBoxMenuItem( "Show Big Computer Font" );
         /*  64 */
@@ -116,13 +110,11 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         this.bigComputerFontMenuItem.setSelected( ( (Boolean) JPServer.prefs.getPref( 25 ) ).booleanValue() );
 
         /*  73 */
-        this.bigComputerFontMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  75 */
-                JPServer.bigComputerFont = !JPServer.bigComputerFont;
-                /*  77 */
-            }
-        } );
+        this.bigComputerFontMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  75 */
+            JPServer.bigComputerFont = !JPServer.bigComputerFont;
+            /*  77 */
+        });
         /*  78 */
         this.computerAllCapsMenuItem = new javax.swing.JCheckBoxMenuItem( "Computer speech in CAPS" );
         /*  79 */
@@ -131,13 +123,8 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         this.computerAllCapsMenuItem.setSelected( ( (Boolean) JPServer.prefs.getPref( 27 ) ).booleanValue() );
 
         /*  82 */
-        this.computerAllCapsMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            /*  84 */
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                JPServer.computerAllCaps = !JPServer.computerAllCaps;
-            }
-            /*  85 */
-        } );
+        /*  84 *//*  85 */
+        this.computerAllCapsMenuItem.addActionListener(paramAnonymousActionEvent -> JPServer.computerAllCaps = !JPServer.computerAllCaps);
         /*  86 */
         this.computerFontIncreaseMenu = new javax.swing.JMenu( "Computer font increase" );
         /*  87 */
@@ -146,123 +133,103 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         /*  89 */
         this.cpuIncrease0 = new javax.swing.JRadioButtonMenuItem( "None" );
         /*  90 */
-        this.cpuIncrease0.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  92 */
-                JPServer.spamString( "0700" );
-                /*  93 */
-                JPServer.computerFontIncrease = 0;
-                /*  94 */
-            }
-        } );
+        this.cpuIncrease0.addActionListener(paramAnonymousActionEvent -> {
+            /*  92 */
+            JPServer.spamString( "0700" );
+            /*  93 */
+            JPServer.computerFontIncrease = 0;
+            /*  94 */
+        });
         /*  95 */
         this.cpuIncrease2 = new javax.swing.JRadioButtonMenuItem( "2 points" );
         /*  96 */
-        this.cpuIncrease2.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  98 */
-                JPServer.spamString( "0702" );
-                /*  99 */
-                JPServer.computerFontIncrease = 2;
-                /* 100 */
-            }
-        } );
+        this.cpuIncrease2.addActionListener(paramAnonymousActionEvent -> {
+            /*  98 */
+            JPServer.spamString( "0702" );
+            /*  99 */
+            JPServer.computerFontIncrease = 2;
+            /* 100 */
+        });
         /* 101 */
         this.cpuIncrease4 = new javax.swing.JRadioButtonMenuItem( "4 points" );
         /* 102 */
-        this.cpuIncrease4.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 104 */
-                JPServer.spamString( "0704" );
-                /* 105 */
-                JPServer.computerFontIncrease = 4;
-                /* 106 */
-            }
-        } );
+        this.cpuIncrease4.addActionListener(paramAnonymousActionEvent -> {
+            /* 104 */
+            JPServer.spamString( "0704" );
+            /* 105 */
+            JPServer.computerFontIncrease = 4;
+            /* 106 */
+        });
         /* 107 */
         this.cpuIncrease6 = new javax.swing.JRadioButtonMenuItem( "6 points" );
         /* 108 */
-        this.cpuIncrease6.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 110 */
-                JPServer.spamString( "0706" );
-                /* 111 */
-                JPServer.computerFontIncrease = 6;
-                /* 112 */
-            }
-        } );
+        this.cpuIncrease6.addActionListener(paramAnonymousActionEvent -> {
+            /* 110 */
+            JPServer.spamString( "0706" );
+            /* 111 */
+            JPServer.computerFontIncrease = 6;
+            /* 112 */
+        });
         /* 113 */
         this.cpuIncrease8 = new javax.swing.JRadioButtonMenuItem( "8 points" );
         /* 114 */
-        this.cpuIncrease8.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 116 */
-                JPServer.spamString( "0708" );
-                /* 117 */
-                JPServer.computerFontIncrease = 8;
-                /* 118 */
-            }
-        } );
+        this.cpuIncrease8.addActionListener(paramAnonymousActionEvent -> {
+            /* 116 */
+            JPServer.spamString( "0708" );
+            /* 117 */
+            JPServer.computerFontIncrease = 8;
+            /* 118 */
+        });
         /* 119 */
         this.cpuIncrease10 = new javax.swing.JRadioButtonMenuItem( "10 points" );
         /* 120 */
-        this.cpuIncrease10.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 122 */
-                JPServer.spamString( "07010" );
-                /* 123 */
-                JPServer.computerFontIncrease = 10;
-                /* 124 */
-            }
-        } );
+        this.cpuIncrease10.addActionListener(paramAnonymousActionEvent -> {
+            /* 122 */
+            JPServer.spamString( "07010" );
+            /* 123 */
+            JPServer.computerFontIncrease = 10;
+            /* 124 */
+        });
         /* 125 */
         this.cpuIncrease12 = new javax.swing.JRadioButtonMenuItem( "12 points" );
         /* 126 */
-        this.cpuIncrease12.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 128 */
-                JPServer.spamString( "07012" );
-                /* 129 */
-                JPServer.computerFontIncrease = 12;
-                /* 130 */
-            }
-        } );
+        this.cpuIncrease12.addActionListener(paramAnonymousActionEvent -> {
+            /* 128 */
+            JPServer.spamString( "07012" );
+            /* 129 */
+            JPServer.computerFontIncrease = 12;
+            /* 130 */
+        });
         /* 131 */
         this.cpuIncrease14 = new javax.swing.JRadioButtonMenuItem( "14 points" );
         /* 132 */
-        this.cpuIncrease14.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 134 */
-                JPServer.spamString( "07014" );
-                /* 135 */
-                JPServer.computerFontIncrease = 14;
-                /* 136 */
-            }
-        } );
+        this.cpuIncrease14.addActionListener(paramAnonymousActionEvent -> {
+            /* 134 */
+            JPServer.spamString( "07014" );
+            /* 135 */
+            JPServer.computerFontIncrease = 14;
+            /* 136 */
+        });
         /* 137 */
         this.cpuIncrease16 = new javax.swing.JRadioButtonMenuItem( "16 points" );
         /* 138 */
-        this.cpuIncrease16.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 140 */
-                JPServer.spamString( "07016" );
-                /* 141 */
-                JPServer.computerFontIncrease = 16;
-                /* 142 */
-            }
-        } );
+        this.cpuIncrease16.addActionListener(paramAnonymousActionEvent -> {
+            /* 140 */
+            JPServer.spamString( "07016" );
+            /* 141 */
+            JPServer.computerFontIncrease = 16;
+            /* 142 */
+        });
         /* 143 */
         this.cpuIncrease18 = new javax.swing.JRadioButtonMenuItem( "18 points" );
         /* 144 */
-        this.cpuIncrease18.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 146 */
-                JPServer.spamString( "07018" );
-                /* 147 */
-                JPServer.computerFontIncrease = 18;
-                /* 148 */
-            }
-        } );
+        this.cpuIncrease18.addActionListener(paramAnonymousActionEvent -> {
+            /* 146 */
+            JPServer.spamString( "07018" );
+            /* 147 */
+            JPServer.computerFontIncrease = 18;
+            /* 148 */
+        });
         /* 149 */
         javax.swing.ButtonGroup localButtonGroup = new javax.swing.ButtonGroup();
 
@@ -364,28 +331,23 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
 
 
         /* 195 */
-        this.titleMessageMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 197 */
-                new javax.swing.JOptionPane();
-                JPServer.titleMessage = (String) javax.swing.JOptionPane.showInputDialog( null, "Enter a new title bar message:", "Set Title Message", -1, null, null, "" );
+        /* 201 */
+        this.titleMessageMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 197 */
+            new javax.swing.JOptionPane();
+            JPServer.titleMessage = (String) javax.swing.JOptionPane.showInputDialog( null, "Enter a new title bar message:", "Set Title Message", -1, null, null, "" );
 
-                /* 199 */
-                if ( JPServer.titleMessage != null ) {
-                    JPServer.setTitleMessage( JPServer.titleMessage );
-                }
+            /* 199 */
+            if ( JPServer.titleMessage != null ) {
+                JPServer.setTitleMessage( JPServer.titleMessage );
             }
-            /* 201 */
-        } );
+        });
         /* 202 */
         this.clearTitleMessageMenuItem = new javax.swing.JMenuItem( "Clear Title Message" );
         /* 203 */
-        this.clearTitleMessageMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-            }
-
-            /* 207 */
-        } );
+        /* 207 */
+        this.clearTitleMessageMenuItem.addActionListener(paramAnonymousActionEvent -> {
+        });
         /* 208 */
         this.useAnnouncementMenuItem = new javax.swing.JCheckBoxMenuItem( "Use Announcement" );
         /* 209 */
@@ -394,21 +356,15 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         /* 211 */
         this.setAnnouncementMenuItem = new javax.swing.JMenuItem( "Set Announcement..." );
         /* 212 */
-        this.setAnnouncementMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-            }
-
-            /* 216 */
-        } );
+        /* 216 */
+        this.setAnnouncementMenuItem.addActionListener(paramAnonymousActionEvent -> {
+        });
         /* 217 */
         this.clearAnnouncementMenuItem = new javax.swing.JMenuItem( "Clear Announcement" );
         /* 218 */
-        this.clearAnnouncementMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-            }
-
-            /* 222 */
-        } );
+        /* 222 */
+        this.clearAnnouncementMenuItem.addActionListener(paramAnonymousActionEvent -> {
+        });
         /* 223 */
         this.allowGMEmotesMenuItem = new javax.swing.JCheckBoxMenuItem( "Allow GM Emotes" );
 
@@ -425,14 +381,11 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         /* 234 */
         this.allowGMEmotesMenuItem.setSelected( JPServer.allowGMEmotes );
         /* 235 */
-        this.allowGMEmotesMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 237 */
-                JPServer.allowGMEmotes = !JPServer.allowGMEmotes;
-            }
-
-            /* 240 */
-        } );
+        /* 240 */
+        this.allowGMEmotesMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 237 */
+            JPServer.allowGMEmotes = !JPServer.allowGMEmotes;
+        });
         /* 241 */
         this.singleUseSpoofMenuItem = new javax.swing.JCheckBoxMenuItem( "Single Use Spoofing" );
 
@@ -446,12 +399,9 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         /* 249 */
         this.singleUseSpoofMenuItem.setSelected( ( (Boolean) JPServer.prefs.getPref( 36 ) ).booleanValue() );
         /* 250 */
-        this.singleUseSpoofMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-            }
-
-            /* 255 */
-        } );
+        /* 255 */
+        this.singleUseSpoofMenuItem.addActionListener(paramAnonymousActionEvent -> {
+        });
         /* 256 */
         this.computerFontMenu = new javax.swing.JMenu( "Computer font" );
         /* 257 */

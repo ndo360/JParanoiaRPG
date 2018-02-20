@@ -25,17 +25,14 @@ import javax.swing.JButton;
         /* 16 */
         this.connectButton = new JButton( "Join" );
         /* 17 */
-        this.connectButton.addActionListener( new java.awt.event.ActionListener() {
+        /*    *//*    */
+        this.connectButton.addActionListener(paramAnonymousActionEvent -> {
+            /* 19 */
+            jparanoia.client.JPClient.connect( JPGameInfo.this.ipAddress, true, JPGameInfo.this.description );
+            /* 20 */
+            jparanoia.client.ConnectManager.frame.setVisible( false );
             /*    */
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 19 */
-                jparanoia.client.JPClient.connect( JPGameInfo.this.ipAddress, true, JPGameInfo.this.description );
-                /* 20 */
-                jparanoia.client.ConnectManager.frame.setVisible( false );
-                /*    */
-            }
-            /*    */
-        } );
+        });
         /*    */
     }
     /*    */

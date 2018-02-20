@@ -30,33 +30,9 @@ import util.StringReplace;
         String str = StringReplace.replaceStr( paramString, "%", "PERCENTGOESHEREOMG" );
         /* 18 */
         str = StringReplace.replaceStr( paramString, "&", "%26" );
-        /*    */
-        /*    */
-        /* 21 */
+
         str = StringReplace.replaceStr( str, "+", "%2B" ).replace( ' ', '+' );
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /*    */
-        /* 44 */
+
         str = StringReplace.replaceStr( str, "\\", "%5C" );
         /* 45 */
         str = StringReplace.replaceStr( str, "'", "%27" );

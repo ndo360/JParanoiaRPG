@@ -12,7 +12,7 @@ import java.net.URL;
 /*    */
 /*    */ public class JPURLs
         /*    */ {
-    /*    */   public static final String URLS_URL_STRING = "http://www.paranoia-live.net/jpreg/jparanoia/urls.html";
+//    /*    */   public static final String URLS_URL_STRING = "http://www.paranoia-live.net/jpreg/jparanoia/urls.html";
     /* 10 */   public static URL URLS_URL = null;
     /*    */   public static URL gameRegistrarURL;
 
@@ -22,7 +22,7 @@ import java.net.URL;
         /*    */
         try {
             /* 16 */
-            URLS_URL = new URL( "http://www.paranoia-live.net/jpreg/jparanoia/urls.html" );
+            URLS_URL = new URL( "http://127.0.0.1/jpreg/jparanoia/urls.html" );
             /*    */
         }
         /*    */ catch ( MalformedURLException localMalformedURLException ) {
@@ -64,7 +64,7 @@ import java.net.URL;
             while ( ( str1 = localBufferedReader.readLine() ) != null )
                 /*    */ {
                 /* 44 */
-                if ( str1.indexOf( "GAME-REGISTRAR:" ) != -1 ) {
+                if (str1.contains("GAME-REGISTRAR:")) {
                     /* 45 */
                     str2 = "GAME-REGISTRAR";
                     /* 46 */

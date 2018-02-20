@@ -30,33 +30,27 @@ public class FontMenu extends javax.swing.JMenu {
         /*  23 */
         this.serifButton = new JRadioButtonMenuItem( "Serif" );
         /*  24 */
-        this.serifButton.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  26 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Family, "Serif" );
-            }
-            /*  28 */
-        } );
+        /*  28 */
+        this.serifButton.addActionListener(paramAnonymousActionEvent -> {
+            /*  26 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Family, "Serif" );
+        });
         /*  29 */
         this.sansSerifButton = new JRadioButtonMenuItem( "Sans-Serif" );
         /*  30 */
-        this.sansSerifButton.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  32 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Family, "SansSerif" );
-            }
-            /*  34 */
-        } );
+        /*  34 */
+        this.sansSerifButton.addActionListener(paramAnonymousActionEvent -> {
+            /*  32 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Family, "SansSerif" );
+        });
         /*  35 */
         this.monospacedButton = new JRadioButtonMenuItem( "Monospaced" );
         /*  36 */
-        this.monospacedButton.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  38 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Family, "Monospaced" );
-            }
-            /*  40 */
-        } );
+        /*  40 */
+        this.monospacedButton.addActionListener(paramAnonymousActionEvent -> {
+            /*  38 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Family, "Monospaced" );
+        });
         /*  41 */
         javax.swing.ButtonGroup localButtonGroup1 = new javax.swing.ButtonGroup();
         /*  42 */
@@ -89,137 +83,113 @@ public class FontMenu extends javax.swing.JMenu {
         /*  58 */
         this.size10Button = new JRadioButtonMenuItem( "10" );
         /*  59 */
-        this.size10Button.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  61 */
-                JPClient.mainFontSize = new Integer( 10 );
-                /*  62 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 10 ) );
-            }
-            /*  64 */
-        } );
+        /*  64 */
+        this.size10Button.addActionListener(paramAnonymousActionEvent -> {
+            /*  61 */
+            JPClient.mainFontSize = new Integer( 10 );
+            /*  62 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 10 ) );
+        });
         /*  65 */
         this.size12Button = new JRadioButtonMenuItem( "12" );
         /*  66 */
-        this.size12Button.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  68 */
-                JPClient.mainFontSize = new Integer( 12 );
-                /*  69 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 12 ) );
-            }
-            /*  71 */
-        } );
+        /*  71 */
+        this.size12Button.addActionListener(paramAnonymousActionEvent -> {
+            /*  68 */
+            JPClient.mainFontSize = new Integer( 12 );
+            /*  69 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 12 ) );
+        });
         /*  72 */
         this.size14Button = new JRadioButtonMenuItem( "14" );
         /*  73 */
-        this.size14Button.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  75 */
-                JPClient.mainFontSize = new Integer( 14 );
-                /*  76 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 14 ) );
-            }
-            /*  78 */
-        } );
+        /*  78 */
+        this.size14Button.addActionListener(paramAnonymousActionEvent -> {
+            /*  75 */
+            JPClient.mainFontSize = new Integer( 14 );
+            /*  76 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 14 ) );
+        });
         /*  79 */
         this.size16Button = new JRadioButtonMenuItem( "16" );
         /*  80 */
-        this.size16Button.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  82 */
-                JPClient.mainFontSize = new Integer( 16 );
-                /*  83 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 16 ) );
-            }
-            /*  85 */
-        } );
+        /*  85 */
+        this.size16Button.addActionListener(paramAnonymousActionEvent -> {
+            /*  82 */
+            JPClient.mainFontSize = new Integer( 16 );
+            /*  83 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 16 ) );
+        });
         /*  86 */
         this.size18Button = new JRadioButtonMenuItem( "18" );
         /*  87 */
-        this.size18Button.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  89 */
-                JPClient.mainFontSize = new Integer( 18 );
-                /*  90 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 18 ) );
-            }
-            /*  92 */
-        } );
+        /*  92 */
+        this.size18Button.addActionListener(paramAnonymousActionEvent -> {
+            /*  89 */
+            JPClient.mainFontSize = new Integer( 18 );
+            /*  90 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 18 ) );
+        });
         /*  93 */
         this.size24Button = new JRadioButtonMenuItem( "24" );
         /*  94 */
-        this.size24Button.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  96 */
-                JPClient.mainFontSize = new Integer( 24 );
-                /*  97 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 24 ) );
-            }
-            /*  99 */
-        } );
+        /*  99 */
+        this.size24Button.addActionListener(paramAnonymousActionEvent -> {
+            /*  96 */
+            JPClient.mainFontSize = new Integer( 24 );
+            /*  97 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 24 ) );
+        });
         /* 100 */
         this.size36Button = new JRadioButtonMenuItem( "36" );
         /* 101 */
-        this.size36Button.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 103 */
-                JPClient.mainFontSize = new Integer( 36 );
-                /* 104 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 36 ) );
-            }
-            /* 106 */
-        } );
+        /* 106 */
+        this.size36Button.addActionListener(paramAnonymousActionEvent -> {
+            /* 103 */
+            JPClient.mainFontSize = new Integer( 36 );
+            /* 104 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 36 ) );
+        });
         /* 107 */
         this.size48Button = new JRadioButtonMenuItem( "48" );
         /* 108 */
-        this.size48Button.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 110 */
-                JPClient.mainFontSize = new Integer( 48 );
-                /* 111 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 48 ) );
-            }
-            /* 113 */
-        } );
+        /* 113 */
+        this.size48Button.addActionListener(paramAnonymousActionEvent -> {
+            /* 110 */
+            JPClient.mainFontSize = new Integer( 48 );
+            /* 111 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 48 ) );
+        });
         /* 114 */
         this.size72Button = new JRadioButtonMenuItem( "72" );
         /* 115 */
-        this.size72Button.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 117 */
-                JPClient.mainFontSize = new Integer( 72 );
-                /* 118 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 72 ) );
-            }
-
-            /* 121 */
-        } );
+        /* 121 */
+        this.size72Button.addActionListener(paramAnonymousActionEvent -> {
+            /* 117 */
+            JPClient.mainFontSize = new Integer( 72 );
+            /* 118 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 72 ) );
+        });
         /* 122 */
         this.size96Button = new JRadioButtonMenuItem( "96" );
         /* 123 */
-        this.size96Button.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 125 */
-                JPClient.mainFontSize = new Integer( 96 );
-                /* 126 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 96 ) );
-            }
-
-            /* 129 */
-        } );
+        /* 129 */
+        this.size96Button.addActionListener(paramAnonymousActionEvent -> {
+            /* 125 */
+            JPClient.mainFontSize = new Integer( 96 );
+            /* 126 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 96 ) );
+        });
         /* 130 */
         this.size120Button = new JRadioButtonMenuItem( "120" );
         /* 131 */
-        this.size120Button.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 133 */
-                JPClient.mainFontSize = new Integer( 120 );
-                /* 134 */
-                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 120 ) );
-            }
-            /* 136 */
-        } );
+        /* 136 */
+        this.size120Button.addActionListener(paramAnonymousActionEvent -> {
+            /* 133 */
+            JPClient.mainFontSize = new Integer( 120 );
+            /* 134 */
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 120 ) );
+        });
         /* 137 */
         javax.swing.ButtonGroup localButtonGroup2 = new javax.swing.ButtonGroup();
         /* 138 */
@@ -327,25 +297,23 @@ public class FontMenu extends javax.swing.JMenu {
         /* 180 */
         this.fontBoldMenuItem.setSelected( JPClient.prefs.getPref( 17 ).equals( new Boolean( true ) ) );
         /* 181 */
-        this.fontBoldMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 183 */
-                if ( JPClient.fontIsBold ) {
-                    /* 185 */
-                    JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Bold, Boolean.FALSE );
-                    /* 186 */
-                    JPClient.fontIsBold = false;
-                }
-                /* 189 */
-                else if ( !JPClient.fontIsBold ) {
-                    /* 191 */
-                    JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Bold, Boolean.TRUE );
-                    /* 192 */
-                    JPClient.fontIsBold = true;
-                }
-                /* 194 */
+        this.fontBoldMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 183 */
+            if ( JPClient.fontIsBold ) {
+                /* 185 */
+                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Bold, Boolean.FALSE );
+                /* 186 */
+                JPClient.fontIsBold = false;
             }
-        } );
+            /* 189 */
+            else if ( !JPClient.fontIsBold ) {
+                /* 191 */
+                JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Bold, Boolean.TRUE );
+                /* 192 */
+                JPClient.fontIsBold = true;
+            }
+            /* 194 */
+        });
         /* 195 */
         addSeparator();
         /* 196 */

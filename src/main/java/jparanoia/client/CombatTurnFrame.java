@@ -111,41 +111,39 @@ public class CombatTurnFrame extends javax.swing.JFrame {
         this.sendButton.setEnabled( false );
 
         /*  75 */
-        this.sendButton.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  77 */
-                String str = CombatTurnFrame.this.publicInputLine.getText();
-                /*  78 */
-                if ( str.equals( "" ) ) {
-                    /*  80 */
-                    str = "/appears to do nothing.";
-                    /*  81 */
-                    JPClient.out.println( "601" + str + "~" + CombatTurnFrame.this.secretInputLine.getText() );
-                    /*  82 */
-                    JPClient.PMFrame[0].addMyMessage( CombatTurnFrame.this.secretInputLine.getText() );
-                    /*  83 */
-                    JPClient.connectionStatusLabel.setIcon( JPClient.frozenIcon );
-                    /*  84 */
-                    CombatTurnFrame.this.dispose();
-                }
-                /*  87 */
-                else if ( str.startsWith( "/" ) || str.startsWith( "'" ) ) {
-                    /*  89 */
-                    JPClient.out.println( "601" + str + "~" + CombatTurnFrame.this.secretInputLine.getText() );
-                    /*  90 */
-                    JPClient.PMFrame[0].addMyMessage( CombatTurnFrame.this.secretInputLine.getText() );
-                    /*  91 */
-                    JPClient.connectionStatusLabel.setIcon( JPClient.frozenIcon );
-                    /*  92 */
-                    CombatTurnFrame.this.dispose();
-                } else {
-                    /*  94 */
-                    new javax.swing.JOptionPane();
-                    javax.swing.JOptionPane.showMessageDialog( null, "Your public text must begin with\n/  or  '\nor you can leave it blank.", "Combat Error", -1 );
-                }
+        /*  98 */
+        this.sendButton.addActionListener(paramAnonymousActionEvent -> {
+            /*  77 */
+            String str = CombatTurnFrame.this.publicInputLine.getText();
+            /*  78 */
+            if ( str.equals( "" ) ) {
+                /*  80 */
+                str = "/appears to do nothing.";
+                /*  81 */
+                JPClient.out.println( "601" + str + "~" + CombatTurnFrame.this.secretInputLine.getText() );
+                /*  82 */
+                JPClient.PMFrame[0].addMyMessage( CombatTurnFrame.this.secretInputLine.getText() );
+                /*  83 */
+                JPClient.connectionStatusLabel.setIcon( JPClient.frozenIcon );
+                /*  84 */
+                CombatTurnFrame.this.dispose();
             }
-            /*  98 */
-        } );
+            /*  87 */
+            else if ( str.startsWith( "/" ) || str.startsWith( "'" ) ) {
+                /*  89 */
+                JPClient.out.println( "601" + str + "~" + CombatTurnFrame.this.secretInputLine.getText() );
+                /*  90 */
+                JPClient.PMFrame[0].addMyMessage( CombatTurnFrame.this.secretInputLine.getText() );
+                /*  91 */
+                JPClient.connectionStatusLabel.setIcon( JPClient.frozenIcon );
+                /*  92 */
+                CombatTurnFrame.this.dispose();
+            } else {
+                /*  94 */
+                new javax.swing.JOptionPane();
+                javax.swing.JOptionPane.showMessageDialog( null, "Your public text must begin with\n/  or  '\nor you can leave it blank.", "Combat Error", -1 );
+            }
+        });
         /*  99 */
         this.inputPanel = new javax.swing.JPanel();
 

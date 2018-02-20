@@ -258,15 +258,13 @@ public class JPClient extends jparanoia.shared.JParanoia {
         /*  244 */
         inputLine.setEnabled( false );
         /*  245 */
-        inputLine.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  247 */
-                if ( !JPClient.muted && !JPClient.frozen ) {
-                    JPClient.sendChat( JPClient.inputLine.getText() );
-                }
+        /*  250 */
+        inputLine.addActionListener(paramAnonymousActionEvent -> {
+            /*  247 */
+            if ( !JPClient.muted && !JPClient.frozen ) {
+                JPClient.sendChat( JPClient.inputLine.getText() );
             }
-            /*  250 */
-        } );
+        });
         /*  251 */
         inputLine.addKeyListener( new java.awt.event.KeyListener() {
             public void keyTyped( java.awt.event.KeyEvent paramAnonymousKeyEvent ) {
@@ -322,22 +320,14 @@ public class JPClient extends jparanoia.shared.JParanoia {
         /*  289 */
         connectMenuItem = new JMenuItem( "Connect..." );
         /*  290 */
-        connectMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-            }
-
-            /*  295 */
-        } );
+        /*  295 */
+        connectMenuItem.addActionListener(paramAnonymousActionEvent -> {
+        });
         /*  296 */
         disconnectMenuItem = new JMenuItem( "Disconnect" );
         /*  297 */
-        disconnectMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            /*  299 */
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                JPClient.disconnect( false );
-            }
-            /*  300 */
-        } );
+        /*  299 *//*  300 */
+        disconnectMenuItem.addActionListener(paramAnonymousActionEvent -> JPClient.disconnect( false ));
         /*  301 */
         connectionMenu.add( connectMenuItem );
         /*  302 */
@@ -366,13 +356,11 @@ public class JPClient extends jparanoia.shared.JParanoia {
         /*  318 */
         autoScrollMenuItem.setSelected( true );
         /*  319 */
-        autoScrollMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  321 */
-                jparanoia.shared.JParanoia.autoScroll = !jparanoia.shared.JParanoia.autoScroll;
-                /*  323 */
-            }
-        } );
+        autoScrollMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  321 */
+            jparanoia.shared.JParanoia.autoScroll = !jparanoia.shared.JParanoia.autoScroll;
+            /*  323 */
+        });
         /*  324 */
         chatNotifyNewPMMenuItem = new JCheckBoxMenuItem( "New PM alert in chat" );
         /*  325 */
@@ -408,18 +396,16 @@ public class JPClient extends jparanoia.shared.JParanoia {
         /*  346 */
         showAllPMWindowsMenuItem = new JMenuItem( "Show all" );
         /*  347 */
-        showAllPMWindowsMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  349 */
-                for ( int i = 0; i < JPClient.numberOfPCs; i++ ) {
-                    /*  351 */
-                    if ( i != JPClient.MY_PLAYER_NUMBER ) {
-                        JPClient.PMFrame[i].setVisible( true );
-                    }
+        /*  354 */
+        showAllPMWindowsMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  349 */
+            for ( int i = 0; i < JPClient.numberOfPCs; i++ ) {
+                /*  351 */
+                if ( i != JPClient.MY_PLAYER_NUMBER ) {
+                    JPClient.PMFrame[i].setVisible( true );
                 }
             }
-            /*  354 */
-        } );
+        });
         /*  355 */
         showAllPMWindowsMenuItem.setEnabled( false );
 
@@ -594,15 +580,13 @@ public class JPClient extends jparanoia.shared.JParanoia {
         /*  458 */
         showCharsheetMenuItem = new JMenuItem( "Show character sheet" );
         /*  459 */
-        showCharsheetMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  461 */
-                if ( !JPClient.charsheetFrame.isVisible() ) {
-                    JPClient.charsheetFrame.setVisible( true );
-                }
+        /*  463 */
+        showCharsheetMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  461 */
+            if ( !JPClient.charsheetFrame.isVisible() ) {
+                JPClient.charsheetFrame.setVisible( true );
             }
-            /*  463 */
-        } );
+        });
         /*  464 */
         charsheetMenu.add( showCharsheetMenuItem );
 
@@ -698,20 +682,15 @@ public class JPClient extends jparanoia.shared.JParanoia {
         realName = (String) prefs.getPref( 22 );
 
         /*  532 */
-        net.roydesign.mac.MRJAdapter.addQuitApplicationListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-            }
-
-            /*  536 */
-        } );
+        /*  536 */
+//        net.roydesign.mac.MRJAdapter.addQuitApplicationListener(paramAnonymousActionEvent -> {
+//        });
         /*  537 */
-        net.roydesign.mac.MRJAdapter.addAboutListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  539 */
-                jparanoia.shared.JParanoia.aboutBoxMenuItem.doClick();
-            }
-            /*  541 */
-        } );
+        /*  541 */
+//        net.roydesign.mac.MRJAdapter.addAboutListener(paramAnonymousActionEvent -> {
+//            /*  539 */
+//            jparanoia.shared.JParanoia.aboutBoxMenuItem.doClick();
+//        });
         /*  542 */
         mainFontSize = (Integer) textAttributes.getAttribute( javax.swing.text.StyleConstants.FontConstants.Size );
     }

@@ -53,33 +53,24 @@ public class CharsheetPanel extends JPanel {
         /*  49 */
         this.saveButton.setMaximumSize( new Dimension( 65, 22 ) );
         /*  50 */
-        this.saveButton.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  53 */
-                CharsheetPanel.this.selectedPlayer.saveCharsheet( CharsheetPanel.this.selectedPlayer.isLoggedIn() );
-            }
-
-
-
-
-            /*  61 */
-        } );
+        /*  61 */
+        this.saveButton.addActionListener(paramAnonymousActionEvent -> {
+            /*  53 */
+            CharsheetPanel.this.selectedPlayer.saveCharsheet( CharsheetPanel.this.selectedPlayer.isLoggedIn() );
+        });
         /*  62 */
         this.playerComboBox = new JComboBox( JPServer.troubleshooters );
         /*  63 */
-        this.playerComboBox.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  68 */
-                CharsheetPanel.this.selectedPlayer = (ServerPlayer) CharsheetPanel.this.playerComboBox.getSelectedItem();
+        /*  74 */
+        this.playerComboBox.addActionListener(paramAnonymousActionEvent -> {
+            /*  68 */
+            CharsheetPanel.this.selectedPlayer = (ServerPlayer) CharsheetPanel.this.playerComboBox.getSelectedItem();
 
-                /*  70 */
-                CharsheetPanel.this.theFile = CharsheetPanel.this.selectedPlayer.getCharsheet();
-                /*  71 */
-                CharsheetPanel.this.displayArea.setDocument( CharsheetPanel.this.theFile );
-            }
-
-            /*  74 */
-        } );
+            /*  70 */
+            CharsheetPanel.this.theFile = CharsheetPanel.this.selectedPlayer.getCharsheet();
+            /*  71 */
+            CharsheetPanel.this.displayArea.setDocument( CharsheetPanel.this.theFile );
+        });
         /*  75 */
         this.selectedPlayer = (ServerPlayer) this.playerComboBox.getSelectedItem();
 

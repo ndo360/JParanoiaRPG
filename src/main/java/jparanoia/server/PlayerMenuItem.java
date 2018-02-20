@@ -32,15 +32,12 @@ import javax.swing.JMenuItem;
         /* 20 */
         this.somePlayer = paramServerPlayer;
         /* 21 */
-        addActionListener( new java.awt.event.ActionListener() {
+        /*    *//*    */
+        addActionListener(paramAnonymousActionEvent -> {
+            /* 23 */
+            PlayerMenuItem.this.action();
             /*    */
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 23 */
-                PlayerMenuItem.this.action();
-                /*    */
-            }
-            /*    */
-        } );
+        });
         /*    */
     }
 

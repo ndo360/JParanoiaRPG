@@ -23,13 +23,11 @@ public class ServerPlayerClearanceMenu extends javax.swing.JMenu {
         /*  22 */
         this.securityInfraMenuItem = new JRadioButtonMenuItem( "IR" );
         /*  23 */
-        this.securityInfraMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  25 */
-                ServerPlayerClearanceMenu.this.player.setClearance( "IR", "Infrared" );
-            }
-            /*  27 */
-        } );
+        /*  27 */
+        this.securityInfraMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  25 */
+            ServerPlayerClearanceMenu.this.player.setClearance( "IR", "Infrared" );
+        });
         /*  28 */
         add( this.securityInfraMenuItem );
         /*  29 */
@@ -38,13 +36,11 @@ public class ServerPlayerClearanceMenu extends javax.swing.JMenu {
         /*  31 */
         this.securityRedMenuItem = new JRadioButtonMenuItem( "R" );
         /*  32 */
-        this.securityRedMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  34 */
-                ServerPlayerClearanceMenu.this.player.setClearance( "R", "Red" );
-            }
-            /*  36 */
-        } );
+        /*  36 */
+        this.securityRedMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  34 */
+            ServerPlayerClearanceMenu.this.player.setClearance( "R", "Red" );
+        });
         /*  37 */
         add( this.securityRedMenuItem );
         /*  38 */
@@ -53,13 +49,11 @@ public class ServerPlayerClearanceMenu extends javax.swing.JMenu {
         /*  40 */
         this.securityOrangeMenuItem = new JRadioButtonMenuItem( "O" );
         /*  41 */
-        this.securityOrangeMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  43 */
-                ServerPlayerClearanceMenu.this.player.setClearance( "O", "Orange" );
-            }
-            /*  45 */
-        } );
+        /*  45 */
+        this.securityOrangeMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  43 */
+            ServerPlayerClearanceMenu.this.player.setClearance( "O", "Orange" );
+        });
         /*  46 */
         add( this.securityOrangeMenuItem );
         /*  47 */
@@ -68,13 +62,11 @@ public class ServerPlayerClearanceMenu extends javax.swing.JMenu {
         /*  49 */
         this.securityYellowMenuItem = new JRadioButtonMenuItem( "Y" );
         /*  50 */
-        this.securityYellowMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  52 */
-                ServerPlayerClearanceMenu.this.player.setClearance( "Y", "Yellow" );
-            }
-            /*  54 */
-        } );
+        /*  54 */
+        this.securityYellowMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  52 */
+            ServerPlayerClearanceMenu.this.player.setClearance( "Y", "Yellow" );
+        });
         /*  55 */
         add( this.securityYellowMenuItem );
         /*  56 */
@@ -84,13 +76,11 @@ public class ServerPlayerClearanceMenu extends javax.swing.JMenu {
         /*  59 */
         this.securityGreenMenuItem = new JRadioButtonMenuItem( "G" );
         /*  60 */
-        this.securityGreenMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  62 */
-                ServerPlayerClearanceMenu.this.player.setClearance( "G", "Green" );
-            }
-            /*  64 */
-        } );
+        /*  64 */
+        this.securityGreenMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  62 */
+            ServerPlayerClearanceMenu.this.player.setClearance( "G", "Green" );
+        });
         /*  65 */
         add( this.securityGreenMenuItem );
         /*  66 */
@@ -100,13 +90,11 @@ public class ServerPlayerClearanceMenu extends javax.swing.JMenu {
         /*  69 */
         this.securityBlueMenuItem = new JRadioButtonMenuItem( "B" );
         /*  70 */
-        this.securityBlueMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  72 */
-                ServerPlayerClearanceMenu.this.player.setClearance( "B", "Blue" );
-            }
-            /*  74 */
-        } );
+        /*  74 */
+        this.securityBlueMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  72 */
+            ServerPlayerClearanceMenu.this.player.setClearance( "B", "Blue" );
+        });
         /*  75 */
         add( this.securityBlueMenuItem );
         /*  76 */
@@ -116,13 +104,11 @@ public class ServerPlayerClearanceMenu extends javax.swing.JMenu {
         /*  79 */
         this.securityIndigoMenuItem = new JRadioButtonMenuItem( "I" );
         /*  80 */
-        this.securityIndigoMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  82 */
-                ServerPlayerClearanceMenu.this.player.setClearance( "I", "Indigo" );
-            }
-            /*  84 */
-        } );
+        /*  84 */
+        this.securityIndigoMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  82 */
+            ServerPlayerClearanceMenu.this.player.setClearance( "I", "Indigo" );
+        });
         /*  85 */
         add( this.securityIndigoMenuItem );
         /*  86 */
@@ -132,13 +118,11 @@ public class ServerPlayerClearanceMenu extends javax.swing.JMenu {
         /*  89 */
         this.securityVioletMenuItem = new JRadioButtonMenuItem( "V" );
         /*  90 */
-        this.securityVioletMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  92 */
-                ServerPlayerClearanceMenu.this.player.setClearance( "V", "Violet" );
-            }
-            /*  94 */
-        } );
+        /*  94 */
+        this.securityVioletMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  92 */
+            ServerPlayerClearanceMenu.this.player.setClearance( "V", "Violet" );
+        });
         /*  95 */
         add( this.securityVioletMenuItem );
         /*  96 */
@@ -148,13 +132,11 @@ public class ServerPlayerClearanceMenu extends javax.swing.JMenu {
         /*  99 */
         this.securityUltraMenuItem = new JRadioButtonMenuItem( "U" );
         /* 100 */
-        this.securityUltraMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /* 102 */
-                ServerPlayerClearanceMenu.this.player.setClearance( "U", "Ultraviolet" );
-            }
-            /* 104 */
-        } );
+        /* 104 */
+        this.securityUltraMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 102 */
+            ServerPlayerClearanceMenu.this.player.setClearance( "U", "Ultraviolet" );
+        });
         /* 105 */
         add( this.securityUltraMenuItem );
         /* 106 */

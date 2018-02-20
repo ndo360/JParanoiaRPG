@@ -91,7 +91,7 @@ public class BrowserLauncher {
             /* 228 */
         } else if ( str1.startsWith( "Windows" ) ) {
             /* 229 */
-            if ( str1.indexOf( "9" ) != -1 ) {
+            if (str1.contains("9")) {
                 /* 230 */
                 jvm = 6;
             } else {

@@ -114,31 +114,27 @@ public class PrivateMessagePane extends javax.swing.JPanel {
         /*  97 */
         this.inputLine.setEnabled( false );
         /*  98 */
-        this.inputLine.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /* 100 */
-                String str = PrivateMessagePane.this.inputLine.getText();
-                /* 101 */
-                if ( !str.equals( "" ) ) {
-                    /* 103 */
-                    PrivateMessagePane.this.player.specificSend( "200" +
-                            PrivateMessagePane.this.player.getID() +
-                            JPServer.myPlayer.getID() +
-                            str );
-                    /* 104 */
-                    PrivateMessagePane.this.addMyMessage( str );
-                    /* 105 */
-                    PrivateMessagePane.this.inputLine.setText( "" );
-                }
-                /* 107 */
-                JPServer.inputLine.requestFocus();
-                /* 108 */
-                JPServer.spamString( "211" );
+        /* 112 */
+        this.inputLine.addActionListener(paramAnonymousActionEvent -> {
+            /* 100 */
+            String str = PrivateMessagePane.this.inputLine.getText();
+            /* 101 */
+            if ( !str.equals( "" ) ) {
+                /* 103 */
+                PrivateMessagePane.this.player.specificSend( "200" +
+                        PrivateMessagePane.this.player.getID() +
+                        JPServer.myPlayer.getID() +
+                        str );
+                /* 104 */
+                PrivateMessagePane.this.addMyMessage( str );
+                /* 105 */
+                PrivateMessagePane.this.inputLine.setText( "" );
             }
-
-
-            /* 112 */
-        } );
+            /* 107 */
+            JPServer.inputLine.requestFocus();
+            /* 108 */
+            JPServer.spamString( "211" );
+        });
         /* 113 */
         this.inputLine.addFocusListener( new java.awt.event.FocusAdapter() {
             public void focusGained( java.awt.event.FocusEvent paramAnonymousFocusEvent ) {

@@ -23,44 +23,41 @@ import jparanoia.shared.JPImage;
         /* 14 */
         this.imageItem = paramJPImage;
         /* 15 */
-        addActionListener( new java.awt.event.ActionListener() {
-            /*    */
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 17 */
-                JPServer.spamString( "404" + SendImageMenuItem.this.getImageInfo() );
-                /* 18 */
-                jparanoia.shared.JParanoia.displayImage( SendImageMenuItem.this.getImageInfo() );
-                /* 19 */
-                if ( JPServer.keepLog )
-                    /*    */ {
-                    /*    */
-                    String str;
-                    /* 22 */
-                    if ( JPServer.htmlLog ) {
-                        str = "IMAGE: \"" +
-                                SendImageMenuItem.this.imageItem.getName() +
-                                "\" URL: <a href=\"" +
-                                SendImageMenuItem.this.imageItem.getURL() +
-                                "\">" +
-                                SendImageMenuItem.this.imageItem.getURL() +
-                                "</a><br/>\n<img src=\"" +
-                                SendImageMenuItem.this.imageItem.getURL() +
-                                "\"><br/>";
-                    } else
-                        /* 23 */ {
-                        str = "IMAGE: \"" +
-                                SendImageMenuItem.this.imageItem.getName() +
-                                "\" URL: " +
-                                SendImageMenuItem.this.imageItem.getURL();
-                    }
-                    /* 24 */
-                    JPServer.logger.logEntry( str );
-                    /*    */
+        /*    *//*    */
+        addActionListener(paramAnonymousActionEvent -> {
+            /* 17 */
+            JPServer.spamString( "404" + SendImageMenuItem.this.getImageInfo() );
+            /* 18 */
+            jparanoia.shared.JParanoia.displayImage( SendImageMenuItem.this.getImageInfo() );
+            /* 19 */
+            if ( JPServer.keepLog )
+                /*    */ {
+                /*    */
+                String str;
+                /* 22 */
+                if ( JPServer.htmlLog ) {
+                    str = "IMAGE: \"" +
+                            SendImageMenuItem.this.imageItem.getName() +
+                            "\" URL: <a href=\"" +
+                            SendImageMenuItem.this.imageItem.getURL() +
+                            "\">" +
+                            SendImageMenuItem.this.imageItem.getURL() +
+                            "</a><br/>\n<img src=\"" +
+                            SendImageMenuItem.this.imageItem.getURL() +
+                            "\"><br/>";
+                } else
+                    /* 23 */ {
+                    str = "IMAGE: \"" +
+                            SendImageMenuItem.this.imageItem.getName() +
+                            "\" URL: " +
+                            SendImageMenuItem.this.imageItem.getURL();
                 }
+                /* 24 */
+                JPServer.logger.logEntry( str );
                 /*    */
             }
             /*    */
-        } );
+        });
         /*    */
     }
 

@@ -32,31 +32,27 @@ public class Spinner extends javax.swing.JPanel {
         this.textField.setHorizontalAlignment( 4 );
 
         /*  48 */
-        this.plus.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  50 */
-                if ( Spinner.this.value < Spinner.this.maxValue ) {
-                    /*  51 */
-                    Spinner.this.value += 1;
-                    /*  52 */
-                    Spinner.this.updateField();
-                }
+        /*  55 */
+        this.plus.addActionListener(paramAnonymousActionEvent -> {
+            /*  50 */
+            if ( Spinner.this.value < Spinner.this.maxValue ) {
+                /*  51 */
+                Spinner.this.value += 1;
+                /*  52 */
+                Spinner.this.updateField();
             }
-            /*  55 */
-        } );
+        });
         /*  56 */
-        this.minus.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  58 */
-                if ( Spinner.this.value > Spinner.this.minValue ) {
-                    /*  59 */
-                    Spinner.this.value -= 1;
-                    /*  60 */
-                    Spinner.this.updateField();
-                }
+        /*  63 */
+        this.minus.addActionListener(paramAnonymousActionEvent -> {
+            /*  58 */
+            if ( Spinner.this.value > Spinner.this.minValue ) {
+                /*  59 */
+                Spinner.this.value -= 1;
+                /*  60 */
+                Spinner.this.updateField();
             }
-            /*  63 */
-        } );
+        });
         /*  64 */
         setPreferredSize( new Dimension( 40, 30 ) );
         /*  65 */

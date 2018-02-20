@@ -28,17 +28,15 @@ public class GlobalPMDialog extends javax.swing.JFrame {
         resetExcludeCheckBoxes();
 
         /*  29 */
-        this.resetButton.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  31 */
-                GlobalPMDialog.this.textField.setText( "" );
-                /*  32 */
-                JPServer.spamString( "211" );
-                /*  33 */
-                GlobalPMDialog.resetExcludeCheckBoxes();
-                /*  34 */
-            }
-        } );
+        this.resetButton.addActionListener(paramAnonymousActionEvent -> {
+            /*  31 */
+            GlobalPMDialog.this.textField.setText( "" );
+            /*  32 */
+            JPServer.spamString( "211" );
+            /*  33 */
+            GlobalPMDialog.resetExcludeCheckBoxes();
+            /*  34 */
+        });
         /*  35 */
         this.resetButton.setAlignmentX( 0.5F );
 
@@ -99,13 +97,11 @@ public class GlobalPMDialog extends javax.swing.JFrame {
             /*  76 */
         } );
         /*  77 */
-        this.textField.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  79 */
-                GlobalPMDialog.this.sendGlobalPM( GlobalPMDialog.this.textField.getText() );
-            }
-            /*  81 */
-        } );
+        /*  81 */
+        this.textField.addActionListener(paramAnonymousActionEvent -> {
+            /*  79 */
+            GlobalPMDialog.this.sendGlobalPM( GlobalPMDialog.this.textField.getText() );
+        });
         /*  82 */
         this.contentPane.add( this.excludePanel );
         /*  83 */

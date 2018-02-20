@@ -54,8 +54,7 @@ import java.net.Socket;
                 System.out.println( str + "*" );
                 /*    */
             }
-            /* 37 */       while ( str != null && str.toUpperCase().indexOf( "</HTML>" ) == -1 );
-            return;
+            /* 37 */       while ( str != null && !str.toUpperCase().contains("</HTML>"));
             /*    */
         }
         /*    */ catch ( Exception localException )

@@ -75,27 +75,22 @@ public class PrivateMessageFrame extends javax.swing.JFrame {
         /*  60 */
         this.inputLine = new JTextField( 20 );
         /*  61 */
-        this.inputLine.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  63 */
-                String str = PrivateMessageFrame.this.inputLine.getText();
-                /*  64 */
-                if ( !str.equals( "" ) ) {
-                    /*  65 */
-                    JPClient.sendPrivateMessage( PrivateMessageFrame.this.player.getID() +
-                            JPClient.myPlayer.getID() +
-                            str );
-                    /*  66 */
-                    PrivateMessageFrame.this.addMyMessage( str );
-                }
-                /*  68 */
-                PrivateMessageFrame.this.inputLine.setText( "" );
+        /*  75 */
+        this.inputLine.addActionListener(paramAnonymousActionEvent -> {
+            /*  63 */
+            String str = PrivateMessageFrame.this.inputLine.getText();
+            /*  64 */
+            if ( !str.equals( "" ) ) {
+                /*  65 */
+                JPClient.sendPrivateMessage( PrivateMessageFrame.this.player.getID() +
+                        JPClient.myPlayer.getID() +
+                        str );
+                /*  66 */
+                PrivateMessageFrame.this.addMyMessage( str );
             }
-
-
-
-            /*  75 */
-        } );
+            /*  68 */
+            PrivateMessageFrame.this.inputLine.setText( "" );
+        });
         /*  76 */
         this.inputLine.setEnabled( this.player.isLoggedIn() );
 
@@ -183,15 +178,13 @@ public class PrivateMessageFrame extends javax.swing.JFrame {
         /* 133 */
         this.pmWindowMenuItem = new JMenuItem( getTitle() );
         /* 134 */
-        this.pmWindowMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 137 */
-                PrivateMessageFrame.this.setVisible( true );
-                /* 138 */
-                PrivateMessageFrame.this.toFront();
-            }
-            /* 140 */
-        } );
+        /* 140 */
+        this.pmWindowMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 137 */
+            PrivateMessageFrame.this.setVisible( true );
+            /* 138 */
+            PrivateMessageFrame.this.toFront();
+        });
         /* 141 */
         JPClient.pmWindowsMenu.add( this.pmWindowMenuItem );
     }

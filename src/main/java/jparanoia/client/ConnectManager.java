@@ -21,14 +21,12 @@ public class ConnectManager {
         manualEntryField.setText( JPClient.addressToTry );
 
         /*  35 */
-        manualEntryField.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  37 */
-                ConnectManager.frame.setVisible( false );
-                /*  38 */
-                JPClient.connect( ConnectManager.manualEntryField.getText(), false, ConnectManager.manualEntryField.getText() );
-            }
-        } );
+        manualEntryField.addActionListener(paramAnonymousActionEvent -> {
+            /*  37 */
+            ConnectManager.frame.setVisible( false );
+            /*  38 */
+            JPClient.connect( ConnectManager.manualEntryField.getText(), false, ConnectManager.manualEntryField.getText() );
+        });
     }
 
     public static void activate() {

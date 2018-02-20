@@ -39,15 +39,13 @@ public class SoundMenu extends JMenu {
         /*  30 */
         this.playSoundsMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 0 ) ).booleanValue() );
         /*  31 */
-        this.playSoundsMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  33 */
-                JParanoia.toggleSoundEngine();
-                /*  34 */
-                SoundMenu.this.prefs.setPref( 0, new Boolean( SoundMenu.this.playSoundsMenuItem.isSelected() ) );
-            }
-            /*  36 */
-        } );
+        /*  36 */
+        this.playSoundsMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  33 */
+            JParanoia.toggleSoundEngine();
+            /*  34 */
+            SoundMenu.this.prefs.setPref( 0, new Boolean( SoundMenu.this.playSoundsMenuItem.isSelected() ) );
+        });
         /*  37 */
         add( this.playSoundsMenuItem );
 
@@ -64,13 +62,11 @@ public class SoundMenu extends JMenu {
         /*  46 */
         this.startupMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 1 ) ).booleanValue() );
         /*  47 */
-        this.startupMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  49 */
-                SoundMenu.this.prefs.setPref( 1, new Boolean( SoundMenu.this.startupMenuItem.isSelected() ) );
-            }
-            /*  51 */
-        } );
+        /*  51 */
+        this.startupMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  49 */
+            SoundMenu.this.prefs.setPref( 1, new Boolean( SoundMenu.this.startupMenuItem.isSelected() ) );
+        });
         /*  52 */
         add( this.startupMenuItem );
 
@@ -80,13 +76,11 @@ public class SoundMenu extends JMenu {
         /*  56 */
         this.joinLeaveMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 2 ) ).booleanValue() );
         /*  57 */
-        this.joinLeaveMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  59 */
-                SoundMenu.this.prefs.setPref( 2, new Boolean( SoundMenu.this.joinLeaveMenuItem.isSelected() ) );
-            }
-            /*  61 */
-        } );
+        /*  61 */
+        this.joinLeaveMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  59 */
+            SoundMenu.this.prefs.setPref( 2, new Boolean( SoundMenu.this.joinLeaveMenuItem.isSelected() ) );
+        });
         /*  62 */
         add( this.joinLeaveMenuItem );
 
@@ -96,13 +90,11 @@ public class SoundMenu extends JMenu {
         this.newTextMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 3 ) ).booleanValue() );
 
         /*  67 */
-        this.newTextMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  69 */
-                SoundMenu.this.prefs.setPref( 3, new Boolean( SoundMenu.this.newTextMenuItem.isSelected() ) );
-            }
-            /*  71 */
-        } );
+        /*  71 */
+        this.newTextMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  69 */
+            SoundMenu.this.prefs.setPref( 3, new Boolean( SoundMenu.this.newTextMenuItem.isSelected() ) );
+        });
         /*  72 */
         add( this.newTextMenuItem );
 
@@ -112,13 +104,11 @@ public class SoundMenu extends JMenu {
         this.newObserverTextMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 4 ) ).booleanValue() );
 
         /*  77 */
-        this.newObserverTextMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  79 */
-                SoundMenu.this.prefs.setPref( 4, new Boolean( SoundMenu.this.newObserverTextMenuItem.isSelected() ) );
-            }
-            /*  81 */
-        } );
+        /*  81 */
+        this.newObserverTextMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  79 */
+            SoundMenu.this.prefs.setPref( 4, new Boolean( SoundMenu.this.newObserverTextMenuItem.isSelected() ) );
+        });
         /*  82 */
         add( this.newObserverTextMenuItem );
 
@@ -127,13 +117,11 @@ public class SoundMenu extends JMenu {
         /*  85 */
         this.mutedUnmutedMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 5 ) ).booleanValue() );
         /*  86 */
-        this.mutedUnmutedMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  88 */
-                SoundMenu.this.prefs.setPref( 5, new Boolean( SoundMenu.this.mutedUnmutedMenuItem.isSelected() ) );
-            }
-            /*  90 */
-        } );
+        /*  90 */
+        this.mutedUnmutedMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  88 */
+            SoundMenu.this.prefs.setPref( 5, new Boolean( SoundMenu.this.mutedUnmutedMenuItem.isSelected() ) );
+        });
         /*  91 */
         add( this.mutedUnmutedMenuItem );
 
@@ -143,13 +131,11 @@ public class SoundMenu extends JMenu {
         /*  95 */
         this.freezeUnfreezeMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 6 ) ).booleanValue() );
         /*  96 */
-        this.freezeUnfreezeMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  98 */
-                SoundMenu.this.prefs.setPref( 6, new Boolean( SoundMenu.this.freezeUnfreezeMenuItem.isSelected() ) );
-            }
-            /* 100 */
-        } );
+        /* 100 */
+        this.freezeUnfreezeMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  98 */
+            SoundMenu.this.prefs.setPref( 6, new Boolean( SoundMenu.this.freezeUnfreezeMenuItem.isSelected() ) );
+        });
         /* 101 */
         add( this.freezeUnfreezeMenuItem );
 
@@ -158,13 +144,11 @@ public class SoundMenu extends JMenu {
         /* 104 */
         this.promotedDemotedMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 7 ) ).booleanValue() );
         /* 105 */
-        this.promotedDemotedMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 107 */
-                SoundMenu.this.prefs.setPref( 7, new Boolean( SoundMenu.this.promotedDemotedMenuItem.isSelected() ) );
-            }
-            /* 109 */
-        } );
+        /* 109 */
+        this.promotedDemotedMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 107 */
+            SoundMenu.this.prefs.setPref( 7, new Boolean( SoundMenu.this.promotedDemotedMenuItem.isSelected() ) );
+        });
         /* 110 */
         add( this.promotedDemotedMenuItem );
 
@@ -174,13 +158,11 @@ public class SoundMenu extends JMenu {
         /* 114 */
         this.loginBadLoginMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 8 ) ).booleanValue() );
         /* 115 */
-        this.loginBadLoginMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 117 */
-                SoundMenu.this.prefs.setPref( 8, new Boolean( SoundMenu.this.loginBadLoginMenuItem.isSelected() ) );
-            }
-            /* 119 */
-        } );
+        /* 119 */
+        this.loginBadLoginMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 117 */
+            SoundMenu.this.prefs.setPref( 8, new Boolean( SoundMenu.this.loginBadLoginMenuItem.isSelected() ) );
+        });
         /* 120 */
         add( this.loginBadLoginMenuItem );
 
@@ -189,13 +171,11 @@ public class SoundMenu extends JMenu {
         /* 123 */
         this.connectedDisconnectedMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 9 ) ).booleanValue() );
         /* 124 */
-        this.connectedDisconnectedMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 126 */
-                SoundMenu.this.prefs.setPref( 9, new Boolean( SoundMenu.this.connectedDisconnectedMenuItem.isSelected() ) );
-            }
-            /* 128 */
-        } );
+        /* 128 */
+        this.connectedDisconnectedMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 126 */
+            SoundMenu.this.prefs.setPref( 9, new Boolean( SoundMenu.this.connectedDisconnectedMenuItem.isSelected() ) );
+        });
         /* 129 */
         add( this.connectedDisconnectedMenuItem );
 
@@ -205,13 +185,11 @@ public class SoundMenu extends JMenu {
         /* 133 */
         this.combatAlertMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 10 ) ).booleanValue() );
         /* 134 */
-        this.combatAlertMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 136 */
-                SoundMenu.this.prefs.setPref( 10, new Boolean( SoundMenu.this.combatAlertMenuItem.isSelected() ) );
-            }
-            /* 138 */
-        } );
+        /* 138 */
+        this.combatAlertMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 136 */
+            SoundMenu.this.prefs.setPref( 10, new Boolean( SoundMenu.this.combatAlertMenuItem.isSelected() ) );
+        });
         /* 139 */
         add( this.combatAlertMenuItem );
 
@@ -220,13 +198,11 @@ public class SoundMenu extends JMenu {
         /* 142 */
         this.combatMusicMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 11 ) ).booleanValue() );
         /* 143 */
-        this.combatMusicMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 145 */
-                SoundMenu.this.prefs.setPref( 11, new Boolean( SoundMenu.this.combatMusicMenuItem.isSelected() ) );
-            }
-            /* 147 */
-        } );
+        /* 147 */
+        this.combatMusicMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 145 */
+            SoundMenu.this.prefs.setPref( 11, new Boolean( SoundMenu.this.combatMusicMenuItem.isSelected() ) );
+        });
         /* 148 */
         add( this.combatMusicMenuItem );
 
@@ -236,13 +212,11 @@ public class SoundMenu extends JMenu {
         /* 152 */
         this.charSheetAlertMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 12 ) ).booleanValue() );
         /* 153 */
-        this.charSheetAlertMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 155 */
-                SoundMenu.this.prefs.setPref( 12, new Boolean( SoundMenu.this.charSheetAlertMenuItem.isSelected() ) );
-            }
-            /* 157 */
-        } );
+        /* 157 */
+        this.charSheetAlertMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 155 */
+            SoundMenu.this.prefs.setPref( 12, new Boolean( SoundMenu.this.charSheetAlertMenuItem.isSelected() ) );
+        });
         /* 158 */
         add( this.charSheetAlertMenuItem );
 
@@ -252,13 +226,11 @@ public class SoundMenu extends JMenu {
         /* 162 */
         this.newPMAlertMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 13 ) ).booleanValue() );
         /* 163 */
-        this.newPMAlertMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 165 */
-                SoundMenu.this.prefs.setPref( 13, new Boolean( SoundMenu.this.newPMAlertMenuItem.isSelected() ) );
-            }
-            /* 167 */
-        } );
+        /* 167 */
+        this.newPMAlertMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 165 */
+            SoundMenu.this.prefs.setPref( 13, new Boolean( SoundMenu.this.newPMAlertMenuItem.isSelected() ) );
+        });
         /* 168 */
         add( this.newPMAlertMenuItem );
 
@@ -268,13 +240,11 @@ public class SoundMenu extends JMenu {
         /* 172 */
         this.deathAlertMenuItem.setSelected( ( (Boolean) this.prefs.getPref( 14 ) ).booleanValue() );
         /* 173 */
-        this.deathAlertMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 175 */
-                SoundMenu.this.prefs.setPref( 14, new Boolean( SoundMenu.this.deathAlertMenuItem.isSelected() ) );
-            }
-            /* 177 */
-        } );
+        /* 177 */
+        this.deathAlertMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /* 175 */
+            SoundMenu.this.prefs.setPref( 14, new Boolean( SoundMenu.this.deathAlertMenuItem.isSelected() ) );
+        });
         /* 178 */
         add( this.deathAlertMenuItem );
     }

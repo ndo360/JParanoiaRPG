@@ -25,22 +25,20 @@ public class SoundManager {
             System.out.println( "WARNING: Preparing to attempt acquisition of more than 32 voices!" );
         }
         try {
-            /*  35 */
-            Mixer.Info[] arrayOfInfo = AudioSystem.getMixerInfo();
-
-            /*  37 */
-            int i = 0;
-            /*  38 */
-            System.out.println( arrayOfInfo[i] );
-            /*  39 */
-            Mixer localMixer = AudioSystem.getMixer( arrayOfInfo[i] );
-
-            /*  41 */
             this.clipList = new Clip[paramArrayOfFile.length];
-            /*  42 */
             this.audioStreams = new AudioInputStream[paramArrayOfFile.length];
 
-            /*  44 */
+            //looks like sound system init
+            Mixer.Info[] arrayOfInfo = AudioSystem.getMixerInfo();
+            if (arrayOfInfo == null || arrayOfInfo.length == 0){
+                JParanoia.errorMessage("No soundcard detected","Soundcard init failed, you won't get any sounds!");
+                return;
+            }
+            Mixer.Info info = arrayOfInfo[0];
+            System.out.println(info);
+
+            Mixer localMixer = AudioSystem.getMixer(info);
+           //some archaic sound loading
             for ( int j = 0; j < paramArrayOfFile.length; j++ ) {
 
                 /*  47 */
@@ -64,24 +62,6 @@ public class SoundManager {
                             "jpConfig.ini file and prevent this error\n" +
                             "from appearing again.\n\n" +
                             "JParanoia will now terminate." );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     /*  77 */
                     System.exit( 0 );
                 }

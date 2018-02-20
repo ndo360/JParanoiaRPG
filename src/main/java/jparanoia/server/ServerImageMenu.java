@@ -50,14 +50,8 @@ import javax.swing.JOptionPane;
         /* 33 */
         this.unplannedMenuItem = new JMenuItem( "Unplanned Image..." );
         /* 34 */
-        this.unplannedMenuItem.addActionListener( new java.awt.event.ActionListener()
-                /*    */ {
-            /* 36 */
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                ServerImageMenu.this.sendUnplannedImage();
-            }
-            /* 37 */
-        } );
+        /*    *//* 36 *//* 37 */
+        this.unplannedMenuItem.addActionListener(paramAnonymousActionEvent -> ServerImageMenu.this.sendUnplannedImage());
         /* 38 */
         add( this.unplannedMenuItem );
         /*    */

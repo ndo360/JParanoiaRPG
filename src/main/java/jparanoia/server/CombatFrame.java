@@ -240,105 +240,100 @@ public class CombatFrame extends JFrame {
         /* 176 */
         this.publishButton.setEnabled( false );
         /* 177 */
-        this.publishButton.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 179 */
-                CombatFrame.this.publishTurn( CombatFrame.this.currentPlayer, CombatFrame.this.proposedPublicTurn.getText() );
-                /* 180 */
-                CombatFrame.this.proposedPublicTurn.setText( "Turn published. Select next player." );
-                /* 181 */
-                boolean bool = CombatFrame.this.currentPlayer.statusPanel.isNewMessageWaiting();
-                /* 182 */
-                String str = CombatFrame.this.secretTurn.getText();
-                /* 183 */
-                if ( !str.equals( "No secret turn submitted." ) )
-                    /* 184 */ {
-                    JPServer.privateMessageHandler( "00" + CombatFrame.this.currentPlayer.getID() + str, false );
-                }
-                /* 185 */
-                if ( !bool ) {
-                    CombatFrame.this.currentPlayer.statusPanel.statusNewMessage( false );
-                }
-                /* 186 */
-                CombatFrame.this.secretTurn.setText( "" );
-                /* 187 */
-                for ( int i = 0; i < CombatFrame.this.waitingPlayers.size(); i++ ) {
-                    /* 189 */
-                    CombatButton localCombatButton = (CombatButton) CombatFrame.this.waitingPlayers.elementAt( i );
-                    /* 190 */
-                    localCombatButton.setEnabled( true );
-                }
-
-                /* 193 */
-                CombatFrame.this.currentPlayer.statusPanel.freeze();
-                /* 194 */
-                CombatFrame.this.turnsToBeReturned -= 1;
-                CombatFrame
-                        /* 195 */           tmp220_217 = CombatFrame.this;
-                tmp220_217.debugButtonString = tmp220_217.debugButtonString +
-                        "   Turn published. " +
-                        CombatFrame.this.turnStatus();
-                /* 196 */
-                if ( CombatFrame.this.waitingPlayers.size() == 0 && CombatFrame.this.turnsToBeReturned == 0 ) {
-                    CombatFrame.this.endCombat();
-                }
-                /* 198 */
-                CombatFrame.this.currentPlayer = null;
+        /* 201 */
+        this.publishButton.addActionListener(paramAnonymousActionEvent -> {
+            /* 179 */
+            CombatFrame.this.publishTurn( CombatFrame.this.currentPlayer, CombatFrame.this.proposedPublicTurn.getText() );
+            /* 180 */
+            CombatFrame.this.proposedPublicTurn.setText( "Turn published. Select next player." );
+            /* 181 */
+            boolean bool = CombatFrame.this.currentPlayer.statusPanel.isNewMessageWaiting();
+            /* 182 */
+            String str = CombatFrame.this.secretTurn.getText();
+            /* 183 */
+            if ( !str.equals( "No secret turn submitted." ) )
+                /* 184 */ {
+                JPServer.privateMessageHandler( "00" + CombatFrame.this.currentPlayer.getID() + str, false );
+            }
+            /* 185 */
+            if ( !bool ) {
+                CombatFrame.this.currentPlayer.statusPanel.statusNewMessage( false );
+            }
+            /* 186 */
+            CombatFrame.this.secretTurn.setText( "" );
+            /* 187 */
+            for ( int i = 0; i < CombatFrame.this.waitingPlayers.size(); i++ ) {
+                /* 189 */
+                CombatButton localCombatButton = (CombatButton) CombatFrame.this.waitingPlayers.elementAt( i );
+                /* 190 */
+                localCombatButton.setEnabled( true );
             }
 
-            /* 201 */
-        } );
+            /* 193 */
+            CombatFrame.this.currentPlayer.statusPanel.freeze();
+            /* 194 */
+            CombatFrame.this.turnsToBeReturned -= 1;
+            CombatFrame
+                    /* 195 */           tmp220_217 = CombatFrame.this;
+            tmp220_217.debugButtonString = tmp220_217.debugButtonString +
+                    "   Turn published. " +
+                    CombatFrame.this.turnStatus();
+            /* 196 */
+            if ( CombatFrame.this.waitingPlayers.size() == 0 && CombatFrame.this.turnsToBeReturned == 0 ) {
+                CombatFrame.this.endCombat();
+            }
+            /* 198 */
+            CombatFrame.this.currentPlayer = null;
+        });
         /* 202 */
         this.skipButton = new JButton( "Skip" );
         /* 203 */
         this.skipButton.setEnabled( false );
         /* 204 */
-        this.skipButton.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /* 206 */
-                CombatFrame.this.proposedPublicTurn.setText( "Player skipped. Select next player." );
-                /* 207 */
-                CombatFrame.this.secretTurn.setText( "" );
-                /* 208 */
-                CombatFrame.this.currentPlayer.specificSend( "609" );
-                /* 209 */
-                JPServer.spamString( "199" + CombatFrame.this.currentPlayer.getName() + "'s turn was skipped." );
-                /* 210 */
-                JPServer.absoluteChat( CombatFrame.this.currentPlayer.getName() + "'s turn was skipped." );
-                /* 211 */
-                for ( int i = 0; i < CombatFrame.this.waitingPlayers.size(); i++ ) {
-                    /* 213 */
-                    CombatButton localCombatButton = (CombatButton) CombatFrame.this.waitingPlayers.elementAt( i );
-                    /* 214 */
-                    localCombatButton.setEnabled( true );
-                }
-
-                /* 217 */
-                CombatFrame.this.currentPlayer.statusPanel.freeze();
-
-                /* 219 */
-                CombatFrame.this.turnsToBeReturned -= 1;
-                CombatFrame
-
-                        /* 221 */           tmp182_179 = CombatFrame.this;
-                tmp182_179.debugButtonString = tmp182_179.debugButtonString +
-                        "   Turn skipped. " +
-                        CombatFrame.this.turnStatus();
-
-                /* 223 */
-                CombatFrame.this.skipButton.setEnabled( false );
-                /* 224 */
-                CombatFrame.this.publishButton.setEnabled( false );
-
-                /* 226 */
-                if ( CombatFrame.this.waitingPlayers.size() == 0 && CombatFrame.this.turnsToBeReturned == 0 ) {
-                    CombatFrame.this.endCombat();
-                }
-                /* 228 */
-                CombatFrame.this.currentPlayer = null;
+        /* 230 */
+        this.skipButton.addActionListener(paramAnonymousActionEvent -> {
+            /* 206 */
+            CombatFrame.this.proposedPublicTurn.setText( "Player skipped. Select next player." );
+            /* 207 */
+            CombatFrame.this.secretTurn.setText( "" );
+            /* 208 */
+            CombatFrame.this.currentPlayer.specificSend( "609" );
+            /* 209 */
+            JPServer.spamString( "199" + CombatFrame.this.currentPlayer.getName() + "'s turn was skipped." );
+            /* 210 */
+            JPServer.absoluteChat( CombatFrame.this.currentPlayer.getName() + "'s turn was skipped." );
+            /* 211 */
+            for ( int i = 0; i < CombatFrame.this.waitingPlayers.size(); i++ ) {
+                /* 213 */
+                CombatButton localCombatButton = (CombatButton) CombatFrame.this.waitingPlayers.elementAt( i );
+                /* 214 */
+                localCombatButton.setEnabled( true );
             }
-            /* 230 */
-        } );
+
+            /* 217 */
+            CombatFrame.this.currentPlayer.statusPanel.freeze();
+
+            /* 219 */
+            CombatFrame.this.turnsToBeReturned -= 1;
+            CombatFrame
+
+                    /* 221 */           tmp182_179 = CombatFrame.this;
+            tmp182_179.debugButtonString = tmp182_179.debugButtonString +
+                    "   Turn skipped. " +
+                    CombatFrame.this.turnStatus();
+
+            /* 223 */
+            CombatFrame.this.skipButton.setEnabled( false );
+            /* 224 */
+            CombatFrame.this.publishButton.setEnabled( false );
+
+            /* 226 */
+            if ( CombatFrame.this.waitingPlayers.size() == 0 && CombatFrame.this.turnsToBeReturned == 0 ) {
+                CombatFrame.this.endCombat();
+            }
+            /* 228 */
+            CombatFrame.this.currentPlayer = null;
+        });
         /* 231 */
         this.skipAndPublishPanel = new JPanel();
         /* 232 */

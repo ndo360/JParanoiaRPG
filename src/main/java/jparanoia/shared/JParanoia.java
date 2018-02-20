@@ -10,6 +10,8 @@ import javax.swing.JTextPane;
 import javax.swing.ToolTipManager;
 import javax.swing.text.StyledDocument;
 
+import static java.lang.invoke.MethodHandles.lookup;
+
 public abstract class JParanoia {
     public static final String JPARANOIA_WEBSITE = "http://www.byronbarry.com/jparanoia/";
     /*  17 */   public static JFrame frame = new JFrame();
@@ -67,10 +69,10 @@ public abstract class JParanoia {
         /*  73 */
         aboutBoxMenuItem = new JMenuItem( "About JParanoia..." );
         /*  74 */
-        aboutBoxMenuItem.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  76 */
-                String str = "\n\nCoded by Byron Barry\nIcons by Andy Fitzpatrick\n\nJParanoia is Freeware\n(Donations accepted.)\nPermission required to re-distribute\nConsult included LICENSE.TXT for details\n\nThe JParanoia website is\nhttp://www.byronbarry.com/jparanoia/\n\nSearch for JParanoia on http://dmoz.org/\nif the above URL is no longer in use.";
+        /*  97 */
+        aboutBoxMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  76 */
+            String str = "\n\nCoded by Byron Barry\nIcons by Andy Fitzpatrick\n\nJParanoia is Freeware\n(Donations accepted.)\nPermission required to re-distribute\nConsult included LICENSE.TXT for details\n\nThe JParanoia website is\nhttp://www.byronbarry.com/jparanoia/\n\nSearch for JParanoia on http://dmoz.org/\nif the above URL is no longer in use.";
 
 
 
@@ -86,16 +88,12 @@ public abstract class JParanoia {
 
 
 
-                /*  92 */
-                new JOptionPane();
-                JOptionPane.showMessageDialog( null, JParanoia.appInfo +
-                        "\n© 2002-2004 Byron Barry" +
-                        str, "About JParanoia", 1, JParanoia.aboutIcon );
-            }
-
-
-            /*  97 */
-        } );
+            /*  92 */
+            new JOptionPane();
+            JOptionPane.showMessageDialog( null, JParanoia.appInfo +
+                    "\n© 2002-2004 Byron Barry" +
+                    str, "About JParanoia", 1, JParanoia.aboutIcon );
+        });
         /*  98 */
         javax.swing.FocusManager.setCurrentManager( ntfm );
 
@@ -190,8 +188,7 @@ public abstract class JParanoia {
             try {
                 /* 177 */
                 localJFrame.setIconImage( java.awt.Toolkit.getDefaultToolkit()
-                        .getImage( Class.forName( "jparanoia.shared.JParanoia" )
-                                .getResource( "graphics/jparanoiaIcon.jpg" ) ) );
+                        .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
                 /* 178 */
             } catch ( Exception localException2 ) {
                 System.out.println( "Error getting icon." );

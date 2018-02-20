@@ -50,37 +50,34 @@ public class StatusPanel extends javax.swing.JPanel {
         this.statusButton.setSelected( false );
 
         /*  52 */
-        this.statusButton.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  54 */
-                if ( StatusPanel.this.player.isMuted() ) {
-                    /*  55 */
-                    JPServer.unmute( StatusPanel.this.player.getID() );
-                    /*  56 */
-                    StatusPanel.this.player.setMuted( false );
-                    /*  57 */
-                    if ( !JPServer.frozen ) {
-                        StatusPanel.this.statusButton.setIcon( StatusPanel.this.connectedIcon );
-                    } else {
-                        /*  58 */
-                        StatusPanel.this.statusButton.setIcon( StatusPanel.this.frozenIcon );
-                    }
+        /*  68 */
+        this.statusButton.addActionListener(paramAnonymousActionEvent -> {
+            /*  54 */
+            if ( StatusPanel.this.player.isMuted() ) {
+                /*  55 */
+                JPServer.unmute( StatusPanel.this.player.getID() );
+                /*  56 */
+                StatusPanel.this.player.setMuted( false );
+                /*  57 */
+                if ( !JPServer.frozen ) {
+                    StatusPanel.this.statusButton.setIcon( StatusPanel.this.connectedIcon );
                 } else {
-                    /*  61 */
-                    JPServer.mute( StatusPanel.this.player.getID() );
-                    /*  62 */
-                    StatusPanel.this.player.setMuted( true );
-                    /*  63 */
-                    if ( !JPServer.frozen ) {
-                        StatusPanel.this.statusButton.setIcon( StatusPanel.this.mutedIcon );
-                    }
+                    /*  58 */
+                    StatusPanel.this.statusButton.setIcon( StatusPanel.this.frozenIcon );
                 }
-                /*  65 */
-                JPServer.inputLine.requestFocus();
+            } else {
+                /*  61 */
+                JPServer.mute( StatusPanel.this.player.getID() );
+                /*  62 */
+                StatusPanel.this.player.setMuted( true );
+                /*  63 */
+                if ( !JPServer.frozen ) {
+                    StatusPanel.this.statusButton.setIcon( StatusPanel.this.mutedIcon );
+                }
             }
-
-            /*  68 */
-        } );
+            /*  65 */
+            JPServer.inputLine.requestFocus();
+        });
         /*  69 */
         this.newMessageLabel = new JButton( this.nullMessageIcon );
         /*  70 */
@@ -92,18 +89,15 @@ public class StatusPanel extends javax.swing.JPanel {
         /*  73 */
         this.newMessageLabel.setMinimumSize( new java.awt.Dimension( 31, 30 ) );
         /*  74 */
-        this.newMessageLabel.addActionListener( new java.awt.event.ActionListener() {
-            public void actionPerformed( java.awt.event.ActionEvent paramAnonymousActionEvent ) {
-                /*  76 */
-                StatusPanel.this.newMessageAnimationTimer.stop();
-                /*  77 */
-                StatusPanel.this.newMessageLabel.setIcon( StatusPanel.this.nullMessageIcon );
-                /*  78 */
-                JPServer.inputLine.requestFocus();
-            }
-
-            /*  81 */
-        } );
+        /*  81 */
+        this.newMessageLabel.addActionListener(paramAnonymousActionEvent -> {
+            /*  76 */
+            StatusPanel.this.newMessageAnimationTimer.stop();
+            /*  77 */
+            StatusPanel.this.newMessageLabel.setIcon( StatusPanel.this.nullMessageIcon );
+            /*  78 */
+            JPServer.inputLine.requestFocus();
+        });
         /*  82 */
         setLayout( new javax.swing.BoxLayout( this, 1 ) );
 

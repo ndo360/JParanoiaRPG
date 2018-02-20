@@ -46,16 +46,13 @@ public class DicePanel extends javax.swing.JPanel {
         /*  42 */
         this.d10Button.setMaximumSize( new Dimension( 32, 18 ) );
         /*  43 */
-        this.d10Button.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  45 */
-                DicePanel.this.rollDie( 10 );
-                /*  46 */
-                JPServer.inputLine.requestFocus();
-            }
-
-            /*  49 */
-        } );
+        /*  49 */
+        this.d10Button.addActionListener(paramAnonymousActionEvent -> {
+            /*  45 */
+            DicePanel.this.rollDie( 10 );
+            /*  46 */
+            JPServer.inputLine.requestFocus();
+        });
         /*  50 */
         this.d20Button = new JButton( this.d20Icon );
         /*  51 */
@@ -63,15 +60,13 @@ public class DicePanel extends javax.swing.JPanel {
         /*  52 */
         this.d20Button.setMaximumSize( new Dimension( 32, 18 ) );
         /*  53 */
-        this.d20Button.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  55 */
-                DicePanel.this.rollDie( 20 );
-                /*  56 */
-                JPServer.inputLine.requestFocus();
-            }
-            /*  58 */
-        } );
+        /*  58 */
+        this.d20Button.addActionListener(paramAnonymousActionEvent -> {
+            /*  55 */
+            DicePanel.this.rollDie( 20 );
+            /*  56 */
+            JPServer.inputLine.requestFocus();
+        });
         /*  59 */
         this.d100Button = new JButton( this.d100Icon );
         /*  60 */
@@ -81,15 +76,13 @@ public class DicePanel extends javax.swing.JPanel {
         /*  62 */
         this.d100Button.setMaximumSize( new Dimension( 38, 18 ) );
         /*  63 */
-        this.d100Button.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  65 */
-                DicePanel.this.rollDie( 100 );
-                /*  66 */
-                JPServer.inputLine.requestFocus();
-            }
-            /*  68 */
-        } );
+        /*  68 */
+        this.d100Button.addActionListener(paramAnonymousActionEvent -> {
+            /*  65 */
+            DicePanel.this.rollDie( 100 );
+            /*  66 */
+            JPServer.inputLine.requestFocus();
+        });
         /*  69 */
         this.diceOutputField = new JTextField( 4 );
 

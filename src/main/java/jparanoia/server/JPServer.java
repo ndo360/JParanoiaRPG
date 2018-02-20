@@ -505,19 +505,17 @@ public class JPServer extends JParanoia {
         /*  434 */
         spoofComboBox = new javax.swing.JComboBox( arrayOfServerPlayer );
         /*  435 */
-        spoofComboBox.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  437 */
-                JPServer.playerToSpoof = (ServerPlayer) JPServer.spoofComboBox.getSelectedItem();
-                /*  438 */
-                if ( JPServer.spoofCheckBox.isSelected() ) {
-                    JPServer.currentPlayerID = JPServer.playerToSpoof.getID();
-                }
-                /*  439 */
-                JPServer.inputLine.requestFocus();
+        /*  441 */
+        spoofComboBox.addActionListener(paramAnonymousActionEvent -> {
+            /*  437 */
+            JPServer.playerToSpoof = (ServerPlayer) JPServer.spoofComboBox.getSelectedItem();
+            /*  438 */
+            if ( JPServer.spoofCheckBox.isSelected() ) {
+                JPServer.currentPlayerID = JPServer.playerToSpoof.getID();
             }
-            /*  441 */
-        } );
+            /*  439 */
+            JPServer.inputLine.requestFocus();
+        });
         /*  442 */
         playerToSpoof = (ServerPlayer) spoofComboBox.getSelectedItem();
 
@@ -531,25 +529,23 @@ public class JPServer extends JParanoia {
         /*  448 */
         spoofCheckBox = new javax.swing.JCheckBox();
         /*  449 */
-        spoofCheckBox.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  451 */
-                if ( JPServer.spoofCheckBox.isSelected() ) {
-                    /*  452 */
-                    JPServer.currentPlayerID = JPServer.playerToSpoof.getID();
-                    /*  453 */
-                    JPServer.inputLine.setFont( JPServer.spoofFont );
-                } else {
-                    /*  456 */
-                    JPServer.currentPlayerID = "00";
-                    /*  457 */
-                    JPServer.inputLine.setFont( JPServer.normalFont );
-                }
-                /*  459 */
-                JPServer.inputLine.requestFocus();
+        /*  461 */
+        spoofCheckBox.addActionListener(paramAnonymousActionEvent -> {
+            /*  451 */
+            if ( JPServer.spoofCheckBox.isSelected() ) {
+                /*  452 */
+                JPServer.currentPlayerID = JPServer.playerToSpoof.getID();
+                /*  453 */
+                JPServer.inputLine.setFont( JPServer.spoofFont );
+            } else {
+                /*  456 */
+                JPServer.currentPlayerID = "00";
+                /*  457 */
+                JPServer.inputLine.setFont( JPServer.normalFont );
             }
-            /*  461 */
-        } );
+            /*  459 */
+            JPServer.inputLine.requestFocus();
+        });
         /*  462 */
         spoofPanel = new JPanel();
         /*  463 */
@@ -576,28 +572,23 @@ public class JPServer extends JParanoia {
         /*  475 */
         freezeButton = new JButton( "Freeze" );
         /*  476 */
-        freezeButton.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  478 */
-                if ( !JPServer.frozen ) {
-                    /*  479 */
-                    JPServer.freezePlayers();
-                } else {
-                    /*  482 */
-                    JPServer.unfreezePlayers();
-                }
+        /*  486 */
+        freezeButton.addActionListener(paramAnonymousActionEvent -> {
+            /*  478 */
+            if ( !JPServer.frozen ) {
+                /*  479 */
+                JPServer.freezePlayers();
+            } else {
+                /*  482 */
+                JPServer.unfreezePlayers();
             }
-            /*  486 */
-        } );
+        });
         /*  487 */
         combatButton = new JButton( "Combat!" );
         /*  488 */
-        combatButton.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-            }
-
-            /*  492 */
-        } );
+        /*  492 */
+        combatButton.addActionListener(paramAnonymousActionEvent -> {
+        });
         /*  493 */
         combatButton.setEnabled( false );
 
@@ -656,11 +647,8 @@ public class JPServer extends JParanoia {
 
 
         /*  531 */
-        startServerMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-            }
-            /*  534 */
-        } );
+        /*  534 */
+        startServerMenuItem.addActionListener(paramAnonymousActionEvent -> startServer());
         /*  535 */
         stopServerMenuItem = new JMenuItem( "Stop server" );
         /*  536 */
@@ -668,11 +656,8 @@ public class JPServer extends JParanoia {
 
 
         /*  539 */
-        stopServerMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-            }
-            /*  542 */
-        } );
+        /*  542 */
+        stopServerMenuItem.addActionListener(paramAnonymousActionEvent -> stopServer());
         /*  543 */
         registerGameMenuItem = new JCheckBoxMenuItem( "Register Game" );
         /*  544 */
@@ -684,33 +669,31 @@ public class JPServer extends JParanoia {
         /*  549 */
         registerGameMenuItem.setSelected( prefs.getPref( 31 ).equals( new Boolean( true ) ) );
         /*  550 */
-        registerGameMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  552 */
-                if ( JPServer.registerGame ) {
-                    /*  554 */
-                    JPServer.registerGame = false;
-                    /*  555 */
-                    if ( JPServer.gameRegistered ) {
-                        jparanoia.shared.GameRegistrar.removeGame();
+        /*  569 */
+        registerGameMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  552 */
+            if ( JPServer.registerGame ) {
+                /*  554 */
+                JPServer.registerGame = false;
+                /*  555 */
+                if ( JPServer.gameRegistered ) {
+                    jparanoia.shared.GameRegistrar.removeGame();
+                }
+            } else {
+                /*  560 */
+                JPServer.registerGame = true;
+                /*  561 */
+                if ( JPServer.serverRunning ) {
+                    /*  563 */
+                    if ( JPServer.gameDescription.equals( JPServer.defaultGameDescription ) )
+                        /*  564 */ {
+                        JPServer.setGameDescriptionMenuItem.doClick();
                     }
-                } else {
-                    /*  560 */
-                    JPServer.registerGame = true;
-                    /*  561 */
-                    if ( JPServer.serverRunning ) {
-                        /*  563 */
-                        if ( JPServer.gameDescription.equals( JPServer.defaultGameDescription ) )
-                            /*  564 */ {
-                            JPServer.setGameDescriptionMenuItem.doClick();
-                        }
-                        /*  565 */
-                        jparanoia.shared.GameRegistrar.addGame( JPServer.gameDescription );
-                    }
+                    /*  565 */
+                    jparanoia.shared.GameRegistrar.addGame( JPServer.gameDescription );
                 }
             }
-            /*  569 */
-        } );
+        });
         /*  570 */
         setGameDescriptionMenuItem = new JMenuItem( "Set Game Description..." );
         /*  571 */
@@ -719,24 +702,22 @@ public class JPServer extends JParanoia {
 
 
         /*  575 */
-        setGameDescriptionMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  577 */
-                String str = (String) javax.swing.JOptionPane.showInputDialog( null, "Enter a description for your game:", "Set Game Description...", -1, null, null, JPServer.gameDescription );
+        /*  587 */
+        setGameDescriptionMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  577 */
+            String str = (String) javax.swing.JOptionPane.showInputDialog( null, "Enter a description for your game:", "Set Game Description...", -1, null, null, JPServer.gameDescription );
 
 
-                /*  580 */
-                if ( str != null && !str.equals( "" ) && !str.equals( JPServer.gameDescription ) ) {
-                    /*  582 */
-                    JPServer.gameDescription = str;
-                    /*  583 */
-                    if ( JPServer.gameRegistered ) {
-                        jparanoia.shared.GameRegistrar.addGame( JPServer.gameDescription );
-                    }
+            /*  580 */
+            if ( str != null && !str.equals( "" ) && !str.equals( JPServer.gameDescription ) ) {
+                /*  582 */
+                JPServer.gameDescription = str;
+                /*  583 */
+                if ( JPServer.gameRegistered ) {
+                    jparanoia.shared.GameRegistrar.addGame( JPServer.gameDescription );
                 }
             }
-            /*  587 */
-        } );
+        });
         /*  588 */
         serverMenu.add( startServerMenuItem );
         /*  589 */
@@ -815,13 +796,11 @@ public class JPServer extends JParanoia {
         /*  640 */
         sendGlobalPMMenuItem = new JMenuItem( "Send Global PM..." );
         /*  641 */
-        sendGlobalPMMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  643 */
-                new GlobalPMDialog().setVisible( true );
-            }
-            /*  645 */
-        } );
+        /*  645 */
+        sendGlobalPMMenuItem.addActionListener(paramAnonymousActionEvent -> {
+            /*  643 */
+            new GlobalPMDialog().setVisible( true );
+        });
         /*  646 */
         globalPMMenu.add( sendGlobalPMMenuItem );
 
@@ -842,31 +821,22 @@ public class JPServer extends JParanoia {
         /*  657 */
         hearObserversMenuItem.setSelected( ( (Boolean) prefs.getPref( 29 ) ).booleanValue() );
         /*  658 */
-        hearObserversMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-            }
-            /*  661 */
-        } );
+        /*  661 */
+        hearObserversMenuItem.addActionListener(paramAnonymousActionEvent -> {
+        });
         /*  662 */
         announceObserversMenuItem = new JCheckBoxMenuItem( "Announce Observers" );
         /*  663 */
         announceObserversMenuItem.setSelected( ( (Boolean) prefs.getPref( 30 ) ).booleanValue() );
         /*  664 */
-        announceObserversMenuItem.addActionListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-            }
-            /*  667 */
-        } );
+        /*  667 */
+        announceObserversMenuItem.addActionListener(paramAnonymousActionEvent -> {
+        });
         /*  668 */
         showObserversListMenuItem = new JMenuItem( "Show Observers List" );
         /*  669 */
-        showObserversListMenuItem.addActionListener( new ActionListener() {
-            /*  671 */
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                JParanoia.obsFrame.setVisible( true );
-            }
-            /*  672 */
-        } );
+        /*  671 *//*  672 */
+        showObserversListMenuItem.addActionListener(paramAnonymousActionEvent -> JParanoia.obsFrame.setVisible( true ));
         /*  673 */
         observersMenu.add( hearObserversMenuItem );
         /*  674 */
@@ -1105,20 +1075,15 @@ public class JPServer extends JParanoia {
 
 
         /*  837 */
-        net.roydesign.mac.MRJAdapter.addQuitApplicationListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-            }
-
-            /*  841 */
-        } );
+        /*  841 */
+//        net.roydesign.mac.MRJAdapter.addQuitApplicationListener(paramAnonymousActionEvent -> {
+//        });
         /*  842 */
-        net.roydesign.mac.MRJAdapter.addAboutListener( new ActionListener() {
-            public void actionPerformed( ActionEvent paramAnonymousActionEvent ) {
-                /*  844 */
-                JParanoia.aboutBoxMenuItem.doClick();
-            }
-            /*  846 */
-        } );
+        /*  846 */
+//        net.roydesign.mac.MRJAdapter.addAboutListener(paramAnonymousActionEvent -> {
+//            /*  844 */
+//            JParanoia.aboutBoxMenuItem.doClick();
+//        });
         /*  847 */
         mainFontSize = (Integer) textAttributes.getAttribute( javax.swing.text.StyleConstants.FontConstants.Size );
 

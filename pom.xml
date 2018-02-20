@@ -8,14 +8,14 @@
     <artifactId>JParanoiaRPG</artifactId>
     <version>1.0-SNAPSHOT</version>
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>com.apple</groupId>-->
-            <!--<artifactId>AppleJavaExtensions</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>mrj</groupId>-->
-            <!--<artifactId>MRJToolkitStubs</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.github.dheid</groupId>
             <artifactId>mrjadapter</artifactId>
