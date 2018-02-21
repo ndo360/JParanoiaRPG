@@ -1,41 +1,20 @@
-
 package jparanoia.shared;
-
-
-import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 
+public class JPGameInfo {
+    public String ipAddress;
+    public String description;
+    public JButton connectButton;
 
-
-
- public class JPGameInfo
-         {
-       public String ipAddress;
-       public String description;
-       public JButton connectButton;
-
-
-
-    public JPGameInfo( String paramString1, String paramString2 )
-     {
-
+    public JPGameInfo( String paramString1, String paramString2 ) {
         this.ipAddress = paramString1;
-
         this.description = paramString2;
-
         this.connectButton = new JButton( "Join" );
-
-
-        this.connectButton.addActionListener(paramAnonymousActionEvent -> {
-
+        this.connectButton.addActionListener( paramAnonymousActionEvent -> {
             jparanoia.client.JPClient.connect( JPGameInfo.this.ipAddress, true, JPGameInfo.this.description );
-
             jparanoia.client.ConnectManager.frame.setVisible( false );
-
-        });
-
+        } );
     }
-
 }
 
 

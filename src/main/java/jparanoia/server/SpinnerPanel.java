@@ -1,44 +1,21 @@
-
 package jparanoia.server;
-
-
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+public class SpinnerPanel extends JPanel {
+    Spinner gppSpinner = new Spinner( "PPs" );
+    Spinner powerSpinner = new Spinner( "Pow" );
+    Spinner accessSpinner = new Spinner( "Acc" );
 
-
-
-
- public class SpinnerPanel extends JPanel
-         {
-     Spinner gppSpinner = new Spinner( "PPs" );
-     Spinner powerSpinner = new Spinner( "Pow" );
-     Spinner accessSpinner = new Spinner( "Acc" );
-
-
-
-
-
-    public SpinnerPanel()
-     {
-
+    public SpinnerPanel() {
         setLayout( new BoxLayout( this, 1 ) );
-
-
         setPreferredSize( new Dimension( 85, 70 ) );
-
         setMinimumSize( new Dimension( 85, 70 ) );
-
-
         add( this.gppSpinner );
-
         add( this.powerSpinner );
-
         add( this.accessSpinner );
-
     }
-
 }
 
 

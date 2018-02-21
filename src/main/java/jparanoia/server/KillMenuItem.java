@@ -1,25 +1,12 @@
-
 package jparanoia.server;
-
- public class KillMenuItem extends PlayerMenuItem
-         {
-
-    public KillMenuItem( ServerPlayer paramServerPlayer )
-     {
-
+public class KillMenuItem extends PlayerMenuItem {
+    public KillMenuItem( ServerPlayer paramServerPlayer ) {
         super( paramServerPlayer, "Kill" );
-
     }
 
-
-
-    protected void action()
-     {
-
+    protected void action() {
         this.somePlayer.kill();
-
     }
-
 }
 
 

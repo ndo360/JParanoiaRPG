@@ -1,26 +1,12 @@
-
 package jparanoia.server;
-
- public class NPCRenameMenuItem
-         extends PlayerMenuItem
-         {
-
-    public NPCRenameMenuItem( ServerPlayer paramServerPlayer )
-     {
-
+public class NPCRenameMenuItem extends PlayerMenuItem {
+    public NPCRenameMenuItem( ServerPlayer paramServerPlayer ) {
         super( paramServerPlayer, "Rename" );
-
     }
 
-
-
-    protected void action()
-     {
-
+    protected void action() {
         this.somePlayer.npcRename();
-
     }
-
 }
 
 

@@ -1,51 +1,23 @@
-
 package jparanoia.server;
-
-
-import java.awt.event.ActionEvent;
 import javax.swing.JMenuItem;
 
+public abstract class PlayerMenuItem extends JMenuItem {
+    ServerPlayer somePlayer;
 
-
-
- public abstract class PlayerMenuItem extends JMenuItem
-         {
-     ServerPlayer somePlayer;
-
-
-
-    public PlayerMenuItem()
-     {
-
+    public PlayerMenuItem() {
         System.out.println( "Error: invalid use of PlayerMenuItem constructor; must provide ServerPlayer object" );
-
     }
 
-
-
-    public PlayerMenuItem( ServerPlayer paramServerPlayer, String paramString )
-     {
-
+    public PlayerMenuItem( ServerPlayer paramServerPlayer, String paramString ) {
         super( paramString );
-
-
-
         this.somePlayer = paramServerPlayer;
-
-
-        addActionListener(paramAnonymousActionEvent -> {
-
+        addActionListener( paramAnonymousActionEvent -> {
             PlayerMenuItem.this.action();
-
-        });
-
+        } );
     }
-
-
 
     protected void action() {
     }
-
 }
 
 

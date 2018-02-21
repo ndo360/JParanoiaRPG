@@ -1,25 +1,12 @@
-
 package jparanoia.server;
-
- public class RenamePlayerMenuItem extends PlayerMenuItem
-         {
-
-    public RenamePlayerMenuItem( ServerPlayer paramServerPlayer )
-     {
-
+public class RenamePlayerMenuItem extends PlayerMenuItem {
+    public RenamePlayerMenuItem( ServerPlayer paramServerPlayer ) {
         super( paramServerPlayer, "New family..." );
-
     }
 
-
-
-    protected void action()
-     {
-
+    protected void action() {
         this.somePlayer.rename();
-
     }
-
 }
 
 

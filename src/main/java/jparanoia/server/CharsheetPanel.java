@@ -1,7 +1,5 @@
 package jparanoia.server;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -28,112 +26,45 @@ public class CharsheetPanel extends JPanel {
     javax.swing.text.DefaultStyledDocument theFile;
 
     public CharsheetPanel() {
-
         setLayout( new BoxLayout( this, 1 ) );
-
-
         this.displayArea = new JTextPane();
-
-
         this.displayArea.setCharacterAttributes( JPServer.charsheetAttributes, true );
-
-
         this.displayArea.setEditable( true );
-
         this.displayArea.setEnabled( true );
-
-
-
-
         this.scrollPane = new javax.swing.JScrollPane( this.displayArea, 22, 31 );
-
-
-
         this.saveButton = new JButton( "Save / Send" );
-
         this.saveButton.setMaximumSize( new Dimension( 65, 22 ) );
-
-
-        this.saveButton.addActionListener(paramAnonymousActionEvent -> {
-
+        this.saveButton.addActionListener( paramAnonymousActionEvent -> {
             CharsheetPanel.this.selectedPlayer.saveCharsheet( CharsheetPanel.this.selectedPlayer.isLoggedIn() );
-        });
-
+        } );
         this.playerComboBox = new JComboBox( JPServer.troubleshooters );
-
-
-        this.playerComboBox.addActionListener(paramAnonymousActionEvent -> {
-
+        this.playerComboBox.addActionListener( paramAnonymousActionEvent -> {
             CharsheetPanel.this.selectedPlayer = (ServerPlayer) CharsheetPanel.this.playerComboBox.getSelectedItem();
-
-
             CharsheetPanel.this.theFile = CharsheetPanel.this.selectedPlayer.getCharsheet();
-
             CharsheetPanel.this.displayArea.setDocument( CharsheetPanel.this.theFile );
-        });
-
+        } );
         this.selectedPlayer = (ServerPlayer) this.playerComboBox.getSelectedItem();
-
-
         this.theFile = this.selectedPlayer.getCharsheet();
-
-
         this.displayArea.setDocument( this.theFile );
-
-
         this.dicePanel = new DicePanel();
-
-
         this.playerPanel = new JPanel();
-
-
         this.playerPanel.setLayout( new BoxLayout( this.playerPanel, 0 ) );
-
-
         this.playerPanel.setMaximumSize( new Dimension( 100, 15 ) );
-
-
         this.playerPanel.add( Box.createRigidArea( new Dimension( 5, 0 ) ) );
-
         this.playerPanel.add( this.playerComboBox );
-
         this.playerPanel.add( Box.createRigidArea( new Dimension( 5, 0 ) ) );
-
         this.playerPanel.add( this.saveButton );
-
-
         this.playerAndDicePanel = new JPanel();
-
         this.playerAndDicePanel.setLayout( new java.awt.BorderLayout() );
-
-
         this.playerAndDicePanel.add( this.playerPanel, "West" );
-
         this.playerAndDicePanel.add( this.dicePanel, "East" );
-
-
         this.playerAndDicePanel.setMaximumSize( new Dimension( 1500, 20 ) );
-
         this.playerAndDicePanel.setMinimumSize( new Dimension( 200, 20 ) );
-
         this.playerAndDicePanel.setPreferredSize( new Dimension( 1500, 20 ) );
-
-
-
-
-
         add( Box.createRigidArea( new Dimension( 0, 5 ) ) );
-
         add( this.playerAndDicePanel );
-
         add( Box.createRigidArea( new Dimension( 0, 5 ) ) );
-
         add( this.scrollPane );
-
-
-
-
-
         setPreferredSize( new Dimension( 9200, 9200 ) );
     }
 }

@@ -7,22 +7,12 @@ class CombatButton extends JButton {
     ServerPlayer player;
 
     public CombatButton( ServerPlayer paramServerPlayer ) {
-
         super( paramServerPlayer.toString() );
-
-
         this.player = paramServerPlayer;
-
-
-
         setText( this.player.getName() );
-
         setPreferredSize( new Dimension( 110, 24 ) );
-
         setMinimumSize( new Dimension( 110, 24 ) );
-
         setMaximumSize( new Dimension( 110, 24 ) );
-
         setMargin( new Insets( 2, 2, 2, 2 ) );
     }
 }

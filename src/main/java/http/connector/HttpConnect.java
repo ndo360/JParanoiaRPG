@@ -16,119 +16,32 @@ public class HttpConnect {
 
     public static void main( String[] paramArrayOfString ) {
         try {
-
             connecto = (HttpURLConnection) new URL( "http://127.0.0.1/formyform.html" ).openConnection();
-
             connecto.setDoOutput( true );
         } catch ( Exception localException ) {
-
-
             System.out.println( "Aww, exception." );
-
             localException.printStackTrace();
         }
-
-
-
         doStuff();
     }
 
     public static void doStuff() {
         try {
-
             String str = "description=foop";
-
-
-
             System.out.println( "Connected. Sending request..." );
-
-
-
-
-
             method = 4;
-
-
             switch ( method ) {
                 case 4:
-
                     connecto.setRequestMethod( "POST" );
-
-
                     PrintWriter localObject = new PrintWriter( connecto.getOutputStream(), true );
-
-
-
-
-
-
                     localObject.println( str );
-
                     localObject.close();
-
-
                     slt = new StreamListenerThread( connecto.getInputStream() );
-
                     slt.start();
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             System.out.println( "Request sent. Waiting for reply..." );
-
-
-
-
-
-
-
-
-
-
             Object localObject = "";
         } catch ( Exception localException ) {
-
-
-
-
-
-
             localException.printStackTrace();
         }
     }

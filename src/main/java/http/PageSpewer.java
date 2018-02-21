@@ -1,7 +1,4 @@
-
 package http;
-
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,47 +7,26 @@ import java.io.PrintWriter;
 import java.lang.invoke.MethodHandles;
 import java.util.Objects;
 
+public class PageSpewer {
+    static java.io.BufferedReader reader;
+    static String line = "";
 
- public class PageSpewer
-         {
-       static java.io.BufferedReader reader;
-       static String line = "";
-
-
-
-
-    public static void spewPage( String paramString, PrintWriter paramPrintWriter )
-     {
-
-        try
-             {
-
+    public static void spewPage( String paramString, PrintWriter paramPrintWriter ) {
+        try {
             final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
             final File file = new File( Objects.requireNonNull( classLoader.getResource( paramString ) ).getFile() );
-            reader = new BufferedReader( new InputStreamReader(new FileInputStream( file )) );
-
-
-            while ( line != null )
-                 {
-
+            reader = new BufferedReader( new InputStreamReader( new FileInputStream( file ) ) );
+            while ( line != null ) {
                 line = reader.readLine();
-
-
                 if ( line != null ) {
                     paramPrintWriter.println( line );
                 }
-
             }
-
         } catch ( Exception localException ) {
-
             localException.printStackTrace();
             System.exit( -1 );
-
         }
-
     }
-
 }
 
 

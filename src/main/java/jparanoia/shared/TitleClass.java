@@ -1,73 +1,37 @@
-
 package jparanoia.shared;
+public class TitleClass {
+    String name = "";
+    String versionString = "";
+    String playerName = "";
+    String extraTitle = "";
+    boolean isClientTitle = true;
 
- public class TitleClass
-         {
-     String name = "";
-     String versionString = "";
-     String playerName = "";
-     String extraTitle = "";
-
-     boolean isClientTitle = true;
-
-
-
-    public TitleClass( String paramString1, String paramString2, boolean paramBoolean )
-     {
-
+    public TitleClass( String paramString1, String paramString2, boolean paramBoolean ) {
         this.name = paramString1;
-
         this.versionString = paramString2;
-
         this.isClientTitle = paramBoolean;
-
     }
 
-
-
-    public void setExtra( String paramString )
-     {
-
+    public void setExtra( String paramString ) {
         this.extraTitle = paramString;
-
     }
 
-
-
-    public void setPlayerName( String paramString )
-     {
-
+    public void setPlayerName( String paramString ) {
         this.playerName = paramString;
-
     }
 
-
-
-    public void clearExtra()
-     {
-
+    public void clearExtra() {
         this.extraTitle = "";
-
     }
 
-
-
-    public String get()
-     {
-
+    public String get() {
         String str1 = this.playerName.length() > 0 ? " -- " : "";
-
         String str2 = this.extraTitle.length() > 0 ? "   " : "";
-
-
         if ( this.isClientTitle ) {
             return this.name + " " + this.versionString + str1 + this.playerName + str2 + this.extraTitle;
         }
-
         return this.name + " " + this.versionString + str2 + this.extraTitle;
-
     }
-
 }
 
 

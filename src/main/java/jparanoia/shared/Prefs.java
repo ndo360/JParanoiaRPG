@@ -44,96 +44,59 @@ public class Prefs {
     public static final int GM_NAME_NAG = 35;
     public static final int SINGLE_USE_SPOOF = 36;
     public static final int USE_ANNOUNCEMENT = 37;
-     String[][] prefStrings = new String[40][2];
-     Object[] prefsArray = new Object[40];
+    String[][] prefStrings = new String[40][2];
+    Object[] prefsArray = new Object[40];
 
     public Prefs() {
-
         parsePrefs( "jpConfig.ini" );
-    }
-
-    public Object getPref( int paramInt ) {
-
-        return this.prefsArray[paramInt];
-    }
-
-    public void setPref( int paramInt, Object paramObject ) {
-
-        this.prefsArray[paramInt] = paramObject;
     }
 
     public void parsePrefs( String paramString ) {
         try {
-
             final Class cl = MethodHandles.lookup().lookupClass();
-            BufferedReader localBufferedReader =
-                    new BufferedReader( new InputStreamReader(cl.getResourceAsStream( "/"+paramString )) );
-
+            BufferedReader localBufferedReader = new BufferedReader( new InputStreamReader( cl.getResourceAsStream( "/" +
+                    paramString ) ) );
             String str1 = localBufferedReader.readLine();
-
             int i = 0;
-
-
             String str2 = "uninitialized";
-
             String str3 = "uninitialized";
-
-
-
-
             while ( str1 != null ) {
-
-
                 if ( !str1.startsWith( "#" ) ) {
-
-
                     StringTokenizer localStringTokenizer = new StringTokenizer( str1, "=" );
-
-
                     while ( localStringTokenizer.hasMoreTokens() ) {
-
                         String str4 = "";
-
-
                         str2 = localStringTokenizer.nextToken();
-
                         str3 = localStringTokenizer.nextToken();
-
-
                         if ( str2.startsWith( "b" ) ) {
                             this.prefsArray[i] = new Boolean( str3.equals( "true" ) );
                             str4 = "BOOLEAN";
-
                         } else if ( str2.startsWith( "i" ) ) {
                             this.prefsArray[i] = new Integer( Integer.parseInt( str3 ) );
                             str4 = "INTEGER";
-
                         } else if ( str2.startsWith( "s" ) ) {
                             this.prefsArray[i] = str3;
                             str4 = "STRING";
                         }
-
                         this.prefStrings[i][0] = str2;
-
                         this.prefStrings[i][1] = str3;
-
-
-
-
                         i++;
                     }
                 }
-
                 str1 = localBufferedReader.readLine();
             }
         } catch ( IOException localIOException ) {
-
             System.out.println( "* Error reading jpConfig.ini" );
-
             localIOException.printStackTrace();
-
             System.exit( -1 );
         }
+    }
+
+    public Object getPref( int paramInt ) {
+        return this.prefsArray[paramInt];
+    }
+
+    public void setPref( int paramInt, Object paramObject ) {
+        this.prefsArray[paramInt] = paramObject;
     }
 }
 

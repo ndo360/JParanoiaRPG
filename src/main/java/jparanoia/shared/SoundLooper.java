@@ -7,42 +7,24 @@ class SoundLooper extends Thread {
     AudioInputStream audioStream;
 
     public SoundLooper( Clip paramClip, AudioInputStream paramAudioInputStream ) {
-
         this.currentClip = paramClip;
-
         this.audioStream = paramAudioInputStream;
     }
 
     public void run() {
-
         this.currentClip.loop( -1 );
-
-
-
-
         while ( this.currentClip.isRunning() && !SoundManager.stopLoop ) {
             try {
-
                 sleep( 30L );
-
                 if ( SoundManager.stopLoop == true ) {
-
                     this.currentClip.stop();
-
                     this.currentClip.flush();
                 }
             } catch ( Exception localException ) {
-
                 localException.printStackTrace();
             }
         }
-
-
-
-
         this.currentClip.setFramePosition( 0 );
-
-
         SoundManager.stopLoop( false );
     }
 }

@@ -1,40 +1,18 @@
-
 package jparanoia.server;
-
-
-import java.awt.event.ActionEvent;
 import javax.swing.JMenuItem;
 import jparanoia.shared.JPImage;
 
+public class SendImageMenuItem extends JMenuItem {
+    JPImage imageItem;
 
-
-
-
- public class SendImageMenuItem extends JMenuItem
-         {
-     JPImage imageItem;
-
-
-
-    public SendImageMenuItem( JPImage paramJPImage )
-     {
-
+    public SendImageMenuItem( JPImage paramJPImage ) {
         super( paramJPImage.getName() );
-
         this.imageItem = paramJPImage;
-
-
-        addActionListener(paramAnonymousActionEvent -> {
-
+        addActionListener( paramAnonymousActionEvent -> {
             JPServer.spamString( "404" + SendImageMenuItem.this.getImageInfo() );
-
             jparanoia.shared.JParanoia.displayImage( SendImageMenuItem.this.getImageInfo() );
-
-            if ( JPServer.keepLog )
-                 {
-
+            if ( JPServer.keepLog ) {
                 String str;
-
                 if ( JPServer.htmlLog ) {
                     str = "IMAGE: \"" +
                             SendImageMenuItem.this.imageItem.getName() +
@@ -45,30 +23,20 @@ import jparanoia.shared.JPImage;
                             "</a><br/>\n<img src=\"" +
                             SendImageMenuItem.this.imageItem.getURL() +
                             "\"><br/>";
-                } else
-                     {
+                } else {
                     str = "IMAGE: \"" +
                             SendImageMenuItem.this.imageItem.getName() +
                             "\" URL: " +
                             SendImageMenuItem.this.imageItem.getURL();
                 }
-
                 JPServer.logger.logEntry( str );
-
             }
-
-        });
-
+        } );
     }
-
-
 
     public String getImageInfo() {
-
         return this.imageItem.getName() + this.imageItem.getURL();
-
     }
-
 }
 
 

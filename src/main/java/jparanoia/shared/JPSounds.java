@@ -1,7 +1,5 @@
 package jparanoia.shared;
-import java.io.File;
 import static java.lang.invoke.MethodHandles.lookup;
-import java.util.Objects;
 
 public class JPSounds {
     public static final int STARTUP = 0;
@@ -29,16 +27,12 @@ public class JPSounds {
     public static final int COMBAT_ALERT = 21;
     public static final int COMBAT_MUSIC = 22;
     SoundManager manager;
-     int deathCounter = 0;
-    ClassLoader loader = lookup().lookupClass()
-            .getClassLoader();
+    int deathCounter = 0;
+    ClassLoader loader = lookup().lookupClass().getClassLoader();
 
     public JPSounds() {
-
         System.out.println( "JPSoundPlayer started\n\n" );
-
         String[] arrayOfFile = new String[23];
-
         arrayOfFile[0] = ( "sounds/programLaunch.wav" );
         arrayOfFile[1] = ( "sounds/connected.wav" );
         arrayOfFile[2] = ( "sounds/disconnected.wav" );
@@ -49,56 +43,45 @@ public class JPSounds {
         arrayOfFile[7] = ( "sounds/newText.wav" );
         arrayOfFile[8] = ( "sounds/muted.wav" );
         arrayOfFile[9] = ( "sounds/unmuted.wav" );
-        arrayOfFile[10] =( "sounds/freeze.wav" );
-        arrayOfFile[11] =( "sounds/unfreeze.wav" );
-        arrayOfFile[12] =( "sounds/promoted.wav" );
-        arrayOfFile[13] =( "sounds/demoted.wav" );
-        arrayOfFile[14] =( "sounds/scream0.wav" );
-        arrayOfFile[15] =( "sounds/scream1.wav" );
-        arrayOfFile[16] =( "sounds/scream2.wav" );
-        arrayOfFile[17] =( "sounds/scream3.wav" );
-        arrayOfFile[18] =( "sounds/scream4.wav" );
-        arrayOfFile[19] =( "sounds/newPrivateMessage.wav" );
-        arrayOfFile[20] =( "sounds/charsheetUpdate.wav" );
-        arrayOfFile[21] =( "sounds/combatAlert.wav" );
-        arrayOfFile[22] =( "sounds/combatMusic.wav" );
-
-
+        arrayOfFile[10] = ( "sounds/freeze.wav" );
+        arrayOfFile[11] = ( "sounds/unfreeze.wav" );
+        arrayOfFile[12] = ( "sounds/promoted.wav" );
+        arrayOfFile[13] = ( "sounds/demoted.wav" );
+        arrayOfFile[14] = ( "sounds/scream0.wav" );
+        arrayOfFile[15] = ( "sounds/scream1.wav" );
+        arrayOfFile[16] = ( "sounds/scream2.wav" );
+        arrayOfFile[17] = ( "sounds/scream3.wav" );
+        arrayOfFile[18] = ( "sounds/scream4.wav" );
+        arrayOfFile[19] = ( "sounds/newPrivateMessage.wav" );
+        arrayOfFile[20] = ( "sounds/charsheetUpdate.wav" );
+        arrayOfFile[21] = ( "sounds/combatAlert.wav" );
+        arrayOfFile[22] = ( "sounds/combatMusic.wav" );
         this.manager = new SoundManager( arrayOfFile );
     }
-
 //    private File getFile( final String filename ) {
 //        return new File( Objects.requireNonNull( loader.getResource( filename ) ).getFile());
 //    }
 
     public void play( int paramInt ) {
-
         if ( paramInt == 14 ) {
-
-            if ( this.deathCounter > 4 )
-                 {
+            if ( this.deathCounter > 4 ) {
                 this.deathCounter = 0;
             }
-
             this.manager.play( 14 + this.deathCounter++ );
         } else {
-
             this.manager.play( paramInt );
         }
     }
 
     public void startCombatMusic() {
-
         this.manager.loopPlay( 22 );
     }
 
     public void stopCombatMusic() {
-
         SoundManager.stopLoop( true );
     }
 
     public void close() {
-
         this.manager.terminate();
     }
 }

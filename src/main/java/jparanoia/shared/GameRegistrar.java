@@ -1,7 +1,6 @@
 package jparanoia.shared;
-
 public class GameRegistrar {
-       public static String formattedDesc = "";
+    public static String formattedDesc = "";
 
     public static JPGameInfo[] getGames() {
         return null;
@@ -76,7 +75,7 @@ public class GameRegistrar {
     }
 
     public static void addGame( String paramString ) {
-        System.out.println("Not adding game to the list as paranoia-live is obviously dead");
+        System.out.println( "Not adding game to the list as paranoia-live is obviously dead" );
 //        return;
 //
 //

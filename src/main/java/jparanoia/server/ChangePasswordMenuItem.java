@@ -1,25 +1,12 @@
-
 package jparanoia.server;
-
- public class ChangePasswordMenuItem extends PlayerMenuItem
-         {
-
-    public ChangePasswordMenuItem( ServerPlayer paramServerPlayer )
-     {
-
+public class ChangePasswordMenuItem extends PlayerMenuItem {
+    public ChangePasswordMenuItem( ServerPlayer paramServerPlayer ) {
         super( paramServerPlayer, "New Password..." );
-
     }
 
-
-
-    protected void action()
-     {
-
+    protected void action() {
         this.somePlayer.changePassword();
-
     }
-
 }
 
 

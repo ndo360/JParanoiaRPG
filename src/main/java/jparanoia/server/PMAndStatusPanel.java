@@ -1,53 +1,20 @@
-
 package jparanoia.server;
-
-
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-
-
-
-
-
-
-
-
-
- public class PMAndStatusPanel
-         extends JPanel
-         {
-
-    public PMAndStatusPanel( PrivateMessagePane paramPrivateMessagePane, StatusPanel paramStatusPanel )
-     {
-
+public class PMAndStatusPanel extends JPanel {
+    public PMAndStatusPanel( PrivateMessagePane paramPrivateMessagePane, StatusPanel paramStatusPanel ) {
         setLayout( new BoxLayout( this, 0 ) );
-
-
         paramStatusPanel.setPreferredSize( new Dimension( 35, 70 ) );
-
         paramStatusPanel.setMinimumSize( new Dimension( 35, 70 ) );
-
-
-
-        if ( JPServer.isPXPGame )
-             {
-
+        if ( JPServer.isPXPGame ) {
             SpinnerPanel localSpinnerPanel = new SpinnerPanel();
-
-
-
             add( localSpinnerPanel );
-
         }
-
         add( paramStatusPanel );
-
         add( paramPrivateMessagePane );
-
     }
-
 }
 
 

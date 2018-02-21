@@ -7,31 +7,20 @@ class SoundPlayer extends Thread {
     AudioInputStream audioStream;
 
     public SoundPlayer( Clip paramClip, AudioInputStream paramAudioInputStream ) {
-
         this.currentClip = paramClip;
-
         this.audioStream = paramAudioInputStream;
     }
 
     public void run() {
-
         this.currentClip.start();
-
-
-
-
         while ( this.currentClip.isRunning() ) {
             try {
-
                 sleep( 99L );
             } catch ( Exception localException ) {
-
                 localException.printStackTrace();
             }
         }
-
         this.currentClip.drain();
-
         this.currentClip.stop();
     }
 }
