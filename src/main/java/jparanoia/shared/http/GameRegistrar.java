@@ -1,86 +1,86 @@
-/*    */
+
 package jparanoia.shared.http;
-/*    */
-/*    */
+
+
 import http.HttpPoster;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URL;
 
-/*    */
-/*    */
 
-/*    */
-/*    */ public class GameRegistrar
-        /*    */ {
-    /*    */   public static final String REGISTRY_URL_STRING = "http://www.byronbarry.com/jparanoia/game_registrar.html";
-    /* 10 */   public static String formattedDesc = "";
 
-    /*    */
-    /*    */
+
+
+ public class GameRegistrar
+         {
+       public static final String REGISTRY_URL_STRING = "http://www.byronbarry.com/jparanoia/game_registrar.html";
+       public static String formattedDesc = "";
+
+
+
     public static void addGame( String paramString )
-    /*    */ {
-        /* 14 */
+     {
+
         formattedDesc = paramString.replace( ' ', '+' );
-        /*    */
-        /*    */
-        /*    */
+
+
+
         try
-            /*    */ {
-            /* 19 */
+             {
+
             BufferedReader localBufferedReader = HttpPoster.postToURL( new URL( "http://www.byronbarry.com/jparanoia/game_registrar.html" ),
                     "description=" +
                             formattedDesc );
-            /*    */
-            /*    */
+
+
             String str;
-            /*    */
-            /* 23 */
+
+
             while ( ( str = localBufferedReader.readLine() ) != null )
-                /* 24 */ {
+                 {
                 System.out.println( str );
             }
-            /* 25 */
+
             localBufferedReader.close();
-            /*    */
+
         } catch ( IOException localIOException ) {
-            /* 27 */
+
             localIOException.printStackTrace();
-            /*    */
+
         }
-        /*    */
+
     }
 
-    /*    */
-    /*    */
+
+
     public static void removeGame()
-    /*    */ {
-        /*    */
+     {
+
         try
-            /*    */ {
-            /* 35 */
+             {
+
             BufferedReader localBufferedReader = HttpPoster.postToURL( new URL( "http://www.byronbarry" +
                     ".com/jparanoia/game_registrar.html" ), "erase=1" );
-            /*    */
-            /*    */
+
+
             String str;
-            /*    */
-            /* 39 */
+
+
             while ( ( str = localBufferedReader.readLine() ) != null )
-                /* 40 */ {
+                 {
                 System.out.println( str );
             }
-            /* 41 */
+
             localBufferedReader.close();
-            /*    */
+
         } catch ( IOException localIOException ) {
-            /* 43 */
+
             localIOException.printStackTrace();
-            /*    */
+
         }
-        /*    */
+
     }
-    /*    */
+
 }
 
 

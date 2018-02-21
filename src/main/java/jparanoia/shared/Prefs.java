@@ -44,94 +44,94 @@ public class Prefs {
     public static final int GM_NAME_NAG = 35;
     public static final int SINGLE_USE_SPOOF = 36;
     public static final int USE_ANNOUNCEMENT = 37;
-    /*  57 */ String[][] prefStrings = new String[40][2];
-    /*  58 */ Object[] prefsArray = new Object[40];
+     String[][] prefStrings = new String[40][2];
+     Object[] prefsArray = new Object[40];
 
     public Prefs() {
-        /*  64 */
+
         parsePrefs( "jpConfig.ini" );
     }
 
     public Object getPref( int paramInt ) {
-        /*  69 */
+
         return this.prefsArray[paramInt];
     }
 
     public void setPref( int paramInt, Object paramObject ) {
-        /*  74 */
+
         this.prefsArray[paramInt] = paramObject;
     }
 
     public void parsePrefs( String paramString ) {
         try {
-            /*  86 */
+
             final Class cl = MethodHandles.lookup().lookupClass();
             BufferedReader localBufferedReader =
                     new BufferedReader( new InputStreamReader(cl.getResourceAsStream( "/"+paramString )) );
-            /*  87 */
+
             String str1 = localBufferedReader.readLine();
-            /*  88 */
+
             int i = 0;
 
-            /*  90 */
+
             String str2 = "uninitialized";
-            /*  91 */
+
             String str3 = "uninitialized";
 
 
 
-            /*  95 */
+
             while ( str1 != null ) {
 
-                /*  98 */
+
                 if ( !str1.startsWith( "#" ) ) {
 
-                    /* 101 */
+
                     StringTokenizer localStringTokenizer = new StringTokenizer( str1, "=" );
 
-                    /* 103 */
+
                     while ( localStringTokenizer.hasMoreTokens() ) {
-                        /* 105 */
+
                         String str4 = "";
 
-                        /* 107 */
+
                         str2 = localStringTokenizer.nextToken();
-                        /* 108 */
+
                         str3 = localStringTokenizer.nextToken();
 
-                        /* 110 */
+
                         if ( str2.startsWith( "b" ) ) {
                             this.prefsArray[i] = new Boolean( str3.equals( "true" ) );
                             str4 = "BOOLEAN";
-                            /* 111 */
+
                         } else if ( str2.startsWith( "i" ) ) {
                             this.prefsArray[i] = new Integer( Integer.parseInt( str3 ) );
                             str4 = "INTEGER";
-                            /* 112 */
+
                         } else if ( str2.startsWith( "s" ) ) {
                             this.prefsArray[i] = str3;
                             str4 = "STRING";
                         }
-                        /* 114 */
+
                         this.prefStrings[i][0] = str2;
-                        /* 115 */
+
                         this.prefStrings[i][1] = str3;
 
 
 
-                        /* 119 */
+
                         i++;
                     }
                 }
-                /* 122 */
+
                 str1 = localBufferedReader.readLine();
             }
         } catch ( IOException localIOException ) {
-            /* 128 */
+
             System.out.println( "* Error reading jpConfig.ini" );
-            /* 129 */
+
             localIOException.printStackTrace();
-            /* 130 */
+
             System.exit( -1 );
         }
     }

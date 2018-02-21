@@ -28,112 +28,112 @@ public class CharsheetPanel extends JPanel {
     javax.swing.text.DefaultStyledDocument theFile;
 
     public CharsheetPanel() {
-        /*  34 */
+
         setLayout( new BoxLayout( this, 1 ) );
 
-        /*  36 */
+
         this.displayArea = new JTextPane();
 
-        /*  38 */
+
         this.displayArea.setCharacterAttributes( JPServer.charsheetAttributes, true );
 
-        /*  40 */
+
         this.displayArea.setEditable( true );
-        /*  41 */
+
         this.displayArea.setEnabled( true );
 
 
 
-        /*  45 */
+
         this.scrollPane = new javax.swing.JScrollPane( this.displayArea, 22, 31 );
 
 
-        /*  48 */
+
         this.saveButton = new JButton( "Save / Send" );
-        /*  49 */
+
         this.saveButton.setMaximumSize( new Dimension( 65, 22 ) );
-        /*  50 */
-        /*  61 */
+
+
         this.saveButton.addActionListener(paramAnonymousActionEvent -> {
-            /*  53 */
+
             CharsheetPanel.this.selectedPlayer.saveCharsheet( CharsheetPanel.this.selectedPlayer.isLoggedIn() );
         });
-        /*  62 */
+
         this.playerComboBox = new JComboBox( JPServer.troubleshooters );
-        /*  63 */
-        /*  74 */
+
+
         this.playerComboBox.addActionListener(paramAnonymousActionEvent -> {
-            /*  68 */
+
             CharsheetPanel.this.selectedPlayer = (ServerPlayer) CharsheetPanel.this.playerComboBox.getSelectedItem();
 
-            /*  70 */
+
             CharsheetPanel.this.theFile = CharsheetPanel.this.selectedPlayer.getCharsheet();
-            /*  71 */
+
             CharsheetPanel.this.displayArea.setDocument( CharsheetPanel.this.theFile );
         });
-        /*  75 */
+
         this.selectedPlayer = (ServerPlayer) this.playerComboBox.getSelectedItem();
 
-        /*  77 */
+
         this.theFile = this.selectedPlayer.getCharsheet();
 
-        /*  79 */
+
         this.displayArea.setDocument( this.theFile );
 
-        /*  81 */
+
         this.dicePanel = new DicePanel();
 
-        /*  83 */
+
         this.playerPanel = new JPanel();
 
-        /*  85 */
+
         this.playerPanel.setLayout( new BoxLayout( this.playerPanel, 0 ) );
 
-        /*  87 */
+
         this.playerPanel.setMaximumSize( new Dimension( 100, 15 ) );
 
-        /*  89 */
+
         this.playerPanel.add( Box.createRigidArea( new Dimension( 5, 0 ) ) );
-        /*  90 */
+
         this.playerPanel.add( this.playerComboBox );
-        /*  91 */
+
         this.playerPanel.add( Box.createRigidArea( new Dimension( 5, 0 ) ) );
-        /*  92 */
+
         this.playerPanel.add( this.saveButton );
 
-        /*  94 */
+
         this.playerAndDicePanel = new JPanel();
-        /*  95 */
+
         this.playerAndDicePanel.setLayout( new java.awt.BorderLayout() );
 
-        /*  97 */
+
         this.playerAndDicePanel.add( this.playerPanel, "West" );
-        /*  98 */
+
         this.playerAndDicePanel.add( this.dicePanel, "East" );
 
-        /* 100 */
+
         this.playerAndDicePanel.setMaximumSize( new Dimension( 1500, 20 ) );
-        /* 101 */
+
         this.playerAndDicePanel.setMinimumSize( new Dimension( 200, 20 ) );
-        /* 102 */
+
         this.playerAndDicePanel.setPreferredSize( new Dimension( 1500, 20 ) );
 
 
 
 
-        /* 107 */
+
         add( Box.createRigidArea( new Dimension( 0, 5 ) ) );
-        /* 108 */
+
         add( this.playerAndDicePanel );
-        /* 109 */
+
         add( Box.createRigidArea( new Dimension( 0, 5 ) ) );
-        /* 110 */
+
         add( this.scrollPane );
 
 
 
 
-        /* 115 */
+
         setPreferredSize( new Dimension( 9200, 9200 ) );
     }
 }

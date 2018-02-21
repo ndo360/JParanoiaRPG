@@ -1,47 +1,47 @@
-/*    */
+
 package jparanoia.shared;
-/*    */
-/*    */
+
+
 import java.net.URL;
 
-/*    */
-/*    */
-/*    */
-/*    */ public class JPImage
-        /*    */ {
-    /*    */ String imageName;
-    /*    */ URL imageURL;
 
-    /*    */
-    /*    */
+
+
+ public class JPImage
+         {
+     String imageName;
+     URL imageURL;
+
+
+
     public JPImage( String paramString, URL paramURL )
-    /*    */ {
-        /* 14 */
+     {
+
         this.imageName = paramString;
-        /* 15 */
+
         this.imageURL = paramURL;
-        /*    */
+
     }
 
-    /*    */
-    /*    */
-    /*    */
+
+
+
     public String getName()
-    /*    */ {
-        /* 21 */
+     {
+
         return this.imageName;
-        /*    */
+
     }
 
-    /*    */
-    /*    */
+
+
     public URL getURL()
-    /*    */ {
-        /* 26 */
+     {
+
         return this.imageURL;
-        /*    */
+
     }
-    /*    */
+
 }
 
 

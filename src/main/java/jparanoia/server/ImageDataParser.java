@@ -1,7 +1,7 @@
-/*    */
+
 package jparanoia.server;
-/*    */
-/*    */
+
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,86 +13,86 @@ import java.util.Objects;
 import java.util.StringTokenizer;
 import jparanoia.shared.JPImage;
 
-/*    */
-/*    */
-/*    */
-/*    */
-/*    */
-/*    */
 
-/*    */
-/*    */ public class ImageDataParser
-        /*    */ {
-    /*    */ BufferedReader reader;
-    /*    */ String input;
-    /*    */ String name;
-    /*    */ StringTokenizer st;
-    /* 17 */ ArrayList imageInfo = new ArrayList( 20 );
 
-    /*    */
-    /*    */
-    /*    */
-    /*    */
-    /*    */
-    /*    */
-    /*    */
+
+
+
+
+
+
+ public class ImageDataParser
+         {
+     BufferedReader reader;
+     String input;
+     String name;
+     StringTokenizer st;
+     ArrayList imageInfo = new ArrayList( 20 );
+
+
+
+
+
+
+
+
     public void parseImageURLs( String paramString )
-    /*    */ {
-        /*    */
+     {
+
         try
-            /*    */ {
+             {
             final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
             final File file =
                     new File( Objects.requireNonNull( classLoader.getResource( "conf/"+ paramString ) ).getFile() );
-            /* 28 */
+
             this.reader = new BufferedReader( new InputStreamReader(new FileInputStream( file ))/*new FileReader( paramString )*/ );
-            /* 29 */
+
             this.input = this.reader.readLine();
-            /* 30 */
+
             while ( this.input != null )
-                /*    */ {
-                /*    */
-                /* 33 */
+                 {
+
+
                 if ( !this.input.startsWith( "#" ) )
-                    /*    */ {
-                    /*    */
-                    /* 36 */
+                     {
+
+
                     this.st = new StringTokenizer( this.input, "|" );
-                    /*    */
-                    /* 38 */
+
+
                     while ( this.st.hasMoreTokens() )
-                        /*    */ {
-                        /* 40 */
+                         {
+
                         String str = this.st.nextToken();
-                        /* 41 */
+
                         System.out.println( "     Image: " + str );
-                        /* 42 */
+
                         this.imageInfo.add( new JPImage( str, new URL( this.st.nextToken() ) ) );
-                        /*    */
+
                     }
-                    /*    */
+
                 }
-                /* 45 */
+
                 this.input = this.reader.readLine();
-                /*    */
+
             }
-            /*    */
+
         } catch ( Exception localException ) {
-            /* 48 */
+
             localException.printStackTrace();
-            /*    */
+
         }
-        /*    */
+
     }
 
-    /*    */
-    /*    */
+
+
     public ArrayList getImageInfo() {
-        /* 53 */
+
         return this.imageInfo;
-        /*    */
+
     }
-    /*    */
+
 }
 
 

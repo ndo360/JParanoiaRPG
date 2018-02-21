@@ -1,32 +1,32 @@
-/*    */
+
 package http;
-/*    */
-/*    */
+
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-/*    */
-/*    */
-/*    */
 
-/*    */
-/*    */
-/*    */
-/*    */
-/*    */
-/*    */ public class HttpGetter
-        /*    */ {
-    /*    */
+
+
+
+
+
+
+
+
+ public class HttpGetter
+         {
+
     public static BufferedReader getFromURL( URL paramURL )
-    /*    */     throws IOException
-    /*    */ {
-        /* 17 */
+         throws IOException
+     {
+
         return new BufferedReader( new InputStreamReader( paramURL.openStream() ) );
-        /*    */
+
     }
-    /*    */
+
 }
 
 

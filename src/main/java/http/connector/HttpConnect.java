@@ -16,59 +16,59 @@ public class HttpConnect {
 
     public static void main( String[] paramArrayOfString ) {
         try {
-            /*  34 */
+
             connecto = (HttpURLConnection) new URL( "http://127.0.0.1/formyform.html" ).openConnection();
-            /*  35 */
+
             connecto.setDoOutput( true );
         } catch ( Exception localException ) {
 
-            /*  41 */
+
             System.out.println( "Aww, exception." );
-            /*  42 */
+
             localException.printStackTrace();
         }
 
 
-        /*  46 */
+
         doStuff();
     }
 
     public static void doStuff() {
         try {
-            /*  77 */
+
             String str = "description=foop";
 
 
-            /*  80 */
+
             System.out.println( "Connected. Sending request..." );
 
 
 
 
-            /*  85 */
+
             method = 4;
 
-            /*  87 */
+
             switch ( method ) {
                 case 4:
-                    /*  92 */
+
                     connecto.setRequestMethod( "POST" );
 
-                    /*  94 */
+
                     PrintWriter localObject = new PrintWriter( connecto.getOutputStream(), true );
 
 
 
 
 
-                    /* 100 */
+
                     localObject.println( str );
-                    /* 101 */
+
                     localObject.close();
 
-                    /* 103 */
+
                     slt = new StreamListenerThread( connecto.getInputStream() );
-                    /* 104 */
+
                     slt.start();
             }
 
@@ -109,7 +109,7 @@ public class HttpConnect {
 
 
 
-            /* 144 */
+
             System.out.println( "Request sent. Waiting for reply..." );
 
 
@@ -120,7 +120,7 @@ public class HttpConnect {
 
 
 
-            /* 154 */
+
             Object localObject = "";
         } catch ( Exception localException ) {
 
@@ -128,7 +128,7 @@ public class HttpConnect {
 
 
 
-            /* 168 */
+
             localException.printStackTrace();
         }
     }

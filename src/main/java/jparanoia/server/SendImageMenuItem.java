@@ -1,40 +1,40 @@
-/*    */
+
 package jparanoia.server;
-/*    */
-/*    */
+
+
 import java.awt.event.ActionEvent;
 import javax.swing.JMenuItem;
 import jparanoia.shared.JPImage;
 
-/*    */
-/*    */
 
-/*    */
-/*    */ public class SendImageMenuItem extends JMenuItem
-        /*    */ {
-    /*    */ JPImage imageItem;
 
-    /*    */
-    /*    */
+
+
+ public class SendImageMenuItem extends JMenuItem
+         {
+     JPImage imageItem;
+
+
+
     public SendImageMenuItem( JPImage paramJPImage )
-    /*    */ {
-        /* 13 */
+     {
+
         super( paramJPImage.getName() );
-        /* 14 */
+
         this.imageItem = paramJPImage;
-        /* 15 */
-        /*    *//*    */
+
+
         addActionListener(paramAnonymousActionEvent -> {
-            /* 17 */
+
             JPServer.spamString( "404" + SendImageMenuItem.this.getImageInfo() );
-            /* 18 */
+
             jparanoia.shared.JParanoia.displayImage( SendImageMenuItem.this.getImageInfo() );
-            /* 19 */
+
             if ( JPServer.keepLog )
-                /*    */ {
-                /*    */
+                 {
+
                 String str;
-                /* 22 */
+
                 if ( JPServer.htmlLog ) {
                     str = "IMAGE: \"" +
                             SendImageMenuItem.this.imageItem.getName() +
@@ -46,29 +46,29 @@ import jparanoia.shared.JPImage;
                             SendImageMenuItem.this.imageItem.getURL() +
                             "\"><br/>";
                 } else
-                    /* 23 */ {
+                     {
                     str = "IMAGE: \"" +
                             SendImageMenuItem.this.imageItem.getName() +
                             "\" URL: " +
                             SendImageMenuItem.this.imageItem.getURL();
                 }
-                /* 24 */
+
                 JPServer.logger.logEntry( str );
-                /*    */
+
             }
-            /*    */
+
         });
-        /*    */
+
     }
 
-    /*    */
-    /*    */
+
+
     public String getImageInfo() {
-        /* 31 */
+
         return this.imageItem.getName() + this.imageItem.getURL();
-        /*    */
+
     }
-    /*    */
+
 }
 
 

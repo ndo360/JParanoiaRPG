@@ -29,14 +29,14 @@ public class JPSounds {
     public static final int COMBAT_ALERT = 21;
     public static final int COMBAT_MUSIC = 22;
     SoundManager manager;
-    /*  36 */ int deathCounter = 0;
+     int deathCounter = 0;
     ClassLoader loader = lookup().lookupClass()
             .getClassLoader();
 
     public JPSounds() {
-        /*  44 */
+
         System.out.println( "JPSoundPlayer started\n\n" );
-        /*  46 */
+
         String[] arrayOfFile = new String[23];
 
         arrayOfFile[0] = ( "sounds/programLaunch.wav" );
@@ -63,7 +63,7 @@ public class JPSounds {
         arrayOfFile[21] =( "sounds/combatAlert.wav" );
         arrayOfFile[22] =( "sounds/combatMusic.wav" );
 
-        /*  72 */
+
         this.manager = new SoundManager( arrayOfFile );
     }
 
@@ -72,33 +72,33 @@ public class JPSounds {
 //    }
 
     public void play( int paramInt ) {
-        /*  86 */
+
         if ( paramInt == 14 ) {
-            /*  87 */
+
             if ( this.deathCounter > 4 )
-                /*  88 */ {
+                 {
                 this.deathCounter = 0;
             }
-            /*  89 */
+
             this.manager.play( 14 + this.deathCounter++ );
         } else {
-            /*  92 */
+
             this.manager.play( paramInt );
         }
     }
 
     public void startCombatMusic() {
-        /*  97 */
+
         this.manager.loopPlay( 22 );
     }
 
     public void stopCombatMusic() {
-        /* 102 */
+
         SoundManager.stopLoop( true );
     }
 
     public void close() {
-        /* 107 */
+
         this.manager.terminate();
     }
 }

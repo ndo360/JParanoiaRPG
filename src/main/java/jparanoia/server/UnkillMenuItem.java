@@ -1,25 +1,25 @@
-/*    */
+
 package jparanoia.server;
-/*    */
-/*    */ public class UnkillMenuItem extends PlayerMenuItem
-        /*    */ {
-    /*    */
+
+ public class UnkillMenuItem extends PlayerMenuItem
+         {
+
     public UnkillMenuItem( ServerPlayer paramServerPlayer )
-    /*    */ {
-        /*  7 */
+     {
+
         super( paramServerPlayer, "Unkill" );
-        /*    */
+
     }
 
-    /*    */
-    /*    */
+
+
     protected void action()
-    /*    */ {
-        /* 12 */
+     {
+
         this.somePlayer.unkill();
-        /*    */
+
     }
-    /*    */
+
 }
 
 

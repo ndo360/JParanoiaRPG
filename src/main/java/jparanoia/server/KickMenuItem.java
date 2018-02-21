@@ -1,25 +1,25 @@
-/*    */
+
 package jparanoia.server;
-/*    */
-/*    */ public class KickMenuItem extends PlayerMenuItem
-        /*    */ {
-    /*    */
+
+ public class KickMenuItem extends PlayerMenuItem
+         {
+
     public KickMenuItem( ServerPlayer paramServerPlayer )
-    /*    */ {
-        /*  7 */
+     {
+
         super( paramServerPlayer, "Kick" );
-        /*    */
+
     }
 
-    /*    */
-    /*    */
+
+
     protected void action()
-    /*    */ {
-        /* 12 */
+     {
+
         this.somePlayer.kickPlayer();
-        /*    */
+
     }
-    /*    */
+
 }
 
 

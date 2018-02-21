@@ -1,27 +1,27 @@
-/*    */
+
 package jparanoia.server;
-/*    */
-/*    */
+
+
 import javax.swing.JMenu;
 
-/*    */
-/*    */ public class NPCMenu
-        /*    */ extends JMenu
-        /*    */ {
-    /*    */ NPCRenameMenuItem npcRenameMenuItem;
 
-    /*    */
-    /*    */
+ public class NPCMenu
+         extends JMenu
+         {
+     NPCRenameMenuItem npcRenameMenuItem;
+
+
+
     public NPCMenu( ServerPlayer paramServerPlayer )
-    /*    */ {
-        /* 12 */
+     {
+
         super( paramServerPlayer.getName() );
-        /*    */
-        /* 14 */
+
+
         add( this.npcRenameMenuItem = new NPCRenameMenuItem( paramServerPlayer ) );
-        /*    */
+
     }
-    /*    */
+
 }
 
 

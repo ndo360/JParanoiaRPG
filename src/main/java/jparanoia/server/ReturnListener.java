@@ -1,30 +1,30 @@
-/*    */
+
 package jparanoia.server;
-/*    */
-/*    */
+
+
 import java.awt.event.KeyEvent;
 
-/*    */
-/*    */ public class ReturnListener implements java.awt.event.KeyListener
-        /*    */ {
-    /*    */
+
+ public class ReturnListener implements java.awt.event.KeyListener
+         {
+
     public void keyTyped( KeyEvent paramKeyEvent ) {
     }
 
-    /*    */
-    /*    */
+
+
     public void keyPressed( KeyEvent paramKeyEvent )
-    /*    */ {
-        /* 13 */
+     {
+
         System.out.println( "Key Code = " + paramKeyEvent.getKeyCode() );
-        /*    */
+
     }
 
-    /*    */
-    /*    */
+
+
     public void keyReleased( KeyEvent paramKeyEvent ) {
     }
-    /*    */
+
 }
 
 

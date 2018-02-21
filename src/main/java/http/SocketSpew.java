@@ -1,72 +1,72 @@
-/*    */
+
 package http;
-/*    */
-/*    */
+
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-/*    */
-/*    */
-/*    */
 
-/*    */
-/*    */ public class SocketSpew extends Thread
-        /*    */ {
-    /*    */ Socket socket;
-    /*    */ BufferedReader in;
 
-    /*    */
-    /*    */
+
+
+
+ public class SocketSpew extends Thread
+         {
+     Socket socket;
+     BufferedReader in;
+
+
+
     public SocketSpew( Socket paramSocket )
-    /*    */ {
-        /* 15 */
+     {
+
         this.socket = paramSocket;
-        /*    */
+
     }
 
-    /*    */
-    /*    */
+
+
     public void run()
-    /*    */ {
-        /* 20 */
+     {
+
         String str = "";
-        /* 21 */
+
         int i = 0;
-        /*    */
-        /*    */
+
+
         try
-            /*    */ {
-            /* 25 */
+             {
+
             this.in = new BufferedReader( new InputStreamReader( this.socket.getInputStream() ) );
-            /*    */
-            /*    */
+
+
             do
-                /*    */ {
-                /* 29 */
+                 {
+
                 str = this.in.readLine();
-                /*    */
-                /*    */
-                /*    */
-                /*    */
-                /*    */
-                /* 35 */
+
+
+
+
+
+
                 System.out.println( str + "*" );
-                /*    */
+
             }
-            /* 37 */       while ( str != null && !str.toUpperCase().contains("</HTML>"));
-            /*    */
+                   while ( str != null && !str.toUpperCase().contains("</HTML>"));
+
         }
-        /*    */ catch ( Exception localException )
-            /*    */ {
-            /* 41 */
+         catch ( Exception localException )
+             {
+
             localException.printStackTrace();
             System.exit( -1 );
-            /*    */
+
         }
-        /*    */
+
     }
-    /*    */
+
 }
 
 
