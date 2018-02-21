@@ -37,39 +37,39 @@ public class JPSounds {
         /*  44 */
         System.out.println( "JPSoundPlayer started\n\n" );
         /*  46 */
-        File[] arrayOfFile = new File[23];
+        String[] arrayOfFile = new String[23];
 
-        arrayOfFile[0] =  getFile("sounds/programLaunch.wav" );
-        arrayOfFile[1] =  getFile("sounds/connected.wav" );
-        arrayOfFile[2] =  getFile("sounds/disconnected.wav" );
-        arrayOfFile[3] =  getFile("sounds/loggedIn.wav" );
-        arrayOfFile[4] =  getFile("sounds/badLogin.wav" );
-        arrayOfFile[5] =  getFile("sounds/playerJoin.wav" );
-        arrayOfFile[6] =  getFile("sounds/playerLeave.wav" );
-        arrayOfFile[7] =  getFile("sounds/newText.wav" );
-        arrayOfFile[8] =  getFile("sounds/muted.wav" );
-        arrayOfFile[9] =  getFile("sounds/unmuted.wav" );
-        arrayOfFile[10] = getFile( "sounds/freeze.wav" );
-        arrayOfFile[11] = getFile( "sounds/unfreeze.wav" );
-        arrayOfFile[12] = getFile( "sounds/promoted.wav" );
-        arrayOfFile[13] = getFile( "sounds/demoted.wav" );
-        arrayOfFile[14] = getFile( "sounds/scream0.wav" );
-        arrayOfFile[15] = getFile( "sounds/scream1.wav" );
-        arrayOfFile[16] = getFile( "sounds/scream2.wav" );
-        arrayOfFile[17] = getFile( "sounds/scream3.wav" );
-        arrayOfFile[18] = getFile( "sounds/scream4.wav" );
-        arrayOfFile[19] = getFile( "sounds/newPrivateMessage.wav" );
-        arrayOfFile[20] = getFile( "sounds/charsheetUpdate.wav" );
-        arrayOfFile[21] = getFile( "sounds/combatAlert.wav" );
-        arrayOfFile[22] = getFile( "sounds/combatMusic.wav" );
+        arrayOfFile[0] = ( "sounds/programLaunch.wav" );
+        arrayOfFile[1] = ( "sounds/connected.wav" );
+        arrayOfFile[2] = ( "sounds/disconnected.wav" );
+        arrayOfFile[3] = ( "sounds/loggedIn.wav" );
+        arrayOfFile[4] = ( "sounds/badLogin.wav" );
+        arrayOfFile[5] = ( "sounds/playerJoin.wav" );
+        arrayOfFile[6] = ( "sounds/playerLeave.wav" );
+        arrayOfFile[7] = ( "sounds/newText.wav" );
+        arrayOfFile[8] = ( "sounds/muted.wav" );
+        arrayOfFile[9] = ( "sounds/unmuted.wav" );
+        arrayOfFile[10] =( "sounds/freeze.wav" );
+        arrayOfFile[11] =( "sounds/unfreeze.wav" );
+        arrayOfFile[12] =( "sounds/promoted.wav" );
+        arrayOfFile[13] =( "sounds/demoted.wav" );
+        arrayOfFile[14] =( "sounds/scream0.wav" );
+        arrayOfFile[15] =( "sounds/scream1.wav" );
+        arrayOfFile[16] =( "sounds/scream2.wav" );
+        arrayOfFile[17] =( "sounds/scream3.wav" );
+        arrayOfFile[18] =( "sounds/scream4.wav" );
+        arrayOfFile[19] =( "sounds/newPrivateMessage.wav" );
+        arrayOfFile[20] =( "sounds/charsheetUpdate.wav" );
+        arrayOfFile[21] =( "sounds/combatAlert.wav" );
+        arrayOfFile[22] =( "sounds/combatMusic.wav" );
 
         /*  72 */
         this.manager = new SoundManager( arrayOfFile );
     }
 
-    private File getFile( final String filename ) {
-        return new File( Objects.requireNonNull( loader.getResource( filename ) ).getFile());
-    }
+//    private File getFile( final String filename ) {
+//        return new File( Objects.requireNonNull( loader.getResource( filename ) ).getFile());
+//    }
 
     public void play( int paramInt ) {
         /*  86 */

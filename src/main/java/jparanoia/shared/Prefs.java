@@ -1,11 +1,8 @@
 package jparanoia.shared;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.invoke.MethodHandles;
-import java.util.Objects;
 import java.util.StringTokenizer;
 
 public class Prefs {
@@ -68,9 +65,9 @@ public class Prefs {
     public void parsePrefs( String paramString ) {
         try {
             /*  86 */
-            final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
-            final File file = new File( Objects.requireNonNull( classLoader.getResource( paramString ) ).getFile() );
-            BufferedReader localBufferedReader = new BufferedReader( new InputStreamReader(new FileInputStream( file )) );
+            final Class cl = MethodHandles.lookup().lookupClass();
+            BufferedReader localBufferedReader =
+                    new BufferedReader( new InputStreamReader(cl.getResourceAsStream( "/"+paramString )) );
             /*  87 */
             String str1 = localBufferedReader.readLine();
             /*  88 */

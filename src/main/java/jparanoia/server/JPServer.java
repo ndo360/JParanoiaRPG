@@ -1,7 +1,5 @@
 package jparanoia.server;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -2168,7 +2166,8 @@ public class JPServer extends JParanoia {
         try {
             /* 1628 */
             final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
-            final File file = new File( Objects.requireNonNull( classLoader.getResource( "announcement.txt" ) ).getFile() );
+            final File file = new File( Objects.requireNonNull( classLoader.getResource( "conf/announcement.txt" ) )
+                    .getFile() );
             BufferedReader localBufferedReader = new BufferedReader( new InputStreamReader(new FileInputStream( file )) );
 
             /* 1630 */

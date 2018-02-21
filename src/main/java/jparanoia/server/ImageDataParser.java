@@ -42,7 +42,8 @@ import jparanoia.shared.JPImage;
         try
             /*    */ {
             final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
-            final File file = new File( Objects.requireNonNull( classLoader.getResource( paramString ) ).getFile() );
+            final File file =
+                    new File( Objects.requireNonNull( classLoader.getResource( "conf/"+ paramString ) ).getFile() );
             /* 28 */
             this.reader = new BufferedReader( new InputStreamReader(new FileInputStream( file ))/*new FileReader( paramString )*/ );
             /* 29 */

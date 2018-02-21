@@ -1,6 +1,7 @@
 package jparanoia.shared;
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -19,7 +20,7 @@ public class SoundManager {
     SoundPlayer player;
     SoundLooper looper;
 
-    public SoundManager( File[] paramArrayOfFile ) {
+    public SoundManager( String[] paramArrayOfFile ) {
         /*  31 */
         if ( paramArrayOfFile.length > 32 ) {
             System.out.println( "WARNING: Preparing to attempt acquisition of more than 32 voices!" );
@@ -42,14 +43,15 @@ public class SoundManager {
             for ( int j = 0; j < paramArrayOfFile.length; j++ ) {
 
                 /*  47 */
-                this.fileString = paramArrayOfFile[j].toString();
+                this.fileString = paramArrayOfFile[j];
                 try {
                     /*  55 */
-                    this.audioStreams[j] = AudioSystem.getAudioInputStream( paramArrayOfFile[j] );
+                    InputStream is = getClass().getResourceAsStream( "/" + paramArrayOfFile[j] );
+                    this.audioStreams[j] = AudioSystem.getAudioInputStream( new BufferedInputStream( is ) );
                 } catch ( FileNotFoundException localFileNotFoundException ) {
                     /*  58 */
                     JParanoia.errorMessage( "Sound not found", "JParanoia was unable to locate:\n" +
-                            paramArrayOfFile[j].toString() +
+                            paramArrayOfFile[j] +
                             "\n\n" +
                             "Sound files should not be renamed or moved.\n\n" +
                             "If you have downloaded a JParanoia zip archive\n" +
