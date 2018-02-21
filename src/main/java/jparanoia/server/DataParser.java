@@ -26,7 +26,8 @@ public class DataParser {
 //            final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
 //            final File file = new File( Objects.requireNonNull( classLoader.getResource( paramString ) ).getFile() );
 //            this.reader = new BufferedReader( new InputStreamReader(new FileInputStream( file )) );
-            this.reader = new BufferedReader( new InputStreamReader( getClass().getResourceAsStream( "/playerData/" +
+            //FIXME for maven build
+            this.reader = new BufferedReader( new InputStreamReader( getClass().getResourceAsStream( "/" +
                     paramString ) ) );
             this.input = this.reader.readLine();
             int i = 0;
