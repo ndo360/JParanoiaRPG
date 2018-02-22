@@ -30,23 +30,23 @@ public class PrivateMessagePane extends javax.swing.JPanel {
             public void focusGained( java.awt.event.FocusEvent paramAnonymousFocusEvent ) {
                 if ( !JPServer.optionsMenu.quickCharsheetMenuItem.isSelected() ||
                         JPServer.charsheetPanel.playerComboBox.getSelectedItem() == PrivateMessagePane.this.player ) {
-                    if ( !JPServer.jvm140 || JPServer.quickNamesToggle ) {
-                        String str = JPServer.inputLine.getText();
-                        int i = JPServer.inputLine.getSelectionStart();
-                        if ( str.equals( "" ) || i == 0 || Character.isWhitespace( str.charAt( i - 1 ) ) ) {
-                            JPServer.inputLine.replaceSelection( PrivateMessagePane.this.player.getName() );
-                        } else {
-                            JPServer.inputLine.replaceSelection( " " + PrivateMessagePane.this.player.getName() );
-                        }
-                        str = JPServer.inputLine.getText();
-                        i = JPServer.inputLine.getCaretPosition();
-                        if ( i < str.length() && !Character.isWhitespace( str.charAt( i ) ) ) {
-                            JPServer.inputLine.replaceSelection( " " );
-                        }
-                        JPServer.quickNamesToggle = false;
-                    } else {
+//                    if ( !JPServer.jvm140 || JPServer.quickNamesToggle ) {
+//                        String str = JPServer.inputLine.getText();
+//                        int i = JPServer.inputLine.getSelectionStart();
+//                        if ( str.equals( "" ) || i == 0 || Character.isWhitespace( str.charAt( i - 1 ) ) ) {
+//                            JPServer.inputLine.replaceSelection( PrivateMessagePane.this.player.getName() );
+//                        } else {
+//                            JPServer.inputLine.replaceSelection( " " + PrivateMessagePane.this.player.getName() );
+//                        }
+//                        str = JPServer.inputLine.getText();
+//                        i = JPServer.inputLine.getCaretPosition();
+//                        if ( i < str.length() && !Character.isWhitespace( str.charAt( i ) ) ) {
+//                            JPServer.inputLine.replaceSelection( " " );
+//                        }
+//                        JPServer.quickNamesToggle = false;
+//                    } else {
                         JPServer.quickNamesToggle = true;
-                    }
+//                    }
                 } else {
                     JPServer.charsheetPanel.playerComboBox.setSelectedItem( PrivateMessagePane.this.player );
                     JPServer.quickNamesToggle = false;
