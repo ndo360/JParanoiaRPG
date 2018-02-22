@@ -70,12 +70,12 @@ import static javax.swing.text.StyleConstants.Family;
 import static javax.swing.text.StyleConstants.Foreground;
 import static javax.swing.text.StyleConstants.Size;
 import jparanoia.shared.BrightColorArray;
-import jparanoia.shared.GameLogger;
 import static jparanoia.shared.GameRegistrar.addGame;
 import static jparanoia.shared.GameRegistrar.removeGame;
 import jparanoia.shared.JParanoia;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
+import org.slf4j.profiler.Profiler;
 
 public class JPServer extends JParanoia {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
@@ -96,7 +96,7 @@ public class JPServer extends JParanoia {
     static java.io.OutputStream someOuputStream;
     static ServerSocketThread servSocketThread;
     static ServerChatThread thisThread;
-    static final Vector chatThreads = new Vector();
+    static final Vector<ServerChatThread> chatThreads = new Vector<>();
     static int numberOfConnectedClients = 0;
     static int numberOfConnectedObservers = 0;
     static ThreadGroup chatThreadGroup = new ThreadGroup( "my group of chat threads" );
@@ -118,7 +118,7 @@ public class JPServer extends JParanoia {
     static boolean singleUseSpoof = false;
     static boolean isPXPGame;
     static ServerPlayer[] troubleshooters;
-    static Vector spareNpcs = new Vector( 10 );
+    static Vector<ServerPlayer> spareNpcs = new Vector<>( 10 );
     static ServerPlayer playerToSpoof;
     static ServerPlayer pmTargetPlayer;
     static javax.swing.JScrollPane inputScrollPane;
@@ -177,7 +177,7 @@ public class JPServer extends JParanoia {
     static JCheckBoxMenuItem registerGameMenuItem;
     static JCheckBoxMenuItem hearObserversMenuItem;
     static javax.swing.JCheckBox spoofCheckBox;
-    static javax.swing.JComboBox spoofComboBox;
+    static JComboBox<? extends ServerPlayer> spoofComboBox;
     static JButton freezeButton;
     static JButton unfreezeButton;
     static JButton combatButton;
@@ -225,6 +225,8 @@ public class JPServer extends JParanoia {
     java.awt.Component componentHolder;
 
     public JPServer() {
+        Profiler profiler = new Profiler("JPServer");
+
         clobberAqua = (Boolean) prefs.getPref( 18 );
         if ( clobberAqua ) {
             try {
@@ -245,6 +247,8 @@ public class JPServer extends JParanoia {
         }
         gmNameNag = (Boolean) prefs.getPref( 35 );
         computerFontIncrease = (Integer) prefs.getPref( 26 );
+
+        profiler.start( "frame init" );
         frame.setTitle( myTitle.get() );
         frame.setIconImage( getDefaultToolkit().getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
         frame.setDefaultCloseOperation( DO_NOTHING_ON_CLOSE );
@@ -261,21 +265,25 @@ public class JPServer extends JParanoia {
         charsheetAttributes.addAttribute( Bold, TRUE );
         charsheetAttributes.addAttribute( Family, "SansSerif" );
         charsheetAttributes.addAttribute( Size, 12 );
+
+        profiler.start( "player list init" );
         DataParser localDataParser = new DataParser();
         players = localDataParser.parsePlayerList( "playerData/playerList.txt" );
+
+        profiler.start( "image data init" );
         logger.info( "Processing imageData.txt:" );
         idp = new ImageDataParser();
         idp.parseImageURLs( "imageData.txt" );
         numberOfPlayers = players.length;
-        for ( int i = 0; i < players.length; i++ ) {
-            if ( players[i].isAnActualPlayer() ) {
+        for ( final ServerPlayer player : players ) {
+            if ( player.isAnActualPlayer() ) {
                 numberOfPCs += 1;
             }
         }
         troubleshooters = new ServerPlayer[numberOfPCs - 1];
         arraycopy( players, 1, troubleshooters, 0, numberOfPCs - 1 );
-        for ( int i = 0; i < troubleshooters.length; i++ ) {
-            sortedNames.add( troubleshooters[i] );
+        for ( final ServerPlayer troubleshooter : troubleshooters ) {
+            sortedNames.add( troubleshooter );
             if ( sortedNames.size() > 1 ) {
                 int j = sortedNames.size() - 1;
                 int k = j - 1;
@@ -290,6 +298,8 @@ public class JPServer extends JParanoia {
         }
         players[0].setLoggedIn( true );
         myPlayer = players[0];
+
+        profiler.start( "further frame init" );
         frame.setSize( 770, 540 );
         displayArea = new JTextPane();
         displayArea.setEditable( false );
@@ -389,7 +399,7 @@ public class JPServer extends JParanoia {
         inputScrollPane = new JScrollPane( inputLine, VERTICAL_SCROLLBAR_ALWAYS, HORIZONTAL_SCROLLBAR_NEVER );
         ServerPlayer[] arrayOfServerPlayer = new ServerPlayer[players.length - 1];
         arraycopy( players, 1, arrayOfServerPlayer, 0, players.length - 1 );
-        spoofComboBox = new JComboBox( arrayOfServerPlayer );
+        spoofComboBox = new JComboBox<>( arrayOfServerPlayer );
         spoofComboBox.addActionListener( paramAnonymousActionEvent -> {
             playerToSpoof = (ServerPlayer) spoofComboBox.getSelectedItem();
             if ( spoofCheckBox.isSelected() ) {
@@ -507,7 +517,7 @@ public class JPServer extends JParanoia {
         menuBar.add( playerMenu );
         npcMenu = new JMenu( "Spare NPCs" );
         for ( int j = 0; j < spareNpcs.size(); j++ ) {
-            npcMenu.add( ( (ServerPlayer) spareNpcs.get( j ) ).getNpcMenu() );
+            npcMenu.add( spareNpcs.get( j ).getNpcMenu() );
         }
         menuBar.add( npcMenu );
         globalPMMenu = new JMenu( "Global PM" );
@@ -553,6 +563,8 @@ public class JPServer extends JParanoia {
         for ( int m = 1; m < numberOfPCs; m++ ) {
             PMPane[m] = new PrivateMessagePane( players[m] );
         }
+
+        profiler.start( "status init" );
         logger.info( "\nServer's local IP Address: " + localIP.getHostAddress() + "\n" );
         pmstatus = new PMAndStatusPanel[numberOfPCs];
         logger.info( "PM & status array initialized." );
@@ -599,16 +611,20 @@ public class JPServer extends JParanoia {
         displayWrite( white, "- Quick Charsheet option (see README).\n- The Computer's text is now large in the logs.\n- The GM's text is now bold in the logs.\n- Unplanned images now appear in the logs.\n- Current passwords appear in Player menu.\n- Other miscellaneous bug fixes.\n\nRead the README.TXT for full details.\nFor a complete version history, visit the JParanoia website.\n\n" );
         displayWrite( white, "If you are new to running a JParanoia server, or find yourself wondering how to do something, " );
         displayWrite( yellow, "READ THE README.\n" );
-        keepLog = (Boolean) prefs.getPref( 20 );
-        htmlLog = (Boolean) prefs.getPref( 21 );
-        if ( keepLog ) {
-            if ( htmlLog ) {
-                log = new GameLogger( players );
-            } else {
-                log = new GameLogger();
-            }
-        }
+
+        profiler.start( "log init" );
+//        keepLog = (Boolean) prefs.getPref( 20 );
+//        htmlLog = (Boolean) prefs.getPref( 21 );
+//        if ( keepLog ) {
+//            if ( htmlLog ) {
+//                log = new GameLogger( players );
+//            } else {
+//                log = new GameLogger();
+//            }
+//        }
         logger.info( "JPServer.frame constructed.\n" );
+
+        profiler.start( "combat init" );
         out.print( "Attempting to load CombatFrame class... " );
         try {
             combatFrame = new CombatFrame();
@@ -629,6 +645,7 @@ public class JPServer extends JParanoia {
             frame.setSize( 855, frame.getHeight() );
         }
         frame.setVisible( true );
+        profiler.stop().print();
     }
 
     public static void main( String[] paramArrayOfString ) {
@@ -674,7 +691,7 @@ public class JPServer extends JParanoia {
 
     public static synchronized void spamString( String paramString ) {
         for ( int i = 0; i < chatThreads.size(); i++ ) {
-            thisThread = (ServerChatThread) chatThreads.elementAt( i );
+            thisThread = chatThreads.elementAt( i );
             someWriter = thisThread.out;
             someWriter.println( paramString );
         }
@@ -1391,7 +1408,7 @@ public class JPServer extends JParanoia {
 
     public static void reassignThreadNumbers() {
         for ( int i = 0; i < chatThreads.size(); i++ ) {
-            thisThread = (ServerChatThread) chatThreads.elementAt( i );
+            thisThread = chatThreads.elementAt( i );
             thisThread.threadNumber = i;
         }
     }

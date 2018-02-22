@@ -4,6 +4,7 @@ import static java.lang.System.exit;
 import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -32,7 +33,7 @@ public abstract class JParanoia {
     public static int thisKey = 100;
     public static String lastNameCompleted = "";
     public static int lastCompletionPlayer = 99;
-    public static java.util.ArrayList sortedNames = new java.util.ArrayList( 8 );
+    public static ArrayList sortedNames = new ArrayList<>( 8 );
     public static Vector obsNames = new Vector( 40 );
     public static GameLogger log;
     public static ErrorLogger errLog;
