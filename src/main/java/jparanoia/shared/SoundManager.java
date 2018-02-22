@@ -2,14 +2,24 @@ package jparanoia.shared;
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import static java.lang.System.exit;
+import java.lang.invoke.MethodHandles;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
+import static javax.sound.sampled.AudioSystem.getAudioInputStream;
+import static javax.sound.sampled.AudioSystem.getMixer;
+import static javax.sound.sampled.AudioSystem.getMixerInfo;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.Mixer;
+import static javax.sound.sampled.Mixer.Info;
+import static jparanoia.shared.JParanoia.errorMessage;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class SoundManager {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     static boolean stopLoop = false;
     String fileString;
     int mixerToUse = 0;
@@ -22,28 +32,28 @@ public class SoundManager {
 
     public SoundManager( String[] paramArrayOfFile ) {
         if ( paramArrayOfFile.length > 32 ) {
-            System.out.println( "WARNING: Preparing to attempt acquisition of more than 32 voices!" );
+            logger.info( "WARNING: Preparing to attempt acquisition of more than 32 voices!" );
         }
         try {
             this.clipList = new Clip[paramArrayOfFile.length];
             this.audioStreams = new AudioInputStream[paramArrayOfFile.length];
             //looks like sound system init
-            Mixer.Info[] arrayOfInfo = AudioSystem.getMixerInfo();
+            Info[] arrayOfInfo = getMixerInfo();
             if ( arrayOfInfo == null || arrayOfInfo.length == 0 ) {
-                JParanoia.errorMessage( "No soundcard detected", "Soundcard init failed, you won't get any sounds!" );
+                errorMessage( "No soundcard detected", "Soundcard init failed, you won't get any sounds!" );
                 return;
             }
-            Mixer.Info info = arrayOfInfo[0];
-            System.out.println( info );
-            Mixer localMixer = AudioSystem.getMixer( info );
+            Info info = arrayOfInfo[0];
+            logger.info( info.toString() );
+            Mixer localMixer = getMixer( info );
             //some archaic sound loading
             for ( int j = 0; j < paramArrayOfFile.length; j++ ) {
                 this.fileString = paramArrayOfFile[j];
                 try {
                     InputStream is = getClass().getResourceAsStream( "/" + paramArrayOfFile[j] );
-                    this.audioStreams[j] = AudioSystem.getAudioInputStream( new BufferedInputStream( is ) );
+                    this.audioStreams[j] = getAudioInputStream( new BufferedInputStream( is ) );
                 } catch ( FileNotFoundException localFileNotFoundException ) {
-                    JParanoia.errorMessage( "Sound not found", "JParanoia was unable to locate:\n" +
+                    errorMessage( "Sound not found", "JParanoia was unable to locate:\n" +
                             paramArrayOfFile[j] +
                             "\n\n" +
                             "Sound files should not be renamed or moved.\n\n" +
@@ -57,14 +67,14 @@ public class SoundManager {
                             "jpConfig.ini file and prevent this error\n" +
                             "from appearing again.\n\n" +
                             "JParanoia will now terminate." );
-                    System.exit( 0 );
+                    exit( 0 );
                 }
                 this.format = this.audioStreams[j].getFormat();
                 this.info = new DataLine.Info( Clip.class, this.format );
                 this.clipList[j] = (Clip) localMixer.getLine( this.info );
                 this.clipList[j].open( this.audioStreams[j] );
             }
-            System.out.println( "SoundManager finished acquiring resources for audio playback." );
+            logger.info( "SoundManager finished acquiring resources for audio playback." );
         } catch ( Exception localException ) {
             localException.printStackTrace();
         }
@@ -88,7 +98,7 @@ public class SoundManager {
         for ( int i = 0; i < this.clipList.length; i++ ) {
             this.clipList[i].close();
         }
-        System.out.println( "Sound engine terminated." );
+        logger.info( "Sound engine terminated." );
     }
 }
 

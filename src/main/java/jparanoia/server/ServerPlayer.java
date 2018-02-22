@@ -5,16 +5,34 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
+import static java.lang.System.exit;
+import static java.lang.System.out;
 import java.lang.invoke.MethodHandles;
+import static java.lang.invoke.MethodHandles.lookup;
 import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 import java.util.StringTokenizer;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.DefaultStyledDocument;
+import static jparanoia.server.JPServer.absoluteChat;
+import static jparanoia.server.JPServer.absoluteSpam;
+import static jparanoia.server.JPServer.repaintMenus;
+import static jparanoia.server.JPServer.spamString;
+import static jparanoia.server.JPServer.spareNpcs;
+import static jparanoia.server.JPServer.stripComments;
 import jparanoia.shared.JParanoia;
+import static jparanoia.shared.JParanoia.errorMessage;
+import static jparanoia.shared.JParanoia.soundIsOn;
+import static jparanoia.shared.JParanoia.soundMenu;
+import static jparanoia.shared.JParanoia.soundPlayer;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class ServerPlayer extends jparanoia.shared.JPPlayer {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     static int numUnsavedCharsheets = 0;
     static FileWriter writer;
     static javax.swing.text.SimpleAttributeSet sas;
@@ -54,8 +72,8 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
         if ( !this.IS_PLAYER && this.name.startsWith( "spareNPC" ) ) {
             this.loggedIn = true;
             this.npcMenu = new NPCMenu( this );
-            System.out.println( "Generated NPCMenu for " + this.name );
-            JPServer.spareNpcs.add( this );
+            logger.info( "Generated NPCMenu for " + this.name );
+            spareNpcs.add( this );
         }
         this.dataFile = paramString3;
         this.characterSheet = new DefaultStyledDocument( new javax.swing.text.StyleContext() );
@@ -76,7 +94,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
             final File file = new File( Objects.requireNonNull( classLoader.getResource( dataFile ) ).getFile() );
             this.reader = new BufferedReader( new InputStreamReader( new FileInputStream( file ) ) );
         } catch ( Exception localException1 ) {
-            System.out.println( "An exception occured while attemping to access " + this.dataFile );
+            logger.info( "An exception occured while attemping to access " + this.dataFile );
             localException1.printStackTrace();
         }
         try {
@@ -111,7 +129,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                     if ( localObject != null && !localObject.equals( "" ) ) {
                         this.name = localObject;
                     } else {
-                        System.out.println( "NUNAME == " + localObject );
+                        logger.info( "NUNAME == " + localObject );
                         this.name = this.data.substring( 0, this.data.length() - 2 );
                     }
                 } else {
@@ -119,10 +137,10 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                 }
             } else if ( this.IS_PLAYER ) {
                 st = new StringTokenizer( str, "-" );
-                System.out.println( "Parsing name for: " + str );
+                logger.info( "Parsing name for: " + str );
                 this.name = str.substring( 0, str.indexOf( "-" ) );
                 if ( st.countTokens() > 3 || st.countTokens() < 2 ) {
-                    JParanoia.errorMessage( "Invalid Player Name", "The character sheet " +
+                    errorMessage( "Invalid Player Name", "The character sheet " +
                             this.dataFile +
                             "\n" +
                             "attempts to define a player with\n" +
@@ -135,16 +153,16 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                             "initial may be omitted for infrared players.)\n" +
                             "\n" +
                             "Correct the error and relaunch the server." );
-                    System.exit( 0 );
+                    exit( 0 );
                 }
                 if ( st.countTokens() == 2 ) {
-                    System.out.println( "2 tokens in \"" + str + "\", assigning Infrared clearance." );
+                    logger.info( "2 tokens in \"" + str + "\", assigning Infrared clearance." );
                     this.clearance = "IR";
                 } else {
                     this.clearance = str.substring( str.indexOf( "-" ) + 1, str.lastIndexOf( "-" ) );
                 }
                 if ( ( this.clearanceInt = evaluateClearance( this.clearance ) ) == -99 ) {
-                    JParanoia.errorMessage( "Invalid clearance", "The character sheet " +
+                    errorMessage( "Invalid clearance", "The character sheet " +
                             this.dataFile +
                             "\n" +
                             "attempts to grant a player an\n" +
@@ -164,11 +182,11 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                             "U = ultraviolet\n" +
                             "\n" +
                             "Correct the error and relaunch the server." );
-                    System.exit( 0 );
+                    exit( 0 );
                 }
                 this.sector = str.substring( str.lastIndexOf( "-" ) + 1 );
                 if ( this.sector.length() != 3 ) {
-                    JParanoia.errorMessage( "Invalid sector", "The character sheet " +
+                    errorMessage( "Invalid sector", "The character sheet " +
                             this.dataFile +
                             "\n" +
                             "attempts to define a player with\n" +
@@ -179,12 +197,12 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                             "Sector names MUST be exactly three characters in length.\n" +
                             "\n" +
                             "Correct the error and relaunch the server." );
-                    System.exit( 0 );
+                    exit( 0 );
                 }
                 char[] localObject = this.sector.toCharArray();
                 for ( i = 0; i < localObject.length; ) {
                     if ( localObject[i] < 'A' || localObject[i] > 'Z' ) {
-                        JParanoia.errorMessage( "Invalid sector", "The character sheet " +
+                        errorMessage( "Invalid sector", "The character sheet " +
                                 this.dataFile +
                                 "\n" +
                                 "attempts to define a player with\n" +
@@ -195,7 +213,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                                 "Sector names MUST only contain capital letters A-Z.\n" +
                                 "\n" +
                                 "Correct the error and relaunch the server." );
-                        System.exit( 0 );
+                        exit( 0 );
                     }
                     i++;
                     this.name = this.data.substring( 0, this.data.length() - 2 );
@@ -232,14 +250,14 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
             this.playerMenu = new ServerPlayerMenu( this );
             this.globalExcludeCheckBox = new JCheckBox( getName() );
         } catch ( Exception localException2 ) {
-            System.out.println( "An exception occured while reading " + this.name + "'s data file." );
+            logger.info( "An exception occured while reading " + this.name + "'s data file." );
             localException2.printStackTrace();
-            JParanoia.errorMessage( "Exception", "An exception occured while reading " +
+            errorMessage( "Exception", "An exception occured while reading " +
                     this.name +
                     "'s data file.\n" +
                     "Run JParanoia with the console window to view errors.\n" +
                     "JParanoia will now terminate." );
-            System.exit( -1 );
+            exit( -1 );
         }
     }
 
@@ -431,20 +449,20 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                 "\n" +
                 "(omit the clone number):", "New Clone Family...", JOptionPane.PLAIN_MESSAGE, null, null, getName() );
         if ( str5 != null && !str5.equals( "" ) ) {
-            System.out.println( "About to attempt name parsing on: " + str5 );
+            logger.info( "About to attempt name parsing on: " + str5 );
             try {
                 st = new StringTokenizer( str5, "-" );
                 if ( st.countTokens() > 3 ) {
-                    JParanoia.errorMessage( "Invalid name", "I told you to leave off the clone number.\nTry again." );
+                    errorMessage( "Invalid name", "I told you to leave off the clone number.\nTry again." );
                     return;
                 }
                 if ( st.countTokens() < 2 ) {
-                    JParanoia.errorMessage( "Invalid name", "You didn't give this clone a sector and/or\nsecurity clearance.\nTry again." );
+                    errorMessage( "Invalid name", "You didn't give this clone a sector and/or\nsecurity clearance.\nTry again." );
                     return;
                 }
                 String str3;
                 if ( st.countTokens() == 2 ) {
-                    System.out.println( "2 tokens in \"" + str5 + "\", assigning Infrared clearance." );
+                    logger.info( "2 tokens in \"" + str5 + "\", assigning Infrared clearance." );
                     str3 = "IR";
                 } else {
                     str3 = str5.substring( str5.indexOf( "-" ) + 1, str5.lastIndexOf( "-" ) );
@@ -452,13 +470,13 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                 String str2 = str5.substring( 0, str5.indexOf( "-" ) );
                 str4 = str5.substring( str5.lastIndexOf( "-" ) + 1 );
                 if ( str4.length() != 3 ) {
-                    JParanoia.errorMessage( "Invalid sector", "Sector names MUST consist of three capital letters A-Z.\nTry again." );
+                    errorMessage( "Invalid sector", "Sector names MUST consist of three capital letters A-Z.\nTry again." );
                     return;
                 }
                 char[] arrayOfChar = str4.toCharArray();
                 for ( int j = 0; j < arrayOfChar.length; j++ ) {
                     if ( arrayOfChar[j] < 'A' || arrayOfChar[j] > 'Z' ) {
-                        JParanoia.errorMessage( "Invalid sector", "The sector \"" +
+                        errorMessage( "Invalid sector", "The sector \"" +
                                 str4 +
                                 "\" is invalid.\n" +
                                 "Sector names MUST only contain capital letters A-Z.\n" +
@@ -469,7 +487,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                 }
                 int i;
                 if ( ( i = evaluateClearance( str3 ) ) == -99 ) {
-                    JParanoia.errorMessage( "Invalid clearance", "Security clearance \"" +
+                    errorMessage( "Invalid clearance", "Security clearance \"" +
                             str3 +
                             "\" is invalid.\n" +
                             "\n" +
@@ -492,10 +510,10 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                 this.clearance = str3;
                 this.sector = str4;
             } catch ( Exception localException ) {
-                JParanoia.errorMessage( "Invalid name", "You have entered a name incompatible\nwith the standards set forth by Friend\nComputer. Report for termination." );
+                errorMessage( "Invalid name", "You have entered a name incompatible\nwith the standards set forth by Friend\nComputer. Report for termination." );
             }
-            JPServer.spamString( "199" + str1 + " has been replaced by " + str5 );
-            JPServer.absoluteChat( str1 + " has been replaced by " + str5 );
+            spamString( "199" + str1 + " has been replaced by " + str5 );
+            absoluteChat( str1 + " has been replaced by " + str5 );
             String str6;
             if ( this.loggedIn ) {
                 str6 = "y";
@@ -505,9 +523,9 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
             this.cloneNumber = 1;
             this.isDead = false;
             this.globalExcludeCheckBox.setText( getName() );
-            JPServer.repaintMenus();
+            repaintMenus();
             this.playerMenu.setText( getName() );
-            JPServer.spamString( "010" + getID() + "p" + str6 + str5 + "-" + this.cloneNumber );
+            spamString( "010" + getID() + "p" + str6 + str5 + "-" + this.cloneNumber );
             saveCharsheet( false );
             this.pmPane.reflectNameChange();
         }
@@ -673,22 +691,22 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
     }
 
     public void sendCharsheet() {
-        System.out.println( "Sending " + getName() + " their char sheet..." );
+        logger.info( "Sending " + getName() + " their char sheet..." );
         specificSend( "400" );
         try {
-            specificSend( JPServer.stripComments( this.characterSheet.getText( 0, this.characterSheet.getLength() ) ) );
+            specificSend( stripComments( this.characterSheet.getText( 0, this.characterSheet.getLength() ) ) );
         } catch ( Exception localException ) {
-            System.out.println( "Bad location exception while sending charsheet." );
+            logger.info( "Bad location exception while sending charsheet." );
         }
         specificSend( "402" );
     }
 
     public void sendLastSavedCharsheet() {
-        System.out.println( "Sending " + getName() + " their last saved char sheet..." );
+        logger.info( "Sending " + getName() + " their last saved char sheet..." );
         specificSend( "400" );
         try {
-            final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
-            final File file = new File( Objects.requireNonNull( classLoader.getResource( dataFile ) ).getFile() );
+            final ClassLoader classLoader = lookup().lookupClass().getClassLoader();
+            final File file = new File( requireNonNull( classLoader.getResource( dataFile ) ).getFile() );
             this.reader = new BufferedReader( new InputStreamReader( new FileInputStream( file ) ) );
             StringBuilder localStringBuffer = new StringBuilder();
             String str = this.reader.readLine();
@@ -700,9 +718,9 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                 str = this.reader.readLine();
             }
             this.reader.close();
-            specificSend( JPServer.stripComments( localStringBuffer.toString() ) );
+            specificSend( stripComments( localStringBuffer.toString() ) );
         } catch ( Exception localException ) {
-            System.out.println( "Bad location exception while sending charsheet." );
+            logger.info( "Bad location exception while sending charsheet." );
         }
         specificSend( "402" );
     }
@@ -722,15 +740,15 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
             writer.close();
             charsheetSaved();
             if ( paramBoolean ) {
-                System.out.println( "saveCharsheet(...): calling serverPlayer.sendCharsheet(...)" );
+                logger.info( "saveCharsheet(...): calling serverPlayer.sendCharsheet(...)" );
                 sendCharsheet();
-                if ( JPServer.soundIsOn && JPServer.soundMenu.charSheetAlertMenuItem.isSelected() ) {
-                    JPServer.soundPlayer.play( 20 );
+                if ( soundIsOn && soundMenu.charSheetAlertMenuItem.isSelected() ) {
+                    soundPlayer.play( 20 );
                 }
             }
         } catch ( Exception localException ) {
-            System.out.println( "An exception ocurred while attempting to write/send the file." );
-            System.out.println( "RAW outputFilepath == \"" + str + "\"" );
+            logger.info( "An exception ocurred while attempting to write/send the file." );
+            logger.info( "RAW outputFilepath == \"" + str + "\"" );
             localException.printStackTrace();
         }
     }
@@ -742,14 +760,14 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
     public void charsheetUpdated() {
         numUnsavedCharsheets += 1;
         this.unsavedCharsheet = true;
-        System.out.println( getName() + "charsheetUpdated(): numUnsavedCharsheets == " + numUnsavedCharsheets );
+        logger.info( getName() + "charsheetUpdated(): numUnsavedCharsheets == " + numUnsavedCharsheets );
     }
 
     public void charsheetSaved() {
         if ( this.unsavedCharsheet ) {
             this.unsavedCharsheet = false;
             numUnsavedCharsheets -= 1;
-            System.out.println( getName() + "charsheetSaved(): numUnsavedCharsheets == " + numUnsavedCharsheets );
+            logger.info( getName() + "charsheetSaved(): numUnsavedCharsheets == " + numUnsavedCharsheets );
         }
     }
 
@@ -763,9 +781,9 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
     }
 
     public void kickPlayer() {
-        System.out.print( "Attempting to kick " + getName() + "... " );
+        out.print( "Attempting to kick " + getName() + "... " );
         if ( this.chatThread == null ) {
-            JParanoia.errorMessage( "No chat thread", getName() +
+            errorMessage( "No chat thread", getName() +
                     " does not have a\n" +
                     "chat thread. (Probably due to not\n" +
                     "being logged in.)" );
@@ -773,8 +791,8 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
         }
         this.chatThread.out.println( "999*** You have been kicked ***" );
         this.chatThread.disconnect( true );
-        JPServer.absoluteSpam( "( * Kicked by server * )" );
-        System.out.println( "Player kicked." );
+        absoluteSpam( "( * Kicked by server * )" );
+        logger.info( "Player kicked." );
     }
 
     public void changePassword() {

@@ -2,10 +2,15 @@ package jparanoia.shared;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import static java.lang.System.exit;
 import java.lang.invoke.MethodHandles;
 import java.util.StringTokenizer;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class Prefs {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     public static final int PLAY_SOUNDS = 0;
     public static final int PLAY_STARTUP = 1;
     public static final int PLAY_JOIN_LEAVE = 2;
@@ -85,9 +90,9 @@ public class Prefs {
                 str1 = localBufferedReader.readLine();
             }
         } catch ( IOException localIOException ) {
-            System.out.println( "* Error reading jpConfig.ini" );
+            logger.info( "* Error reading jpConfig.ini" );
             localIOException.printStackTrace();
-            System.exit( -1 );
+            exit( -1 );
         }
     }
 

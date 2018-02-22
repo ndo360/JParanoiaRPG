@@ -1,7 +1,12 @@
 package jparanoia.server;
+import java.lang.invoke.MethodHandles;
 import javax.swing.JRadioButtonMenuItem;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class FontMenu extends javax.swing.JMenu {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     javax.swing.JMenu fontFamilyMenu;
     javax.swing.JMenu fontSizeMenu;
     javax.swing.JCheckBoxMenuItem fontBoldMenuItem;
@@ -149,7 +154,7 @@ public class FontMenu extends javax.swing.JMenu {
                 this.size120Button.setSelected( true );
                 break;
             default:
-                System.out.println( "ALERT: THE INI FILE IS ABOVE YOUR SECURITY CLEARANCE, CITIZEN!" );
+                logger.info( "ALERT: THE INI FILE IS ABOVE YOUR SECURITY CLEARANCE, CITIZEN!" );
         }
         this.fontSizeMenu.add( this.size10Button );
         this.fontSizeMenu.add( this.size12Button );

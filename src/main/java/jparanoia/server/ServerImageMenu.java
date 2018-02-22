@@ -1,10 +1,15 @@
 package jparanoia.server;
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class ServerImageMenu extends JMenu {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     SendImageMenuItem[] sendImageMenuItems;
     JMenuItem unplannedMenuItem;
     ArrayList imageInfo;
@@ -57,7 +62,7 @@ public class ServerImageMenu extends JMenu {
             } else {
                 str3 = "IMAGE: \"" + str1 + "\" URL: " + str2;
             }
-            JPServer.logger.logEntry( str3 );
+            JPServer.log.logEntry( str3 );
         }
     }
 }

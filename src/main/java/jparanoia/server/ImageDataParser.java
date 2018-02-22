@@ -6,8 +6,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import jparanoia.shared.JPImage;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class ImageDataParser {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     BufferedReader reader;
     String input;
     String name;
@@ -25,7 +29,7 @@ public class ImageDataParser {
                     this.st = new StringTokenizer( this.input, "|" );
                     while ( this.st.hasMoreTokens() ) {
                         String str = this.st.nextToken();
-                        System.out.println( "     Image: " + str );
+                        logger.info( "     Image: " + str );
                         this.imageInfo.add( new JPImage( str, new URL( this.st.nextToken() ) ) );
                     }
                 }

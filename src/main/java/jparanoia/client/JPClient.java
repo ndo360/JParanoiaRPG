@@ -1,7 +1,15 @@
 package jparanoia.client;
 import java.awt.Color;
+import static java.awt.Color.black;
+import static java.awt.Color.white;
+import java.awt.Point;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import static java.lang.System.getProperty;
+import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
+import java.net.Socket;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -15,8 +23,11 @@ import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class JPClient extends jparanoia.shared.JParanoia {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
     public static final jparanoia.shared.JPVersionNumber VERSION_NUMBER = new jparanoia.shared.JPVersionNumber( 1, 31, 1 );
     public static final String VERSION_NAME = VERSION_NUMBER.toString();
     public static final jparanoia.shared.JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new jparanoia.shared.JPVersionNumber( 1, 31, 0 );
@@ -128,7 +139,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
             try {
                 javax.swing.UIManager.setLookAndFeel( javax.swing.UIManager.getCrossPlatformLookAndFeelClassName() );
             } catch ( Exception localException ) {
-                System.out.println( "Exception while setting L&F." );
+                logger.info( "Exception while setting L&F." );
             }
         }
         jparanoia.shared.JParanoia.appInfo = "JParanoia Client " + VERSION_NAME;
@@ -183,7 +194,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                     newColor = new Color( 0.1F, 0.4F, 0.4F );
                     break;
                 default:
-                    System.out.println( "Error: Out of colors!" );
+                    logger.info( "Error: Out of colors!" );
             }
             darkColors[i] = newColor;
         }
@@ -393,15 +404,15 @@ public class JPClient extends jparanoia.shared.JParanoia {
         if ( !currentColorScheme.equals( newColorScheme ) ) {
             switch ( newColorScheme ) {
                 case "White on Black":
-                    textColor = Color.white;
-                    displayArea.setBackground( Color.black );
+                    textColor = white;
+                    displayArea.setBackground( black );
                     break;
                 case "Black on White":
-                    textColor = Color.black;
-                    displayArea.setBackground( Color.white );
+                    textColor = black;
+                    displayArea.setBackground( white );
                     break;
                 default:
-                    System.out.println( "Error: invalid color logic." );
+                    logger.info( "Error: invalid color logic." );
                     break;
             }
             currentColorScheme = newColorScheme;
@@ -416,16 +427,16 @@ public class JPClient extends jparanoia.shared.JParanoia {
                     playerList[i].setChatColor( brightColors[i] );
                 }
             }
-            System.out.println( "Error: invalid color logic" );
+            logger.info( "Error: invalid color logic" );
         }
     }
 
     public static void disconnect( boolean paramBoolean ) {
         System.out.print( "disconnect() initiated by " );
         if ( paramBoolean ) {
-            System.out.println( "server" );
+            logger.info( "server" );
         } else {
-            System.out.println( "client" );
+            logger.info( "client" );
         }
         disconnectCalled = true;
         if ( stayConnected ) {
@@ -446,7 +457,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
             }
             drop();
             if ( keepLog ) {
-                logger.closeLog();
+                log.closeLog();
             }
             loggedIn = false;
             stayConnected = false;
@@ -470,7 +481,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 soundPlayer.stopCombatMusic();
             }
         } else {
-            System.out.println( "Already disconnected." );
+            logger.info( "Already disconnected." );
         }
     }
 
@@ -565,14 +576,14 @@ public class JPClient extends jparanoia.shared.JParanoia {
             if ( autoScroll ) {
                 displayArea.setCaretPosition( chatDocument.getLength() );
             }
-            if ( logger != null && loggedIn && keepLog ) {
+            if ( log != null && loggedIn && keepLog ) {
                 String str;
                 if ( htmlLog ) {
                     str = "<span class=\"gray\">" + paramString + "</span><br/>";
                 } else {
                     str = paramString;
                 }
-                logger.logEntry( str );
+                log.logEntry( str );
             }
         } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
             System.err.println( "Unhandled exception. (Bad Location)" );
@@ -615,10 +626,10 @@ public class JPClient extends jparanoia.shared.JParanoia {
     }
 
     public static void main( String[] paramArrayOfString ) {
-        System.out.println( "\n\nThis is the JParanoia client console.\n" );
-        System.out.println( "Running under Java Runtime Environment version " + System.getProperty( "java.version" ) );
+        logger.info( "\n\nThis is the JParanoia client console.\n" );
+        logger.info( "Running under Java Runtime Environment version " + getProperty( "java.version" ) );
         JPClient localJPClient = new JPClient();
-        frame.setLocation( new java.awt.Point( 20, 20 ) );
+        frame.setLocation( new Point( 20, 20 ) );
         frame.setVisible( true );
     }
 
@@ -632,16 +643,16 @@ public class JPClient extends jparanoia.shared.JParanoia {
         for ( ;
               realName.trim().equals( "default" ) /*|| realName == null*/ || realName.trim().equals( "" );
               realName = (String) javax.swing.JOptionPane.showInputDialog( null, "You have not provided your \"real\" name in the\njpConfig.ini file. The sooner you do, the sooner\nthis message will stop appearing. Your \"real\" name\nis announced when you join and logged for posterity.\nMost likely the best choice rather than your actual\nname would be the name you are known by in your RPG\ncircles or your Internet persona. For example, your\nuser name on Paranoia-Live.net would be an excellent\nname to provide here.\n\n\"Real\" name:", "\"Real\" name...", JOptionPane.PLAIN_MESSAGE, null, null, realName ) ) {
-            System.out.println( "realName == \"" + realName + "\"" );
-            new javax.swing.JOptionPane();
+            logger.info( "realName == \"" + realName + "\"" );
+            new JOptionPane();
         }
         connectMenuItem.setEnabled( false );
         disconnectMenuItem.setEnabled( true );
         disconnectCalled = false;
         String str = "hey";
         try {
-            mySock = new java.net.Socket( paramString1, 11777 );
-            System.out.println( "Connected to server: " + paramString2 );
+            mySock = new Socket( paramString1, 11777 );
+            logger.info( "Connected to server: " + paramString2 );
             System.out.println();
             if ( soundIsOn && soundMenu.connectedDisconnectedMenuItem.isSelected() ) {
                 soundPlayer.play( 1 );
@@ -649,7 +660,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
             connected = true;
             stayConnected = true;
             out = new PrintWriter( mySock.getOutputStream(), true );
-            in = new java.io.BufferedReader( new java.io.InputStreamReader( mySock.getInputStream() ) );
+            in = new BufferedReader( new InputStreamReader( mySock.getInputStream() ) );
             myListener = new ChatListenerThread();
             myListener.setDaemon( true );
             myListener.start();
@@ -667,7 +678,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
             connectMenuItem.setEnabled( true );
             disconnectMenuItem.setEnabled( false );
         } catch ( java.io.IOException localIOException ) {
-            System.out.println( "ERROR: Unhandled IO Exception..." );
+            logger.info( "ERROR: Unhandled IO Exception..." );
             localIOException.printStackTrace();
         }
     }
@@ -768,7 +779,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
             localVector.addElement( "" );
         }
         if ( localVector.size() != numberOfPCs ) {
-            System.out.println( "Error: lipNames size not equal to number of player characters." );
+            logger.info( "Error: lipNames size not equal to number of player characters." );
         }
         Object[][] arrayOfObject = new Object[numberOfPCs][1];
         for ( int k = 0; k < localVector.size(); k++ ) {
@@ -881,9 +892,9 @@ public class JPClient extends jparanoia.shared.JParanoia {
         connectionStatusLabel.setIcon( connectedIcon );
         if ( keepLog ) {
             if ( htmlLog ) {
-                logger = new jparanoia.shared.GameLogger( playerList );
+                log = new jparanoia.shared.GameLogger( playerList );
             } else {
-                logger = new jparanoia.shared.GameLogger();
+                log = new jparanoia.shared.GameLogger();
             }
         }
         if ( soundIsOn && soundMenu.loginBadLoginMenuItem.isSelected() ) {
@@ -909,7 +920,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 charsheetFrame.repaint();
                 absoluteChat( "(Your character sheet has been updated by the GM.)" );
             } catch ( Exception localException ) {
-                System.out.println( "Error receiving character sheet." );
+                logger.info( "Error receiving character sheet." );
                 localException.printStackTrace();
             }
         }
@@ -955,7 +966,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 } else {
                     str = playerList[i].toString() + ": " + paramString;
                 }
-                logger.logEntry( str );
+                log.logEntry( str );
             }
         } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
             System.err.println( "Unhandled exception. (Bad Location)" );
@@ -1038,7 +1049,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 } else {
                     str = "* " + playerList[i].toString() + " " + paramString + " *";
                 }
-                logger.logEntry( str );
+                log.logEntry( str );
             }
             textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, textColor );
         } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
@@ -1098,7 +1109,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 } else {
                     str2 = playerList[i].toString() + " " + str1 + "\"" + paramString + "\"";
                 }
-                logger.logEntry( str2 );
+                log.logEntry( str2 );
             }
             textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, textColor );
         } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
@@ -1149,7 +1160,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 } else {
                     str = playerList[i].toString() + " . o O ( " + paramString + " )";
                 }
-                logger.logEntry( str );
+                log.logEntry( str );
             }
             textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, textColor );
         } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
@@ -1188,7 +1199,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 } else {
                     str2 = str1 + ": " + paramString;
                 }
-                logger.logEntry( str2 );
+                log.logEntry( str2 );
             }
         } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
             System.err.println( "Unhandled exception. (Bad Location)" );
@@ -1237,7 +1248,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                     } else {
                         str = "(" + playerList[j].toString() + " -> " + myPlayer.toString() + "): " + paramString;
                     }
-                    logger.logEntry( str );
+                    log.logEntry( str );
                 }
                 if ( !PMFrame[j].isShowing() ) {
                     PMFrame[j].setVisible( true );
@@ -1435,7 +1446,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
             } else {
                 str3 = "IMAGE: \"" + str1 + "\" URL: " + str2;
             }
-            logger.logEntry( str3 );
+            log.logEntry( str3 );
         }
     }
 

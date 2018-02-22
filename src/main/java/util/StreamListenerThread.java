@@ -2,8 +2,13 @@ package util;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.invoke.MethodHandles;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class StreamListenerThread extends Thread {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     BufferedReader in;
 
     public StreamListenerThread( InputStream paramInputStream ) {
@@ -16,10 +21,10 @@ public class StreamListenerThread extends Thread {
             for ( ; ; ) {
                 str = this.in.readLine();
                 if ( str == null ) {
-                    System.out.println( "-- end of line ---" );
+                    logger.info( "-- end of line ---" );
                     return;
                 }
-                System.out.println( str );
+                logger.info( str );
             }
 //       return;
         } catch ( Exception localException ) {

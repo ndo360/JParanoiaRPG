@@ -2,10 +2,15 @@ package http.raw;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.invoke.MethodHandles;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class RawSecureSocket {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     public static void main( String[] paramArrayOfString ) {
         try {
             SSLSocketFactory localSSLSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
@@ -24,7 +29,7 @@ public class RawSecureSocket {
             localPrintWriter.println( "LOGON=buried&PASSWORDS=wdml1299&NEW_PASSWORD=&CONFIRM_NEW_PASSWORD=&" );
             String str;
             while ( ( str = localBufferedReader.readLine() ) != null ) {
-                System.out.println( str );
+                logger.info( str );
             }
         } catch ( Exception localException ) {
             localException.printStackTrace();

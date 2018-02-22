@@ -1,8 +1,13 @@
 package http;
 import java.io.BufferedReader;
+import java.lang.invoke.MethodHandles;
 import java.net.URL;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class PageGetter {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     static BufferedReader reader;
     static String line = "";
 
@@ -16,7 +21,7 @@ public class PageGetter {
             while ( line != null ) {
                 line = reader.readLine();
                 if ( line != null ) {
-                    System.out.println( line );
+                    logger.info( line );
                 }
             }
         } catch ( Exception localException ) {

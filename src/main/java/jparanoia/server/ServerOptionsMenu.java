@@ -1,7 +1,17 @@
 package jparanoia.server;
+import java.lang.invoke.MethodHandles;
 import javax.swing.JOptionPane;
+import static jparanoia.server.JPServer.keepLog;
+import jparanoia.shared.GameLogger;
+import static jparanoia.shared.JParanoia.autoScroll;
+import static jparanoia.shared.JParanoia.log;
+import static jparanoia.shared.JParanoia.logBroken;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class ServerOptionsMenu extends javax.swing.JMenu {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     javax.swing.JCheckBoxMenuItem autoScrollMenuItem;
     javax.swing.JCheckBoxMenuItem showTimeStampsMenuItem;
     javax.swing.JCheckBoxMenuItem bigComputerFontMenuItem;
@@ -37,21 +47,21 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         this.autoScrollMenuItem = new javax.swing.JCheckBoxMenuItem( "Autoscroll" );
         this.autoScrollMenuItem.setSelected( JPServer.autoScroll );
         this.autoScrollMenuItem.addActionListener( paramAnonymousActionEvent -> {
-            JPServer.autoScroll = !JPServer.autoScroll;
-            System.out.println( "AUTO SCROLL = " + JPServer.autoScroll );
+            autoScroll = !autoScroll;
+            logger.info( "AUTO SCROLL = " + autoScroll );
         } );
         this.makeLogMenuItem = new javax.swing.JCheckBoxMenuItem( "Log Game" );
         this.makeLogMenuItem.setToolTipText( "Logs are saved in the 'logs' directory." );
         this.makeLogMenuItem.setSelected( (Boolean) JPServer.prefs.getPref( 20 ) );
         this.makeLogMenuItem.addActionListener( paramAnonymousActionEvent -> {
-            JPServer.keepLog = !JPServer.keepLog;
-            System.out.println( "KEEP LOG = " + JPServer.keepLog );
-            if ( JPServer.keepLog ) {
-                JPServer.logger = new jparanoia.shared.GameLogger();
+            keepLog = !keepLog;
+            logger.info( "KEEP LOG = " + keepLog );
+            if ( keepLog ) {
+                log = new GameLogger();
             } else {
-                JPServer.logger.closeLog();
+                log.closeLog();
             }
-            if ( JPServer.logBroken ) {
+            if ( logBroken ) {
                 ServerOptionsMenu.this.makeLogMenuItem.setEnabled( false );
                 ServerOptionsMenu.this.makeLogMenuItem.setSelected( false );
             }

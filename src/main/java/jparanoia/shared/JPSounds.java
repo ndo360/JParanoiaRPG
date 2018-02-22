@@ -1,7 +1,12 @@
 package jparanoia.shared;
+import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class JPSounds {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     public static final int STARTUP = 0;
     public static final int CONNECTED = 1;
     public static final int DISCONNECTED = 2;
@@ -31,7 +36,7 @@ public class JPSounds {
     ClassLoader loader = lookup().lookupClass().getClassLoader();
 
     public JPSounds() {
-        System.out.println( "JPSoundPlayer started\n\n" );
+        logger.info( "JPSoundPlayer started\n\n" );
         String[] arrayOfFile = new String[23];
         arrayOfFile[0] = "sounds/programLaunch.wav";
         arrayOfFile[1] = "sounds/connected.wav";

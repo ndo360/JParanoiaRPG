@@ -1,5 +1,8 @@
 package jparanoia.server;
+import static java.awt.Color.black;
+import static java.awt.Color.white;
 import java.awt.Dimension;
+import java.lang.invoke.MethodHandles;
 import javax.swing.BoxLayout;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -7,8 +10,12 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.SimpleAttributeSet;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class PrivateMessagePane extends javax.swing.JPanel {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     static SimpleAttributeSet pmAttributes = new SimpleAttributeSet();
     final ServerPlayer player;
     final Dimension IDEAL_DIMENSION = new Dimension( 250, 175 );
@@ -56,15 +63,15 @@ public class PrivateMessagePane extends javax.swing.JPanel {
         } );
         switch ( JPServer.currentColorScheme ) {
             case "White on Black":
-                this.displayArea.setDisabledTextColor( java.awt.Color.white );
-                this.displayArea.setBackground( java.awt.Color.black );
+                this.displayArea.setDisabledTextColor( white );
+                this.displayArea.setBackground( black );
                 break;
             case "Black on White":
-                this.displayArea.setDisabledTextColor( java.awt.Color.black );
-                this.displayArea.setBackground( java.awt.Color.white );
+                this.displayArea.setDisabledTextColor( black );
+                this.displayArea.setBackground( white );
                 break;
             default:
-                System.out.println( "PivateMessagePane error: no recognized color scheme selected..." );
+                logger.info( "PivateMessagePane error: no recognized color scheme selected..." );
                 break;
         }
         this.scrollPane = new javax.swing.JScrollPane( this.displayArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
@@ -110,7 +117,7 @@ public class PrivateMessagePane extends javax.swing.JPanel {
             this.privateMessageDocument.insertString( this.privateMessageDocument.getLength(), this.player.getName() +
                     "\n", pmAttributes );
         } catch ( BadLocationException localBadLocationException ) {
-            System.out.println( "bad location exception" );
+            logger.info( "bad location exception" );
         }
         this.displayArea.setDocument( this.privateMessageDocument );
         this.player.setPMPane( this );
@@ -145,7 +152,7 @@ public class PrivateMessagePane extends javax.swing.JPanel {
                 } else {
                     str = "(" + JPServer.myPlayer.getName() + " -> " + this.player.toString() + "): " + paramString;
                 }
-                JPServer.logger.logEntry( str );
+                JPServer.log.logEntry( str );
             }
         } catch ( BadLocationException localBadLocationException ) {
             System.err.println( "Unhandled exception. (Bad Location)" );

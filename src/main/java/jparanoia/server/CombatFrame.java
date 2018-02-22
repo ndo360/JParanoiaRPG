@@ -3,6 +3,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -16,8 +17,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
+import static jparanoia.server.JPServer.absoluteChat;
+import static jparanoia.server.JPServer.spamString;
+import static jparanoia.server.JPServer.troubleshooters;
+import jparanoia.shared.ErrorLogger;
+import static jparanoia.shared.JParanoia.errLog;
+import static jparanoia.shared.JParanoia.errorMessage;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class CombatFrame extends JFrame {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     CombatFrame thisCombatFrame = this;
     String debugButtonString = "";
     boolean allTurnsReceived = false;
@@ -228,19 +239,19 @@ public class CombatFrame extends JFrame {
     }
 
     void abortCombat() {
-        JPServer.spamString( "609" );
-        JPServer.spamString( "199(GM aborted combat)" );
-        JPServer.absoluteChat( "(GM aborted combat)" );
-        for ( int i = 0; i < JPServer.troubleshooters.length; i++ ) {
-            if ( JPServer.troubleshooters[i].isLoggedIn() ) {
-                JPServer.troubleshooters[i].statusPanel.freeze();
+        spamString( "609" );
+        spamString( "199(GM aborted combat)" );
+        absoluteChat( "(GM aborted combat)" );
+        for ( int i = 0; i < troubleshooters.length; i++ ) {
+            if ( troubleshooters[i].isLoggedIn() ) {
+                troubleshooters[i].statusPanel.freeze();
             }
         }
-        System.out.println( this.debugButtonString );
-        JPServer.errLog = new jparanoia.shared.ErrorLogger( "cmbt", this.debugButtonString );
-        JPServer.errLog.closeLog();
-        JPServer.errLog = null;
-        JPServer.errorMessage( "Combat Aborted", "You have aborted a combat round. This should only be done\nwhen a combat round is somehow prevented from ending normally.\nAn error log has been created in your JParanoia directory.\nPlease notify the author by submitting the contents of\nthe error log in a bug report on the JParanoia website.\nhttp://www.byronbarry.com/jparanoia" );
+        logger.info( this.debugButtonString );
+        errLog = new ErrorLogger( "cmbt", this.debugButtonString );
+        errLog.closeLog();
+        errLog = null;
+        errorMessage( "Combat Aborted", "You have aborted a combat round. This should only be done\nwhen a combat round is somehow prevented from ending normally.\nAn error log has been created in your JParanoia directory.\nPlease notify the author by submitting the contents of\nthe error log in a bug report on the JParanoia website.\nhttp://www.byronbarry.com/jparanoia" );
         endCombat();
     }
 

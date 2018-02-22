@@ -1,10 +1,15 @@
 package http.connector;
 import java.io.PrintWriter;
+import java.lang.invoke.MethodHandles;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 import util.StreamListenerThread;
 
 public class HttpConnect {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     static final int GET = 0;
     static final int POST = 1;
     static final int REG_POST = 2;
@@ -19,7 +24,7 @@ public class HttpConnect {
             connecto = (HttpURLConnection) new URL( "http://127.0.0.1/formyform.html" ).openConnection();
             connecto.setDoOutput( true );
         } catch ( Exception localException ) {
-            System.out.println( "Aww, exception." );
+            logger.info( "Aww, exception." );
             localException.printStackTrace();
         }
         doStuff();
@@ -28,7 +33,7 @@ public class HttpConnect {
     public static void doStuff() {
         try {
             String str = "description=foop";
-            System.out.println( "Connected. Sending request..." );
+            logger.info( "Connected. Sending request..." );
             method = 4;
             switch ( method ) {
                 case 4:
@@ -39,7 +44,7 @@ public class HttpConnect {
                     slt = new StreamListenerThread( connecto.getInputStream() );
                     slt.start();
             }
-            System.out.println( "Request sent. Waiting for reply..." );
+            logger.info( "Request sent. Waiting for reply..." );
             Object localObject = "";
         } catch ( Exception localException ) {
             localException.printStackTrace();

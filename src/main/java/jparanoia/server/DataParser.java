@@ -2,10 +2,15 @@ package jparanoia.server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.invoke.MethodHandles;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class DataParser {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     BufferedReader reader;
     String input;
     String currentText;
@@ -22,7 +27,7 @@ public class DataParser {
     public ServerPlayer[] parsePlayerList( String paramString ) {
         this.newPlayers = new Vector();
         try {
-            System.out.println( "\nProcessing playerList.txt:" );
+            logger.info( "\nProcessing playerList.txt:" );
 //            final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
 //            final File file = new File( Objects.requireNonNull( classLoader.getResource( paramString ) ).getFile() );
 //            this.reader = new BufferedReader( new InputStreamReader(new FileInputStream( file )) );
@@ -37,7 +42,7 @@ public class DataParser {
                     while ( this.st.hasMoreTokens() ) {
                         this.playerNumber = i;
                         this.playerName = this.st.nextToken();
-                        System.out.println( "     Player " + i + ": " + this.playerName );
+                        logger.info( "     Player " + i + ": " + this.playerName );
                         this.playerIsPlayer = this.st.nextToken().equals( "p" );
                         if ( this.playerIsPlayer ) {
                             this.playerPassword = this.st.nextToken();
@@ -59,7 +64,7 @@ public class DataParser {
                 this.input = this.reader.readLine();
             }
         } catch ( IOException localIOException ) {
-            System.out.println( "* Error reading playerList.txt" );
+            logger.info( "* Error reading playerList.txt" );
             localIOException.printStackTrace();
         }
         this.somePlayerArray = new ServerPlayer[this.newPlayers.size()];

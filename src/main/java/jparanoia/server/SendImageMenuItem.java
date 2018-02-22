@@ -1,8 +1,13 @@
 package jparanoia.server;
+import java.lang.invoke.MethodHandles;
 import javax.swing.JMenuItem;
 import jparanoia.shared.JPImage;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class SendImageMenuItem extends JMenuItem {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     JPImage imageItem;
 
     public SendImageMenuItem( JPImage paramJPImage ) {
@@ -29,7 +34,7 @@ public class SendImageMenuItem extends JMenuItem {
                             "\" URL: " +
                             SendImageMenuItem.this.imageItem.getURL();
                 }
-                JPServer.logger.logEntry( str );
+                JPServer.log.logEntry( str );
             }
         } );
     }

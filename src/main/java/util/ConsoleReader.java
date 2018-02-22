@@ -3,8 +3,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import static java.lang.System.exit;
+import java.lang.invoke.MethodHandles;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class ConsoleReader {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     private BufferedReader reader;
 
     public ConsoleReader() {
@@ -25,8 +31,8 @@ public class ConsoleReader {
         try {
             str = this.reader.readLine();
         } catch ( IOException localIOException ) {
-            System.out.println( localIOException );
-            System.exit( 1 );
+            logger.error( localIOException.toString() );
+            exit( 1 );
         }
         return str;
     }

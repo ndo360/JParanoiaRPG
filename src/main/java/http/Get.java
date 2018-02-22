@@ -1,10 +1,15 @@
 package http;
 import java.io.BufferedReader;
+import java.lang.invoke.MethodHandles;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class Get {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     public static void main( String[] paramArrayOfString ) {
         try {
             HttpURLConnection localHttpURLConnection = null;
@@ -28,17 +33,13 @@ public class Get {
             java.util.Set localSet = localMap.keySet();
             Object[] arrayOfObject = localSet.toArray();
             for ( int i = 0; i < arrayOfObject.length; i++ ) {
-                System.out.println( "<< " +
-                        arrayOfObject[i] +
-                        ": " +
-                        localMap.get( arrayOfObject[i] ).toString() +
-                        " >>" );
+                logger.info( "<< " + arrayOfObject[i] + ": " + localMap.get( arrayOfObject[i] ).toString() + " >>" );
             }
             BufferedReader localBufferedReader = util.TagTosser.tossTags( new BufferedReader( new java.io.InputStreamReader( localHttpURLConnection
                     .getInputStream() ) ) );
             String str;
             while ( ( str = localBufferedReader.readLine() ) != null ) {
-                System.out.println( str );
+                logger.info( str );
             }
         } catch ( Exception localException1 ) {
             localException1.printStackTrace();

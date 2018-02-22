@@ -1,5 +1,11 @@
 package jparanoia.shared;
+import java.lang.invoke.MethodHandles;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
+
 public class GameRegistrar {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     public static String formattedDesc = "";
 
     public static JPGameInfo[] getGames() {
@@ -75,7 +81,7 @@ public class GameRegistrar {
     }
 
     public static void addGame( String paramString ) {
-        System.out.println( "Not adding game to the list as paranoia-live is obviously dead" );
+        logger.info( "Not adding game to the list as paranoia-live is obviously dead" );
 //        return;
 //
 //

@@ -1,7 +1,12 @@
 package jparanoia.shared;
 import java.awt.Color;
+import java.lang.invoke.MethodHandles;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class BrightColorArray {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     public Color[] getColors() {
         Color[] arrayOfColor = new Color[55];
         Color localColor = Color.black;
@@ -272,7 +277,7 @@ public class BrightColorArray {
                     localColor = new Color( 234, 25, 25 );
                     break;
                 default:
-                    System.out.println( "BrightColorArray() constructor: Error: Out of colors!" );
+                    logger.info( "BrightColorArray() constructor: Error: Out of colors!" );
             }
             arrayOfColor[i] = localColor;
         }

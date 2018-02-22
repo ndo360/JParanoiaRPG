@@ -1,9 +1,14 @@
 package http;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.invoke.MethodHandles;
 import java.net.Socket;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class SocketSpew extends Thread {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     Socket socket;
     BufferedReader in;
 
@@ -18,7 +23,7 @@ public class SocketSpew extends Thread {
             this.in = new BufferedReader( new InputStreamReader( this.socket.getInputStream() ) );
             do {
                 str = this.in.readLine();
-                System.out.println( str + "*" );
+                logger.info( str + "*" );
             } while ( str != null && !str.toUpperCase().contains( "</HTML>" ) );
         } catch ( Exception localException ) {
             localException.printStackTrace();

@@ -1,12 +1,42 @@
 package jparanoia.server;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import static java.lang.Integer.parseInt;
+import java.lang.invoke.MethodHandles;
 import java.net.Socket;
 import java.util.Vector;
+import static jparanoia.server.JPServer.MIN_COMPATIBLE_VERSION_NUMBER;
+import static jparanoia.server.JPServer.absoluteChat;
+import static jparanoia.server.JPServer.actionChat;
+import static jparanoia.server.JPServer.chatThreads;
+import static jparanoia.server.JPServer.combatButton;
+import static jparanoia.server.JPServer.combatFrame;
+import static jparanoia.server.JPServer.generalChat;
+import static jparanoia.server.JPServer.hearObserversMenuItem;
+import static jparanoia.server.JPServer.numberOfConnectedClients;
+import static jparanoia.server.JPServer.numberOfConnectedObservers;
+import static jparanoia.server.JPServer.observerChat;
+import static jparanoia.server.JPServer.observerHasJoined;
+import static jparanoia.server.JPServer.observerHasLeft;
+import static jparanoia.server.JPServer.playerHasLeft;
+import static jparanoia.server.JPServer.players;
+import static jparanoia.server.JPServer.privateMessageHandler;
+import static jparanoia.server.JPServer.reassignThreadNumbers;
+import static jparanoia.server.JPServer.spamString;
+import static jparanoia.server.JPServer.speechChat;
+import static jparanoia.server.JPServer.thoughtChat;
 import jparanoia.shared.JPVersionNumber;
+import static jparanoia.shared.JParanoia.addObsName;
+import static jparanoia.shared.JParanoia.announceObservers;
+import static jparanoia.shared.JParanoia.removeObsName;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 class ServerChatThread extends Thread {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     public Socket socket = null;
     public PrintWriter out = null;
     public BufferedReader in = null;
@@ -31,7 +61,7 @@ class ServerChatThread extends Thread {
     public void run() {
         try {
             this.out = new PrintWriter( this.socket.getOutputStream(), true );
-            this.in = new BufferedReader( new java.io.InputStreamReader( this.socket.getInputStream() ) );
+            this.in = new BufferedReader( new InputStreamReader( this.socket.getInputStream() ) );
             this.listening = true;
             playerLogin();
             if ( !this.acceptedLogin ) {
@@ -42,7 +72,7 @@ class ServerChatThread extends Thread {
             while ( this.listening ) {
                 String str = this.in.readLine();
                 try {
-                    switch ( Integer.parseInt( str.substring( 0, 3 ) ) ) {
+                    switch ( parseInt( str.substring( 0, 3 ) ) ) {
                         case 86:
                             if ( this.listening ) {
                                 disconnect( false );
@@ -50,49 +80,49 @@ class ServerChatThread extends Thread {
                             this.listening = false;
                             break;
                         case 99:
-                            JPServer.spamString( str );
-                            if ( JPServer.hearObserversMenuItem.isSelected() ) {
-                                JPServer.observerChat( str.substring( 3 ) );
+                            spamString( str );
+                            if ( hearObserversMenuItem.isSelected() ) {
+                                observerChat( str.substring( 3 ) );
                             }
                             break;
                         case 100:
-                            JPServer.spamString( str );
-                            JPServer.generalChat( str.substring( 3 ) );
+                            spamString( str );
+                            generalChat( str.substring( 3 ) );
                             break;
                         case 110:
-                            JPServer.spamString( str );
-                            JPServer.actionChat( str.substring( 3 ) );
+                            spamString( str );
+                            actionChat( str.substring( 3 ) );
                             break;
                         case 120:
-                            JPServer.spamString( str );
-                            JPServer.speechChat( str.substring( 3 ) );
+                            spamString( str );
+                            speechChat( str.substring( 3 ) );
                             break;
                         case 130:
-                            JPServer.spamString( str );
-                            JPServer.thoughtChat( str.substring( 3 ) );
+                            spamString( str );
+                            thoughtChat( str.substring( 3 ) );
                             break;
                         case 199:
-                            JPServer.absoluteChat( str.substring( 3 ) );
+                            absoluteChat( str.substring( 3 ) );
                             break;
                         case 200:
-                            JPServer.privateMessageHandler( str.substring( 3 ), true );
+                            privateMessageHandler( str.substring( 3 ), true );
                             break;
                         case 400:
                             this.obsName = str.substring( 3 );
-                            jparanoia.shared.JParanoia.addObsName( this.obsName );
-                            if ( jparanoia.shared.JParanoia.announceObservers ) {
-                                JPServer.observerHasJoined( this.obsName );
+                            addObsName( this.obsName );
+                            if ( announceObservers ) {
+                                observerHasJoined( this.obsName );
                             }
                             break;
                         case 601:
-                            JPServer.combatFrame.receiveCombatTurn( this.thisPlayer, str.substring( 3 ) );
+                            combatFrame.receiveCombatTurn( this.thisPlayer, str.substring( 3 ) );
                             break;
                         case 602:
                             this.thisPlayer.playerAbortedTurn();
                             break;
                         default:
-                            System.out.println( "\nError: unknown command type\n" + str + "\n" );
-                            JPServer.absoluteChat( "\nError: unknown command type\n" + str + "\n" );
+                            logger.info( "\nError: unknown command type\n" + str + "\n" );
+                            absoluteChat( "\nError: unknown command type\n" + str + "\n" );
                     }
                 } catch ( NumberFormatException localNumberFormatException ) {
                     this.out.println( "199* * * WARNING * * *\n199Your client has sent an invalid command.\n199You will now be disconnected. Exit and relaunch the client.\n199If this problem persists, submit a bug report on the JParanoia website.\n199(http://www.byronbarry.com/jparanoia/)" );
@@ -102,42 +132,41 @@ class ServerChatThread extends Thread {
                     }
                 } catch ( NullPointerException localNullPointerException ) {
                     this.out.println( "086If you are reading this sentence, please alert the author via a bug report." );
-                    System.out.println( "NPE in ServerChatThread.run()" );
+                    logger.info( "NPE in ServerChatThread.run()" );
                     if ( !this.disconnectCalled ) {
                         disconnect( true );
                     }
                 }
             }
-            System.out.println( "ServerChatThread.run() exiting naturally." );
+            logger.info( "ServerChatThread.run() exiting naturally." );
         } catch ( java.net.SocketException localSocketException ) {
             if ( !this.observer && !this.disconnectCalled ) {
-                System.out.println( this.thisPlayer.getName() +
-                        " unexpectedly lost their connection. (SocketException)" );
-                JPServer.spamString( "199" +
+                logger.info( this.thisPlayer.getName() + " unexpectedly lost their connection. (SocketException)" );
+                spamString( "199" +
                         this.thisPlayer.getName() +
                         " unexpectedly lost their connection. (SocketException)" );
-                JPServer.absoluteChat( this.thisPlayer.getName() +
+                absoluteChat( this.thisPlayer.getName() +
                         " unexpectedly lost their connection. (SocketException)" );
             }
             disconnect( true );
         } catch ( IOException localIOException ) {
             if ( !this.observer && !this.disconnectCalled ) {
-                System.out.println( this.thisPlayer.getName() + " unexpectedly lost their connection. (IOException)" );
-                JPServer.spamString( "199" +
+                logger.info( this.thisPlayer.getName() + " unexpectedly lost their connection. (IOException)" );
+                spamString( "199" +
                         this.thisPlayer.getName() +
                         " unexpectedly lost their connection. (IOException)" );
-                JPServer.absoluteChat( this.thisPlayer.getName() +
+                absoluteChat( this.thisPlayer.getName() +
                         " unexpectedly lost their connection. (IOException)" );
             }
             disconnect( true );
             localIOException.printStackTrace();
         } catch ( Exception localException ) {
             if ( !this.observer && !this.disconnectCalled ) {
-                System.out.println( this.thisPlayer.getName() + " unexpectedly lost their connection. (Exception)" );
-                JPServer.spamString( "199" +
+                logger.info( this.thisPlayer.getName() + " unexpectedly lost their connection. (Exception)" );
+                spamString( "199" +
                         this.thisPlayer.getName() +
                         " unexpectedly lost their connection. (Exception)" );
-                JPServer.absoluteChat( this.thisPlayer.getName() + " unexpectedly lost their connection. (Exception)" );
+                absoluteChat( this.thisPlayer.getName() + " unexpectedly lost their connection. (Exception)" );
             }
             disconnect( true );
             localException.printStackTrace();
@@ -179,13 +208,13 @@ class ServerChatThread extends Thread {
                     }
                     i = Integer.parseInt( str2.substring( 3 ) );
                     if ( i < JPServer.numberOfPCs ) {
-                        System.out.println( "New user attempting to connect as " + JPServer.players[i].getName() );
-                        if ( JPServer.players[i].isLoggedIn() ) {
+                        logger.info( "New user attempting to connect as " + players[i].getName() );
+                        if ( players[i].isLoggedIn() ) {
                             this.out.println( "910 Invalid entry. That player is already logged in. (Nice try.)" );
                         } else {
                             this.out.println( "900 Enter your password." );
                             String str1 = this.in.readLine().substring( 3 );
-                            this.acceptedLogin = JPServer.players[i].checkPassword( str1 );
+                            this.acceptedLogin = players[i].checkPassword( str1 );
                             if ( !this.acceptedLogin ) {
                                 this.out.println( "910 Incorrect password." );
                             }
@@ -257,24 +286,24 @@ class ServerChatThread extends Thread {
                 this.out.println( JPServer.getAnnouncement() );
             }
         } catch ( IOException localIOException ) {
-            System.out.println( "IO exception during connect()" );
+            logger.info( "IO exception during connect()" );
             localIOException.printStackTrace();
         }
         if ( !this.observer ) {
             JPServer.spamString( "011" + this.playerID );
             JPServer.playerHasJoined( this.playerID );
         } else {
-            JPServer.numberOfConnectedObservers += 1;
-            System.out.println( "JPServer.numberOfConnectedObservers == " + JPServer.numberOfConnectedObservers );
+            numberOfConnectedObservers += 1;
+            logger.info( "JPServer.numberOfConnectedObservers == " + numberOfConnectedObservers );
         }
         synchronized ( JPServer.chatThreads ) {
-            this.threadNumber = JPServer.numberOfConnectedClients;
-            JPServer.chatThreads.add( this );
-            JPServer.numberOfConnectedClients = JPServer.chatThreads.size();
-            System.out.println( "JPServer.numberOfConnectedClients == " + JPServer.numberOfConnectedClients );
-            if ( !JPServer.combatButton.isEnabled() &&
-                    JPServer.numberOfConnectedClients - JPServer.numberOfConnectedObservers > 1 ) {
-                JPServer.combatButton.setEnabled( true );
+            this.threadNumber = numberOfConnectedClients;
+            chatThreads.add( this );
+            numberOfConnectedClients = chatThreads.size();
+            logger.info( "JPServer.numberOfConnectedClients == " + numberOfConnectedClients );
+            if ( !combatButton.isEnabled() &&
+                    numberOfConnectedClients - numberOfConnectedObservers > 1 ) {
+                combatButton.setEnabled( true );
             }
         }
         if ( !this.observer ) {
@@ -287,10 +316,10 @@ class ServerChatThread extends Thread {
             this.out.println( "955 Identify your version" );
             if ( new JPVersionNumber( this.in.readLine() ).compareTo( JPServer.MIN_COMPATIBLE_VERSION_NUMBER ) < 0 ) {
                 this.out.println( "961Incompatible version. You must have JParanoia Client version " +
-                        JPServer.MIN_COMPATIBLE_VERSION_NUMBER.toString() +
+                        MIN_COMPATIBLE_VERSION_NUMBER.toString() +
                         " or greater to connect to this server. The JParanoia website is: " +
                         "http://www.byronbarry.com/jparanoia/" );
-                System.out.println( "Notice: Someone has attempted to connect using a client version that is too old." );
+                logger.info( "Notice: Someone has attempted to connect using a client version that is too old." );
                 return false;
             }
             this.out.println( "960" + JPServer.VERSION_NUMBER.toString() );
@@ -305,7 +334,7 @@ class ServerChatThread extends Thread {
             JPServer.absoluteChat( "An error occured: unrecognized version code." );
             return false;
         } catch ( IOException localIOException ) {
-            System.out.println( "Error: An I/O Exception occured during version check." );
+            logger.info( "Error: An I/O Exception occured during version check." );
         }
         return false;
     }
@@ -323,13 +352,13 @@ class ServerChatThread extends Thread {
             int j = Integer.parseInt( str2 );
             int k = Integer.parseInt( str1.substring( 2 ) );
             if ( j % k == 0 ) {
-                System.out.println( "Client passed challenge." );
+                logger.info( "Client passed challenge." );
                 return true;
             }
             JPServer.absoluteChat( "WARNING: Someone has attempted (and failed) to connect using an invalid client application. It is extremely likely that this is not an accident." );
             return false;
         } catch ( IOException localIOException ) {
-            System.out.println( "Error: An I/O Exception occured during check." );
+            logger.info( "Error: An I/O Exception occured during check." );
         }
         return false;
     }
@@ -345,19 +374,19 @@ class ServerChatThread extends Thread {
             this.in.close();
             this.socket.close();
         } catch ( IOException localIOException ) {
-            System.out.println( "Unable to close Writer, Reader or Socket." );
+            logger.info( "Unable to close Writer, Reader or Socket." );
             localIOException.printStackTrace();
         }
         if ( this.observer ) {
-            JPServer.numberOfConnectedObservers -= 1;
-            System.out.println( "JPServer.numberOfConnectedObservers == " + JPServer.numberOfConnectedObservers );
-            jparanoia.shared.JParanoia.removeObsName( this.obsName );
-            if ( jparanoia.shared.JParanoia.announceObservers ) {
-                JPServer.observerHasLeft( this.obsName );
+            numberOfConnectedObservers -= 1;
+            logger.info( "JPServer.numberOfConnectedObservers == " + numberOfConnectedObservers );
+            removeObsName( this.obsName );
+            if ( announceObservers ) {
+                observerHasLeft( this.obsName );
             }
         }
         if ( !this.thisPlayer.isLoggedIn() ) {
-            System.out.println( "Unknown user disconnected. (Not signed in.)" );
+            logger.info( "Unknown user disconnected. (Not signed in.)" );
         } else {
             JPServer.spamString( "012" + this.playerID );
             System.out.print( this.thisPlayer.getName() + " disconnected... " );
@@ -365,14 +394,14 @@ class ServerChatThread extends Thread {
         }
         synchronized ( JPServer.chatThreads ) {
             if ( this.observer || this.thisPlayer.isLoggedIn() ) {
-                JPServer.chatThreads.remove( this.threadNumber );
+                chatThreads.remove( this.threadNumber );
             }
             if ( !this.observer && this.thisPlayer.isLoggedIn() ) {
-                JPServer.playerHasLeft( this.playerID );
+                playerHasLeft( this.playerID );
             }
-            JPServer.numberOfConnectedClients = JPServer.chatThreads.size();
-            System.out.println( "JPServer.numberOfConnectedClients == " + JPServer.numberOfConnectedClients );
-            JPServer.reassignThreadNumbers();
+            numberOfConnectedClients = chatThreads.size();
+            logger.info( "JPServer.numberOfConnectedClients == " + numberOfConnectedClients );
+            reassignThreadNumbers();
         }
         if ( JPServer.combatButton.isEnabled() &&
                 JPServer.numberOfConnectedClients - JPServer.numberOfConnectedObservers < 2 ) {

@@ -2,9 +2,14 @@ package jparanoia.shared.http;
 import http.HttpPoster;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.net.URL;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class GameRegistrar {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     public static final String REGISTRY_URL_STRING = "http://www.byronbarry.com/jparanoia/game_registrar.html";
     public static String formattedDesc = "";
 
@@ -16,7 +21,7 @@ public class GameRegistrar {
                             formattedDesc );
             String str;
             while ( ( str = localBufferedReader.readLine() ) != null ) {
-                System.out.println( str );
+                logger.info( str );
             }
             localBufferedReader.close();
         } catch ( IOException localIOException ) {
@@ -30,7 +35,7 @@ public class GameRegistrar {
                     ".com/jparanoia/game_registrar.html" ), "erase=1" );
             String str;
             while ( ( str = localBufferedReader.readLine() ) != null ) {
-                System.out.println( str );
+                logger.info( str );
             }
             localBufferedReader.close();
         } catch ( IOException localIOException ) {

@@ -1,5 +1,7 @@
 package jparanoia.shared;
 import java.awt.Color;
+import static java.lang.System.exit;
+import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
 import java.net.URL;
 import java.util.Vector;
@@ -10,8 +12,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.ToolTipManager;
 import javax.swing.text.StyledDocument;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public abstract class JParanoia {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     public static final String JPARANOIA_WEBSITE = "http://www.byronbarry.com/jparanoia/";
     public static JFrame frame = new JFrame();
     public static Prefs prefs = new Prefs();
@@ -28,7 +34,7 @@ public abstract class JParanoia {
     public static int lastCompletionPlayer = 99;
     public static java.util.ArrayList sortedNames = new java.util.ArrayList( 8 );
     public static Vector obsNames = new Vector( 40 );
-    public static GameLogger logger;
+    public static GameLogger log;
     public static ErrorLogger errLog;
     public static JMenuItem aboutBoxMenuItem;
     public static java.util.StringTokenizer st;
@@ -116,9 +122,9 @@ public abstract class JParanoia {
                                 .getClassLoader()
                                 .getResource( "graphics/jparanoiaIcon.jpg" ) ) );
             } catch ( Exception localException2 ) {
-                System.out.println( "Error getting icon." );
+                logger.info( "Error getting icon." );
                 localException2.printStackTrace();
-                System.exit( -1 );
+                exit( -1 );
             }
             localJFrame.setVisible( true );
         } catch ( Exception localException1 ) {
@@ -168,11 +174,11 @@ public abstract class JParanoia {
     }
 
     public static void observerHasJoined( String paramString ) {
-        System.out.println( "WRONG METHOD CALLED. (joined)" );
+        logger.info( "WRONG METHOD CALLED. (joined)" );
     }
 
     public static void observerHasLeft( String paramString ) {
-        System.out.println( "WRONG METHOD CALLED. (disconnected)" );
+        logger.info( "WRONG METHOD CALLED. (disconnected)" );
     }
 }
 

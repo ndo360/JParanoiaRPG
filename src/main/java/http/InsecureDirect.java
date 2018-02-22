@@ -1,11 +1,16 @@
 package http;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.lang.invoke.MethodHandles;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class InsecureDirect {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     public static void main( String[] paramArrayOfString ) {
         try {
             HttpURLConnection localHttpURLConnection = null;
@@ -36,7 +41,7 @@ public class InsecureDirect {
                     .getInputStream() ) );
             String str4;
             while ( ( str4 = localBufferedReader.readLine() ) != null ) {
-                System.out.println( str4 );
+                logger.info( str4 );
             }
         } catch ( Exception localException1 ) {
             localException1.printStackTrace();

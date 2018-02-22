@@ -3,9 +3,14 @@ import http.SocketSpew;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.invoke.MethodHandles;
 import java.net.Socket;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class HttpConnector {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     static final int GET = 0;
     static final int POST = 1;
     static final int REG_POST = 2;
@@ -16,13 +21,13 @@ public class HttpConnector {
     public static void main( String[] paramArrayOfString ) {
         try {
             String str = "wnt.cc.utexas.edu";
-            System.out.println( "Connecting to " + str + ":" + 80 + "..." );
+            logger.info( "Connecting to " + str + ":" + 80 + "..." );
             Socket localSocket = new Socket( str, 80 );
             sockSpew = new SocketSpew( localSocket );
             sockSpew.start();
             doStuff( localSocket );
         } catch ( Exception localException ) {
-            System.out.println( "Aww, exception." );
+            logger.info( "Aww, exception." );
             localException.printStackTrace();
         }
     }
@@ -32,7 +37,7 @@ public class HttpConnector {
             PrintWriter localPrintWriter = new PrintWriter( paramSocket.getOutputStream(), true );
             BufferedReader localBufferedReader = new BufferedReader( new InputStreamReader( paramSocket.getInputStream() ) );
             String str1 = "description=foop&erase=0";
-            System.out.println( "Connected. Sending request..." );
+            logger.info( "Connected. Sending request..." );
             method = 0;
             switch ( method ) {
                 case 0:
@@ -73,7 +78,7 @@ public class HttpConnector {
                     localPrintWriter.println( "Content-Length: " + str1.length() );
                     localPrintWriter.println( "Connection: Keep-Alive" );
                     localPrintWriter.println( "Cache-Control: no-cache" );
-                    System.out.println( "-- Content-Length: " + str1.length() + " --" );
+                    logger.info( "-- Content-Length: " + str1.length() + " --" );
                     break;
                 case 3:
                     localPrintWriter.println( "POST /~byronb/gameRegistry.php HTTP/1.1" );
@@ -88,9 +93,9 @@ public class HttpConnector {
                     localPrintWriter.println( "Cache-Control: no-cache" );
                     localPrintWriter.println( "" );
                     localPrintWriter.println( str1 );
-                    System.out.println( "-- Content-Length: " + str1.length() + " --" );
+                    logger.info( "-- Content-Length: " + str1.length() + " --" );
             }
-            System.out.println( "Request sent. Waiting for reply..." );
+            logger.info( "Request sent. Waiting for reply..." );
             String str2 = "";
         } catch ( Exception localException ) {
             localException.printStackTrace();

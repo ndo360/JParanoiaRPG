@@ -1,11 +1,16 @@
 package http;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.lang.invoke.MethodHandles;
 import java.net.URL;
 import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class Direct {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     public static void main( String[] paramArrayOfString ) {
         try {
             HttpsURLConnection localHttpsURLConnection = null;
@@ -38,17 +43,13 @@ public class Direct {
             java.util.Set localSet = localMap.keySet();
             Object[] arrayOfObject = localSet.toArray();
             for ( int i = 0; i < arrayOfObject.length; i++ ) {
-                System.out.println( "*** " +
-                        arrayOfObject[i] +
-                        ": " +
-                        localMap.get( arrayOfObject[i] ).toString() +
-                        " ***" );
+                logger.info( "*** " + arrayOfObject[i] + ": " + localMap.get( arrayOfObject[i] ).toString() + " ***" );
             }
             BufferedReader localBufferedReader = util.TagTosser.tossTags( new BufferedReader( new java.io.InputStreamReader( localHttpsURLConnection
                     .getInputStream() ) ) );
             String str4;
             while ( ( str4 = localBufferedReader.readLine() ) != null ) {
-                System.out.println( str4 );
+                logger.info( str4 );
             }
         } catch ( Exception localException1 ) {
             localException1.printStackTrace();
