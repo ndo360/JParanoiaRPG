@@ -1,7 +1,9 @@
 package jparanoia.server;
 import java.awt.Dimension;
+import javax.swing.BoxLayout;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.SimpleAttributeSet;
@@ -20,7 +22,7 @@ public class PrivateMessagePane extends javax.swing.JPanel {
         this.player = paramServerPlayer;
         pmAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Family, "SansSerif" );
         pmAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Foreground, java.awt.Color.white );
-        pmAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 10 ) );
+        pmAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 10 );
         this.displayArea = new JTextPane();
         this.displayArea.setEditable( false );
         this.displayArea.setEnabled( true );
@@ -52,16 +54,20 @@ public class PrivateMessagePane extends javax.swing.JPanel {
                 JPServer.inputLine.requestFocus();
             }
         } );
-        if ( JPServer.currentColorScheme.equals( "White on Black" ) ) {
-            this.displayArea.setDisabledTextColor( java.awt.Color.white );
-            this.displayArea.setBackground( java.awt.Color.black );
-        } else if ( JPServer.currentColorScheme.equals( "Black on White" ) ) {
-            this.displayArea.setDisabledTextColor( java.awt.Color.black );
-            this.displayArea.setBackground( java.awt.Color.white );
-        } else {
-            System.out.println( "PivateMessagePane error: no recognized color scheme selected..." );
+        switch ( JPServer.currentColorScheme ) {
+            case "White on Black":
+                this.displayArea.setDisabledTextColor( java.awt.Color.white );
+                this.displayArea.setBackground( java.awt.Color.black );
+                break;
+            case "Black on White":
+                this.displayArea.setDisabledTextColor( java.awt.Color.black );
+                this.displayArea.setBackground( java.awt.Color.white );
+                break;
+            default:
+                System.out.println( "PivateMessagePane error: no recognized color scheme selected..." );
+                break;
         }
-        this.scrollPane = new javax.swing.JScrollPane( this.displayArea, 22, 31 );
+        this.scrollPane = new javax.swing.JScrollPane( this.displayArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
         this.privateMessageDocument = new DefaultStyledDocument();
         this.inputLine = new JTextField( 20 );
         this.inputLine.setEnabled( false );
@@ -90,7 +96,7 @@ public class PrivateMessagePane extends javax.swing.JPanel {
             }
         } );
         this.statusPanel = new StatusPanel( this.player );
-        setLayout( new javax.swing.BoxLayout( this, 1 ) );
+        setLayout( new javax.swing.BoxLayout( this, BoxLayout.Y_AXIS ) );
         this.displayArea.setMinimumSize( new Dimension( 200, 60 ) );
         this.displayArea.setPreferredSize( new Dimension( 200, 60 ) );
         this.displayArea.setMaximumSize( new Dimension( 200, 60 ) );
@@ -171,8 +177,7 @@ public class PrivateMessagePane extends javax.swing.JPanel {
     }
 
     public String toString() {
-        String str = this.player.getName() + "'s private message pane";
-        return str;
+        return this.player.getName() + "'s private message pane";
     }
 }
 

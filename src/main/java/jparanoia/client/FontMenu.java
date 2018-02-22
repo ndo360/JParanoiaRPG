@@ -49,58 +49,58 @@ public class FontMenu extends javax.swing.JMenu {
         this.fontSizeMenu = new javax.swing.JMenu( "Size" );
         this.size10Button = new JRadioButtonMenuItem( "10" );
         this.size10Button.addActionListener( paramAnonymousActionEvent -> {
-            JPClient.mainFontSize = new Integer( 10 );
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 10 ) );
+            JPClient.mainFontSize = 10;
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, 10 );
         } );
         this.size12Button = new JRadioButtonMenuItem( "12" );
         this.size12Button.addActionListener( paramAnonymousActionEvent -> {
-            JPClient.mainFontSize = new Integer( 12 );
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 12 ) );
+            JPClient.mainFontSize = 12;
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, 12 );
         } );
         this.size14Button = new JRadioButtonMenuItem( "14" );
         this.size14Button.addActionListener( paramAnonymousActionEvent -> {
-            JPClient.mainFontSize = new Integer( 14 );
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 14 ) );
+            JPClient.mainFontSize = 14;
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, 14 );
         } );
         this.size16Button = new JRadioButtonMenuItem( "16" );
         this.size16Button.addActionListener( paramAnonymousActionEvent -> {
-            JPClient.mainFontSize = new Integer( 16 );
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 16 ) );
+            JPClient.mainFontSize = 16;
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, 16 );
         } );
         this.size18Button = new JRadioButtonMenuItem( "18" );
         this.size18Button.addActionListener( paramAnonymousActionEvent -> {
-            JPClient.mainFontSize = new Integer( 18 );
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( 18 ) );
+            JPClient.mainFontSize = 18;
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, 18 );
         } );
         this.size24Button = new JRadioButtonMenuItem( "24" );
         this.size24Button.addActionListener( paramAnonymousActionEvent -> {
-            JPClient.mainFontSize = new Integer( 24 );
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 24 ) );
+            JPClient.mainFontSize = 24;
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 24 );
         } );
         this.size36Button = new JRadioButtonMenuItem( "36" );
         this.size36Button.addActionListener( paramAnonymousActionEvent -> {
-            JPClient.mainFontSize = new Integer( 36 );
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 36 ) );
+            JPClient.mainFontSize = 36;
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 36 );
         } );
         this.size48Button = new JRadioButtonMenuItem( "48" );
         this.size48Button.addActionListener( paramAnonymousActionEvent -> {
-            JPClient.mainFontSize = new Integer( 48 );
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 48 ) );
+            JPClient.mainFontSize = 48;
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 48 );
         } );
         this.size72Button = new JRadioButtonMenuItem( "72" );
         this.size72Button.addActionListener( paramAnonymousActionEvent -> {
-            JPClient.mainFontSize = new Integer( 72 );
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 72 ) );
+            JPClient.mainFontSize = 72;
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 72 );
         } );
         this.size96Button = new JRadioButtonMenuItem( "96" );
         this.size96Button.addActionListener( paramAnonymousActionEvent -> {
-            JPClient.mainFontSize = new Integer( 96 );
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 96 ) );
+            JPClient.mainFontSize = 96;
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 96 );
         } );
         this.size120Button = new JRadioButtonMenuItem( "120" );
         this.size120Button.addActionListener( paramAnonymousActionEvent -> {
-            JPClient.mainFontSize = new Integer( 120 );
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, new Integer( 120 ) );
+            JPClient.mainFontSize = 120;
+            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 120 );
         } );
         javax.swing.ButtonGroup localButtonGroup2 = new javax.swing.ButtonGroup();
         localButtonGroup2.add( this.size10Button );
@@ -114,7 +114,7 @@ public class FontMenu extends javax.swing.JMenu {
         localButtonGroup2.add( this.size72Button );
         localButtonGroup2.add( this.size96Button );
         localButtonGroup2.add( this.size120Button );
-        switch ( ( (Integer) JPClient.prefs.getPref( 15 ) ).intValue() ) {
+        switch ( (Integer) JPClient.prefs.getPref( 15 ) ) {
             case 10:
                 this.size10Button.setSelected( true );
                 break;
@@ -164,7 +164,7 @@ public class FontMenu extends javax.swing.JMenu {
         this.fontSizeMenu.add( this.size120Button );
         add( this.fontSizeMenu );
         this.fontBoldMenuItem = new javax.swing.JCheckBoxMenuItem( "Bold" );
-        this.fontBoldMenuItem.setSelected( JPClient.prefs.getPref( 17 ).equals( new Boolean( true ) ) );
+        this.fontBoldMenuItem.setSelected( JPClient.prefs.getPref( 17 ).equals( Boolean.TRUE ) );
         this.fontBoldMenuItem.addActionListener( paramAnonymousActionEvent -> {
             if ( JPClient.fontIsBold ) {
                 JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Bold, Boolean.FALSE );

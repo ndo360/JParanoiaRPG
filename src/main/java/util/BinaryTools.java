@@ -1,25 +1,25 @@
 package util;
 public abstract class BinaryTools {
     public static String format( int paramInt ) {
-        String str = Integer.toBinaryString( paramInt );
+        StringBuilder str = new StringBuilder( Integer.toBinaryString( paramInt ) );
         while ( str.length() < 32 ) {
-            str = "0" + str;
+            str.insert( 0, "0" );
         }
-        str = str.substring( 0, 8 ) +
+        str = new StringBuilder( str.substring( 0, 8 ) +
                 " " +
                 str.substring( 8, 16 ) +
                 " " +
                 str.substring( 16, 24 ) +
                 " " +
-                str.substring( 24 );
-        return str;
+                str.substring( 24 ) );
+        return str.toString();
     }
 
     public static String format( byte paramByte ) {
-        String str = Integer.toBinaryString( paramByte & 0xFF );
+        StringBuilder str = new StringBuilder( Integer.toBinaryString( paramByte & 0xFF ) );
         while ( str.length() < 8 ) {
-            str = "0" + str;
+            str.insert( 0, "0" );
         }
-        return str;
+        return str.toString();
     }
 }

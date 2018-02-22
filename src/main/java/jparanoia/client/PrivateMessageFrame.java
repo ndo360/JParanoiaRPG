@@ -5,6 +5,8 @@ import static java.lang.invoke.MethodHandles.lookup;
 import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.WindowConstants;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 
@@ -24,20 +26,24 @@ public class PrivateMessageFrame extends javax.swing.JFrame {
         setIconImage( java.awt.Toolkit.getDefaultToolkit()
                 .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
         addItemToMenu();
-        setDefaultCloseOperation( 1 );
+        setDefaultCloseOperation( WindowConstants.HIDE_ON_CLOSE );
         this.displayArea = new JTextPane();
         this.displayArea.setEditable( false );
         this.displayArea.setEnabled( false );
-        if ( JPClient.currentColorScheme.equals( "White on Black" ) ) {
-            this.displayArea.setDisabledTextColor( Color.white );
-            this.displayArea.setBackground( Color.black );
-        } else if ( JPClient.currentColorScheme.equals( "Black on White" ) ) {
-            this.displayArea.setDisabledTextColor( Color.black );
-            this.displayArea.setBackground( Color.white );
-        } else {
-            System.out.println( "PivateMessageFrame error: no recognized color scheme selected..." );
+        switch ( JPClient.currentColorScheme ) {
+            case "White on Black":
+                this.displayArea.setDisabledTextColor( Color.white );
+                this.displayArea.setBackground( Color.black );
+                break;
+            case "Black on White":
+                this.displayArea.setDisabledTextColor( Color.black );
+                this.displayArea.setBackground( Color.white );
+                break;
+            default:
+                System.out.println( "PivateMessageFrame error: no recognized color scheme selected..." );
+                break;
         }
-        this.scrollPane = new javax.swing.JScrollPane( this.displayArea, 22, 31 );
+        this.scrollPane = new javax.swing.JScrollPane( this.displayArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
         this.privateMessageDocument = new DefaultStyledDocument();
         this.inputLine = new JTextField( 20 );
         this.inputLine.addActionListener( paramAnonymousActionEvent -> {
@@ -119,8 +125,7 @@ public class PrivateMessageFrame extends javax.swing.JFrame {
     }
 
     public String toString() {
-        String str = this.player.getName() + "'s private message frame";
-        return str;
+        return this.player.getName() + "'s private message frame";
     }
 }
 

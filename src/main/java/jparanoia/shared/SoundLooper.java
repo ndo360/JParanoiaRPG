@@ -16,7 +16,7 @@ class SoundLooper extends Thread {
         while ( this.currentClip.isRunning() && !SoundManager.stopLoop ) {
             try {
                 sleep( 30L );
-                if ( SoundManager.stopLoop == true ) {
+                if ( SoundManager.stopLoop ) {
                     this.currentClip.stop();
                     this.currentClip.flush();
                 }

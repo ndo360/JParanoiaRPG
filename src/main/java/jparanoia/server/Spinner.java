@@ -1,6 +1,7 @@
 package jparanoia.server;
 import java.awt.Dimension;
 import static java.lang.invoke.MethodHandles.lookup;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
@@ -34,7 +35,7 @@ public class Spinner extends javax.swing.JPanel {
         } );
         setPreferredSize( new Dimension( 40, 30 ) );
         setMaximumSize( new Dimension( 40, 30 ) );
-        setLayout( new javax.swing.BoxLayout( this, 0 ) );
+        setLayout( new javax.swing.BoxLayout( this, BoxLayout.X_AXIS ) );
         this.label.setMinimumSize( new Dimension( 30, 24 ) );
         this.label.setPreferredSize( new Dimension( 30, 24 ) );
         this.label.setMaximumSize( new Dimension( 30, 24 ) );

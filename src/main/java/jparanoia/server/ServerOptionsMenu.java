@@ -1,4 +1,6 @@
 package jparanoia.server;
+import javax.swing.JOptionPane;
+
 public class ServerOptionsMenu extends javax.swing.JMenu {
     javax.swing.JCheckBoxMenuItem autoScrollMenuItem;
     javax.swing.JCheckBoxMenuItem showTimeStampsMenuItem;
@@ -40,7 +42,7 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         } );
         this.makeLogMenuItem = new javax.swing.JCheckBoxMenuItem( "Log Game" );
         this.makeLogMenuItem.setToolTipText( "Logs are saved in the 'logs' directory." );
-        this.makeLogMenuItem.setSelected( ( (Boolean) JPServer.prefs.getPref( 20 ) ).booleanValue() );
+        this.makeLogMenuItem.setSelected( (Boolean) JPServer.prefs.getPref( 20 ) );
         this.makeLogMenuItem.addActionListener( paramAnonymousActionEvent -> {
             JPServer.keepLog = !JPServer.keepLog;
             System.out.println( "KEEP LOG = " + JPServer.keepLog );
@@ -55,21 +57,21 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
             }
         } );
         this.quickCharsheetMenuItem = new javax.swing.JCheckBoxMenuItem( "Quick Charsheet" );
-        this.quickCharsheetMenuItem.setSelected( ( (Boolean) JPServer.prefs.getPref( 33 ) ).booleanValue() );
+        this.quickCharsheetMenuItem.setSelected( (Boolean) JPServer.prefs.getPref( 33 ) );
         this.showTimeStampsMenuItem = new javax.swing.JCheckBoxMenuItem( "Show Timestamps" );
-        this.showTimeStampsMenuItem.setSelected( ( (Boolean) JPServer.prefs.getPref( 24 ) ).booleanValue() );
+        this.showTimeStampsMenuItem.setSelected( (Boolean) JPServer.prefs.getPref( 24 ) );
         this.showTimeStampsMenuItem.addActionListener( paramAnonymousActionEvent -> {
             JPServer.showTimeStamps = !JPServer.showTimeStamps;
         } );
         this.bigComputerFontMenuItem = new javax.swing.JCheckBoxMenuItem( "Show Big Computer Font" );
         this.bigComputerFontMenuItem.setToolTipText( "<HTML>When disabled, players see The Computer's font<BR>in the increased size but you do not.</HTML>" );
-        this.bigComputerFontMenuItem.setSelected( ( (Boolean) JPServer.prefs.getPref( 25 ) ).booleanValue() );
+        this.bigComputerFontMenuItem.setSelected( (Boolean) JPServer.prefs.getPref( 25 ) );
         this.bigComputerFontMenuItem.addActionListener( paramAnonymousActionEvent -> {
             JPServer.bigComputerFont = !JPServer.bigComputerFont;
         } );
         this.computerAllCapsMenuItem = new javax.swing.JCheckBoxMenuItem( "Computer speech in CAPS" );
         this.computerAllCapsMenuItem.setToolTipText( "Show The Computer's speech in ALL CAPS." );
-        this.computerAllCapsMenuItem.setSelected( ( (Boolean) JPServer.prefs.getPref( 27 ) ).booleanValue() );
+        this.computerAllCapsMenuItem.setSelected( (Boolean) JPServer.prefs.getPref( 27 ) );
         this.computerAllCapsMenuItem.addActionListener( paramAnonymousActionEvent -> JPServer.computerAllCaps = !JPServer.computerAllCaps );
         this.computerFontIncreaseMenu = new javax.swing.JMenu( "Computer font increase" );
         this.computerFontIncreaseMenu.setToolTipText( "<HTML>Amount to increase<BR>The Computer's font size.</HTML>" );
@@ -180,7 +182,7 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         this.titleMessageMenuItem.setToolTipText( "<HTML>Displays a message in the title bar<BR>of everyone's main window.</HTML>" );
         this.titleMessageMenuItem.addActionListener( paramAnonymousActionEvent -> {
             new javax.swing.JOptionPane();
-            JPServer.titleMessage = (String) javax.swing.JOptionPane.showInputDialog( null, "Enter a new title bar message:", "Set Title Message", -1, null, null, "" );
+            JPServer.titleMessage = (String) javax.swing.JOptionPane.showInputDialog( null, "Enter a new title bar message:", "Set Title Message", JOptionPane.PLAIN_MESSAGE, null, null, "" );
             if ( JPServer.titleMessage != null ) {
                 JPServer.setTitleMessage( JPServer.titleMessage );
             }
@@ -189,7 +191,7 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         this.clearTitleMessageMenuItem.addActionListener( paramAnonymousActionEvent -> {
         } );
         this.useAnnouncementMenuItem = new javax.swing.JCheckBoxMenuItem( "Use Announcement" );
-        this.useAnnouncementMenuItem.setSelected( ( (Boolean) JPServer.prefs.getPref( 37 ) ).booleanValue() );
+        this.useAnnouncementMenuItem.setSelected( (Boolean) JPServer.prefs.getPref( 37 ) );
         this.setAnnouncementMenuItem = new javax.swing.JMenuItem( "Set Announcement..." );
         this.setAnnouncementMenuItem.addActionListener( paramAnonymousActionEvent -> {
         } );
@@ -204,7 +206,7 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
         } );
         this.singleUseSpoofMenuItem = new javax.swing.JCheckBoxMenuItem( "Single Use Spoofing" );
         this.singleUseSpoofMenuItem.setToolTipText( "<HTML> When checked, the Spoof checkbox will <BR>automatically deselect itself when you send a <BR>spoofed line.</HTML>" );
-        this.singleUseSpoofMenuItem.setSelected( ( (Boolean) JPServer.prefs.getPref( 36 ) ).booleanValue() );
+        this.singleUseSpoofMenuItem.setSelected( (Boolean) JPServer.prefs.getPref( 36 ) );
         this.singleUseSpoofMenuItem.addActionListener( paramAnonymousActionEvent -> {
         } );
         this.computerFontMenu = new javax.swing.JMenu( "Computer font" );

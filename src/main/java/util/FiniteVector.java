@@ -11,7 +11,7 @@ public class FiniteVector extends Vector {
     public FiniteVector( int paramInt ) {
         super( paramInt );
         if ( paramInt > -1 ) {
-            this.currentMaxNumContents = this.maxNumContents = new Integer( paramInt );
+            this.currentMaxNumContents = this.maxNumContents = paramInt;
         } else {
             throw new IllegalArgumentException( "FiniteVector(int) can not be called with a negative integer." );
         }
@@ -21,7 +21,7 @@ public class FiniteVector extends Vector {
         if ( this.contentsLocked ) {
             return false;
         }
-        if ( size() < this.currentMaxNumContents.intValue() ) {
+        if ( size() < this.currentMaxNumContents ) {
             super.add( paramObject );
             return true;
         }
@@ -43,11 +43,11 @@ public class FiniteVector extends Vector {
     }
 
     public int getMaxNumContents() {
-        return this.maxNumContents.intValue();
+        return this.maxNumContents;
     }
 
     public int getCurrentMaxNumContents() {
-        return this.currentMaxNumContents.intValue();
+        return this.currentMaxNumContents;
     }
 
     public boolean setMaxNumContents( int paramInt ) {
@@ -55,7 +55,7 @@ public class FiniteVector extends Vector {
             return false;
         }
         if ( paramInt >= size() ) {
-            this.maxNumContents = new Integer( paramInt );
+            this.maxNumContents = paramInt;
             return true;
         }
         return false;
@@ -71,7 +71,7 @@ public class FiniteVector extends Vector {
 
     public void lockCurrentMax() {
         this.maxLocked = true;
-        this.currentMaxNumContents = new Integer( size() );
+        this.currentMaxNumContents = size();
     }
 
     public void unlockCurrentMax() {
@@ -84,7 +84,7 @@ public class FiniteVector extends Vector {
     }
 
     public boolean makeFinite() {
-        if ( size() > this.maxNumContents.intValue() ) {
+        if ( size() > this.maxNumContents ) {
             return false;
         }
         this.infinite = false;
@@ -95,7 +95,7 @@ public class FiniteVector extends Vector {
         if ( this.contentsLocked ) {
             return 0;
         }
-        return this.currentMaxNumContents.intValue() - size();
+        return this.currentMaxNumContents - size();
     }
 }
 

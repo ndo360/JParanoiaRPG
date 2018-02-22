@@ -107,7 +107,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                             "\n" +
                             "(You can click Cancel to keep \"GM\" if you so choose.\n" +
                             "To permanently surpress this notice, set bGmNameNag=false\n" +
-                            "in your jpConfig.ini file.)", "Boring GM Name...", -1, null, null, "GM" );
+                            "in your jpConfig.ini file.)", "Boring GM Name...", JOptionPane.PLAIN_MESSAGE, null, null, "GM" );
                     if ( localObject != null && !localObject.equals( "" ) ) {
                         this.name = localObject;
                     } else {
@@ -117,7 +117,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                 } else {
                     this.name = this.data.substring( 0, this.data.length() - 2 );
                 }
-            } else if ( this.IS_PLAYER && this.PLAYER_NUMBER != 0 ) {
+            } else if ( this.IS_PLAYER ) {
                 st = new StringTokenizer( str, "-" );
                 System.out.println( "Parsing name for: " + str );
                 this.name = str.substring( 0, str.indexOf( "-" ) );
@@ -429,7 +429,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
         String str5 = (String) JOptionPane.showInputDialog( null, "Enter new name for " +
                 getName() +
                 "\n" +
-                "(omit the clone number):", "New Clone Family...", -1, null, null, getName() );
+                "(omit the clone number):", "New Clone Family...", JOptionPane.PLAIN_MESSAGE, null, null, getName() );
         if ( str5 != null && !str5.equals( "" ) ) {
             System.out.println( "About to attempt name parsing on: " + str5 );
             try {
@@ -780,7 +780,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
     public void changePassword() {
         String str = null;
         if ( ( str = JOptionPane.showInputDialog( JPServer.frame, "Enter a new password for " +
-                toString(), "New Password", -1 ) ) != null ) {
+                toString(), "New Password", JOptionPane.PLAIN_MESSAGE ) ) != null ) {
             this.password = str;
             this.playerMenu.currentPasswordLabel.setText( "    Password: " + this.password );
         }
@@ -800,7 +800,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
     public void npcRename() {
         String str = null;
         if ( ( str = (String) JOptionPane.showInputDialog( JPServer.frame, "Enter a new name for " +
-                toString(), "New Name", -1, null, null, this.name ) ) != null && !str.equals( "" ) ) {
+                toString(), "New Name", JOptionPane.PLAIN_MESSAGE, null, null, this.name ) ) != null && !str.equals( "" ) ) {
             this.name = str;
             JPServer.repaintMenus();
             this.npcMenu.setText( getName() );

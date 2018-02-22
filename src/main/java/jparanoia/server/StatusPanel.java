@@ -1,5 +1,6 @@
 package jparanoia.server;
 import static java.lang.invoke.MethodHandles.lookup;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.Timer;
@@ -74,7 +75,7 @@ public class StatusPanel extends javax.swing.JPanel {
             StatusPanel.this.newMessageLabel.setIcon( StatusPanel.this.nullMessageIcon );
             JPServer.inputLine.requestFocus();
         } );
-        setLayout( new javax.swing.BoxLayout( this, 1 ) );
+        setLayout( new javax.swing.BoxLayout( this, BoxLayout.Y_AXIS ) );
         add( this.statusButton );
         add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 0, 2 ) ) );
         add( this.newMessageLabel );

@@ -22,9 +22,8 @@ public class VersionNumber implements Comparable {
         return this.patch;
     }
 
-    public boolean equals( Object paramObject ) {
-        VersionNumber localVersionNumber = (VersionNumber) paramObject;
-        return toString().equals( localVersionNumber.toString() );
+    public boolean equals( VersionNumber paramObject ) {
+        return toString().equals( paramObject.toString() );
     }
 
     public String toString() {

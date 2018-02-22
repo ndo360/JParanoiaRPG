@@ -1,7 +1,9 @@
 package jparanoia.server;
 import java.awt.Dimension;
+import java.awt.Font;
 import static java.lang.invoke.MethodHandles.lookup;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
@@ -22,7 +24,7 @@ public class DicePanel extends javax.swing.JPanel {
 
     public DicePanel() {
         this.r = new java.util.Random();
-        setLayout( new javax.swing.BoxLayout( this, 0 ) );
+        setLayout( new javax.swing.BoxLayout( this, BoxLayout.X_AXIS ) );
         this.d10Icon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/d10.jpg" ) );
         this.d20Icon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/d20.jpg" ) );
         this.d100Icon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/d100.jpg" ) );
@@ -52,7 +54,7 @@ public class DicePanel extends javax.swing.JPanel {
         this.diceOutputField.setEnabled( false );
         this.diceOutputField.setEditable( false );
         this.diceOutputField.setDisabledTextColor( java.awt.Color.black );
-        java.awt.Font localFont = new java.awt.Font( "Monospaced", 1, 16 );
+        java.awt.Font localFont = new java.awt.Font( "Monospaced", Font.BOLD, 16 );
         this.diceOutputField.setFont( localFont );
         this.diceOutputField.setHorizontalAlignment( 0 );
         add( this.d10Button );

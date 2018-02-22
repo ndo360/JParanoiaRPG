@@ -44,7 +44,7 @@ public abstract class JParanoia {
     static NoTabFocusManager ntfm = new NoTabFocusManager();
 
     public JParanoia() {
-        if ( ( (Boolean) prefs.getPref( 0 ) ).booleanValue() ) {
+        if ( (Boolean) prefs.getPref( 0 ) ) {
             soundPlayer = new JPSounds();
             soundIsOn = true;
         }
@@ -64,7 +64,7 @@ public abstract class JParanoia {
             new JOptionPane();
             JOptionPane.showMessageDialog( null, JParanoia.appInfo +
                     "\n© 2002-2004 Byron Barry" +
-                    str, "About JParanoia", 1, JParanoia.aboutIcon );
+                    str, "About JParanoia", JOptionPane.INFORMATION_MESSAGE, JParanoia.aboutIcon );
         } );
         javax.swing.FocusManager.setCurrentManager( ntfm );
         ttm.setDismissDelay( 100000000 );
@@ -91,7 +91,7 @@ public abstract class JParanoia {
     }
 
     public static void errorMessage( String paramString1, String paramString2 ) {
-        JOptionPane.showMessageDialog( frame, paramString2, paramString1, 0 );
+        JOptionPane.showMessageDialog( frame, paramString2, paramString1, JOptionPane.ERROR_MESSAGE );
     }
 
     public static void displayImage( String paramString ) {
@@ -131,7 +131,7 @@ public abstract class JParanoia {
     }
 
     public static void warningMessage( String paramString1, String paramString2 ) {
-        JOptionPane.showMessageDialog( frame, paramString2, paramString1, 2 );
+        JOptionPane.showMessageDialog( frame, paramString2, paramString1, JOptionPane.WARNING_MESSAGE );
     }
 
     public static void displayWrite( Color paramColor, String paramString ) {

@@ -1,6 +1,7 @@
 package jparanoia.server;
 import java.awt.Container;
 import java.awt.Dimension;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -27,16 +28,16 @@ public class GlobalPMDialog extends javax.swing.JFrame {
         } );
         this.resetButton.setAlignmentX( 0.5F );
         this.contentPane = getContentPane();
-        this.excludePanel.setLayout( new javax.swing.BoxLayout( this.excludePanel, 1 ) );
+        this.excludePanel.setLayout( new javax.swing.BoxLayout( this.excludePanel, BoxLayout.Y_AXIS ) );
         this.excludePanel.add( javax.swing.Box.createRigidArea( new Dimension( 2, 0 ) ) );
         for ( int i = 0; i < ts.length; i++ ) {
             this.excludePanel.add( ts[i].getExcludeCheckBox() );
             this.excludePanel.add( javax.swing.Box.createRigidArea( new Dimension( 2, 0 ) ) );
         }
         this.excludePanel.setBorder( javax.swing.BorderFactory.createTitledBorder( "Exclude" ) );
-        this.contentPane.setLayout( new javax.swing.BoxLayout( this.contentPane, 0 ) );
+        this.contentPane.setLayout( new javax.swing.BoxLayout( this.contentPane, BoxLayout.X_AXIS ) );
         this.textField.setMaximumSize( new Dimension( 500, 25 ) );
-        this.textPanel.setLayout( new javax.swing.BoxLayout( this.textPanel, 1 ) );
+        this.textPanel.setLayout( new javax.swing.BoxLayout( this.textPanel, BoxLayout.Y_AXIS ) );
         this.textPanel.add( this.textField );
         this.textPanel.add( javax.swing.Box.createRigidArea( new Dimension( 4, 0 ) ) );
         this.textPanel.add( this.resetButton );

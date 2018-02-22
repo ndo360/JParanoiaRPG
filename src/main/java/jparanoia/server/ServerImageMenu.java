@@ -28,12 +28,12 @@ public class ServerImageMenu extends JMenu {
         JOptionPane localJOptionPane = new JOptionPane();
         String str1;
         do {
-            str1 = (String) JOptionPane.showInputDialog( null, "Enter a description of the image:", "Unplanned Image...", -1, null, null, "" );
+            str1 = (String) JOptionPane.showInputDialog( null, "Enter a description of the image:", "Unplanned Image...", JOptionPane.PLAIN_MESSAGE, null, null, "" );
             if ( str1 == null ) {
                 return;
             }
         } while ( str1.startsWith( "http://" ) );
-        String str2 = (String) JOptionPane.showInputDialog( null, "Enter the URL of the image (including http://):", "Unplanned Image URL...", -1, null, null, "" );
+        String str2 = (String) JOptionPane.showInputDialog( null, "Enter the URL of the image (including http://):", "Unplanned Image URL...", JOptionPane.PLAIN_MESSAGE, null, null, "" );
         if ( str2 == null || str2.equals( "" ) ) {
             return;
         }

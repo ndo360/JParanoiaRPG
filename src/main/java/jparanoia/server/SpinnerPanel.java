@@ -9,7 +9,7 @@ public class SpinnerPanel extends JPanel {
     Spinner accessSpinner = new Spinner( "Acc" );
 
     public SpinnerPanel() {
-        setLayout( new BoxLayout( this, 1 ) );
+        setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
         setPreferredSize( new Dimension( 85, 70 ) );
         setMinimumSize( new Dimension( 85, 70 ) );
         add( this.gppSpinner );

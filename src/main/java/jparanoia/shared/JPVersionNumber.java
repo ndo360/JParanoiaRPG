@@ -40,9 +40,8 @@ public class JPVersionNumber implements Comparable {
         return this.patch;
     }
 
-    public boolean equals( Object paramObject ) {
-        JPVersionNumber localJPVersionNumber = (JPVersionNumber) paramObject;
-        return toString().equals( localJPVersionNumber.toString() );
+    public boolean equals( JPVersionNumber paramObject ) {
+        return toString().equals( paramObject.toString() );
     }
 
     public String toString() {

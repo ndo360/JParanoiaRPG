@@ -1,6 +1,8 @@
 package jparanoia.client;
 import java.awt.event.KeyEvent;
 import static java.lang.invoke.MethodHandles.lookup;
+import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class CombatTurnFrame extends javax.swing.JFrame {
@@ -86,21 +88,21 @@ public class CombatTurnFrame extends javax.swing.JFrame {
                 CombatTurnFrame.this.dispose();
             } else {
                 new javax.swing.JOptionPane();
-                javax.swing.JOptionPane.showMessageDialog( null, "Your public text must begin with\n/  or  '\nor you can leave it blank.", "Combat Error", -1 );
+                javax.swing.JOptionPane.showMessageDialog( null, "Your public text must begin with\n/  or  '\nor you can leave it blank.", "Combat Error", JOptionPane.PLAIN_MESSAGE );
             }
         } );
         this.inputPanel = new javax.swing.JPanel();
-        this.inputPanel.setLayout( new javax.swing.BoxLayout( this.inputPanel, 1 ) );
+        this.inputPanel.setLayout( new javax.swing.BoxLayout( this.inputPanel, BoxLayout.Y_AXIS ) );
         this.inputPanel.add( this.publicLabel );
         this.inputPanel.add( this.publicInputLine );
         this.inputPanel.add( this.secretLabel );
         this.inputPanel.add( this.secretInputLine );
         this.sendPanel = new javax.swing.JPanel();
-        this.sendPanel.setLayout( new javax.swing.BoxLayout( this.sendPanel, 0 ) );
+        this.sendPanel.setLayout( new javax.swing.BoxLayout( this.sendPanel, BoxLayout.X_AXIS ) );
         this.sendPanel.add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 200, 0 ) ) );
         this.sendPanel.add( this.sendButton );
         this.contentPane = getContentPane();
-        this.contentPane.setLayout( new javax.swing.BoxLayout( this.contentPane, 1 ) );
+        this.contentPane.setLayout( new javax.swing.BoxLayout( this.contentPane, BoxLayout.Y_AXIS ) );
         this.contentPane.add( this.inputPanel );
         this.contentPane.add( this.sendPanel );
     }

@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 
 public class CharsheetPanel extends JPanel {
     static final int IDEAL_WIDTH = 450;
@@ -26,12 +27,12 @@ public class CharsheetPanel extends JPanel {
     javax.swing.text.DefaultStyledDocument theFile;
 
     public CharsheetPanel() {
-        setLayout( new BoxLayout( this, 1 ) );
+        setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
         this.displayArea = new JTextPane();
         this.displayArea.setCharacterAttributes( JPServer.charsheetAttributes, true );
         this.displayArea.setEditable( true );
         this.displayArea.setEnabled( true );
-        this.scrollPane = new javax.swing.JScrollPane( this.displayArea, 22, 31 );
+        this.scrollPane = new javax.swing.JScrollPane( this.displayArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
         this.saveButton = new JButton( "Save / Send" );
         this.saveButton.setMaximumSize( new Dimension( 65, 22 ) );
         this.saveButton.addActionListener( paramAnonymousActionEvent -> {
@@ -48,7 +49,7 @@ public class CharsheetPanel extends JPanel {
         this.displayArea.setDocument( this.theFile );
         this.dicePanel = new DicePanel();
         this.playerPanel = new JPanel();
-        this.playerPanel.setLayout( new BoxLayout( this.playerPanel, 0 ) );
+        this.playerPanel.setLayout( new BoxLayout( this.playerPanel, BoxLayout.X_AXIS ) );
         this.playerPanel.setMaximumSize( new Dimension( 100, 15 ) );
         this.playerPanel.add( Box.createRigidArea( new Dimension( 5, 0 ) ) );
         this.playerPanel.add( this.playerComboBox );

@@ -53,7 +53,7 @@ public class BrowserLauncher {
             String str2 = System.getProperty( "mrj.version" );
             String str3 = str2.substring( 0, 3 );
             try {
-                double d = Double.valueOf( str3 ).doubleValue();
+                double d = Double.valueOf( str3 );
                 if ( d == 2.0D ) {
                     jvm = 0;
                 } else if ( d >= 2.1D && d < 3.0D ) {
@@ -106,17 +106,8 @@ public class BrowserLauncher {
                     kAutoGenerateReturnID = (Integer) localField3.get( null );
                     Field localField4 = localClass3.getDeclaredField( "kAnyTransactionID" );
                     kAnyTransactionID = (Integer) localField4.get( null );
-                } catch ( ClassNotFoundException localClassNotFoundException1 ) {
+                } catch ( ClassNotFoundException | IllegalAccessException | NoSuchFieldException | NoSuchMethodException localClassNotFoundException1 ) {
                     errorMessage = localClassNotFoundException1.getMessage();
-                    return false;
-                } catch ( NoSuchMethodException localNoSuchMethodException1 ) {
-                    errorMessage = localNoSuchMethodException1.getMessage();
-                    return false;
-                } catch ( NoSuchFieldException localNoSuchFieldException1 ) {
-                    errorMessage = localNoSuchFieldException1.getMessage();
-                    return false;
-                } catch ( IllegalAccessException localIllegalAccessException1 ) {
-                    errorMessage = localIllegalAccessException1.getMessage();
                     return false;
                 }
             case 1:
@@ -128,20 +119,8 @@ public class BrowserLauncher {
                     findFolder = mrjFileUtilsClass.getDeclaredMethod( "findFolder", mrjOSTypeClass );
                     getFileCreator = mrjFileUtilsClass.getDeclaredMethod( "getFileCreator", File.class );
                     getFileType = mrjFileUtilsClass.getDeclaredMethod( "getFileType", File.class );
-                } catch ( ClassNotFoundException localClassNotFoundException2 ) {
+                } catch ( ClassNotFoundException | IllegalAccessException | SecurityException | NoSuchMethodException | NoSuchFieldException localClassNotFoundException2 ) {
                     errorMessage = localClassNotFoundException2.getMessage();
-                    return false;
-                } catch ( NoSuchFieldException localNoSuchFieldException2 ) {
-                    errorMessage = localNoSuchFieldException2.getMessage();
-                    return false;
-                } catch ( NoSuchMethodException localNoSuchMethodException2 ) {
-                    errorMessage = localNoSuchMethodException2.getMessage();
-                    return false;
-                } catch ( SecurityException localSecurityException ) {
-                    errorMessage = localSecurityException.getMessage();
-                    return false;
-                } catch ( IllegalAccessException localIllegalAccessException2 ) {
-                    errorMessage = localIllegalAccessException2.getMessage();
                     return false;
                 }
             case 3:
@@ -149,31 +128,16 @@ public class BrowserLauncher {
                     Class localClass2 = Class.forName( "com.apple.mrj.jdirect.Linker" );
                     localObject = localClass2.getConstructor( Class.class );
                     linkage = ( (Constructor) localObject ).newInstance( BrowserLauncher.class );
-                } catch ( ClassNotFoundException localClassNotFoundException3 ) {
+                } catch ( ClassNotFoundException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException localClassNotFoundException3 ) {
                     errorMessage = localClassNotFoundException3.getMessage();
-                    return false;
-                } catch ( NoSuchMethodException localNoSuchMethodException3 ) {
-                    errorMessage = localNoSuchMethodException3.getMessage();
-                    return false;
-                } catch ( InvocationTargetException localInvocationTargetException ) {
-                    errorMessage = localInvocationTargetException.getMessage();
-                    return false;
-                } catch ( InstantiationException localInstantiationException ) {
-                    errorMessage = localInstantiationException.getMessage();
-                    return false;
-                } catch ( IllegalAccessException localIllegalAccessException3 ) {
-                    errorMessage = localIllegalAccessException3.getMessage();
                     return false;
                 }
             case 4:
                 try {
                     mrjFileUtilsClass = Class.forName( "com.apple.mrj.MRJFileUtils" );
                     openURL = mrjFileUtilsClass.getDeclaredMethod( "openURL", String.class );
-                } catch ( ClassNotFoundException localClassNotFoundException4 ) {
+                } catch ( ClassNotFoundException | NoSuchMethodException localClassNotFoundException4 ) {
                     errorMessage = localClassNotFoundException4.getMessage();
-                    return false;
-                } catch ( NoSuchMethodException localNoSuchMethodException4 ) {
-                    errorMessage = localNoSuchMethodException4.getMessage();
                     return false;
                 }
         }
@@ -280,30 +244,18 @@ public class BrowserLauncher {
                     Object localObject1 = aeTargetConstructor.newInstance( localInteger1 );
                     Integer localInteger2 = (Integer) makeOSType.invoke( null, new Object[]{"GURL"} );
                     return appleEventConstructor.newInstance( localInteger2, localInteger2, localObject1, kAutoGenerateReturnID, kAnyTransactionID );
-                } catch ( IllegalAccessException localIllegalAccessException1 ) {
+                } catch ( IllegalAccessException | InvocationTargetException | InstantiationException localIllegalAccessException1 ) {
                     browser = null;
                     errorMessage = localIllegalAccessException1.getMessage();
-                    return browser;
-                } catch ( InstantiationException localInstantiationException ) {
-                    browser = null;
-                    errorMessage = localInstantiationException.getMessage();
-                    return browser;
-                } catch ( InvocationTargetException localInvocationTargetException1 ) {
-                    browser = null;
-                    errorMessage = localInvocationTargetException1.getMessage();
                     return browser;
                 }
             case 1:
                 File localFile;
                 try {
                     localFile = (File) findFolder.invoke( null, new Object[]{kSystemFolderType} );
-                } catch ( IllegalArgumentException localIllegalArgumentException1 ) {
+                } catch ( IllegalArgumentException | IllegalAccessException localIllegalArgumentException1 ) {
                     browser = null;
                     errorMessage = localIllegalArgumentException1.getMessage();
-                    return browser;
-                } catch ( IllegalAccessException localIllegalAccessException2 ) {
-                    browser = null;
-                    errorMessage = localIllegalAccessException2.getMessage();
                     return browser;
                 } catch ( InvocationTargetException localInvocationTargetException2 ) {
                     browser = null;
@@ -313,7 +265,7 @@ public class BrowserLauncher {
                     return browser;
                 }
                 String[] arrayOfString = localFile.list();
-                for ( int i = 0; i < arrayOfString.length; i++ ) {
+                for ( int i = 0; i < (arrayOfString != null ? arrayOfString.length : 0); i++ ) {
                     try {
                         localObject2 = new File( localFile, arrayOfString[i] );
                         if ( ( (File) localObject2 ).isFile() ) {

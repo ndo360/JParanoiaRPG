@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 public class PMAndStatusPanel extends JPanel {
     public PMAndStatusPanel( PrivateMessagePane paramPrivateMessagePane, StatusPanel paramStatusPanel ) {
-        setLayout( new BoxLayout( this, 0 ) );
+        setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
         paramStatusPanel.setPreferredSize( new Dimension( 35, 70 ) );
         paramStatusPanel.setMinimumSize( new Dimension( 35, 70 ) );
         if ( JPServer.isPXPGame ) {

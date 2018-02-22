@@ -6,12 +6,16 @@ import java.awt.event.ActionEvent;
 import static java.lang.invoke.MethodHandles.lookup;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.WindowConstants;
 
 public class CombatFrame extends JFrame {
     CombatFrame thisCombatFrame = this;
@@ -44,10 +48,10 @@ public class CombatFrame extends JFrame {
             dispose();
             return;
         }
-        setDefaultCloseOperation( 0 );
+        setDefaultCloseOperation( WindowConstants.DO_NOTHING_ON_CLOSE );
         addWindowListener( new java.awt.event.WindowAdapter() {
             public void windowClosing( java.awt.event.WindowEvent paramAnonymousWindowEvent ) {
-                switch ( javax.swing.JOptionPane.showConfirmDialog( CombatFrame.this.thisCombatFrame, "WARNING: Are you SURE you want to end combat?\n", "Abort combat...", 0, 2 ) ) {
+                switch ( javax.swing.JOptionPane.showConfirmDialog( CombatFrame.this.thisCombatFrame, "WARNING: Are you SURE you want to end combat?\n", "Abort combat...", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE ) ) {
                     case 0:
                         CombatFrame.this.abortCombat();
                         break;
@@ -61,7 +65,7 @@ public class CombatFrame extends JFrame {
         this.playerButtons = new CombatButton[JPServer.troubleshooters.length];
         this.contentPane = getContentPane();
         this.buttonPanel = new JPanel();
-        this.buttonPanel.setLayout( new javax.swing.BoxLayout( this.buttonPanel, 1 ) );
+        this.buttonPanel.setLayout( new javax.swing.BoxLayout( this.buttonPanel, BoxLayout.Y_AXIS ) );
         this.buttonPanel.add( javax.swing.Box.createRigidArea( new Dimension( 0, 3 ) ) );
         this.waitingPlayers = new Vector();
         this.debugButtonString += "Constructing playerButtons...\n";
@@ -98,7 +102,7 @@ public class CombatFrame extends JFrame {
         localGridBagLayout.setConstraints( this.publicTurnLabelPanel, localGridBagConstraints );
         this.proposedPublicTurn = new JTextArea();
         this.proposedPublicTurn.setLineWrap( true );
-        this.proposedPublicTurnScrollPane = new JScrollPane( this.proposedPublicTurn, 22, 31 );
+        this.proposedPublicTurnScrollPane = new JScrollPane( this.proposedPublicTurn, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
         localGridBagConstraints.gridwidth = 3;
         localGridBagConstraints.gridheight = 3;
         localGridBagConstraints.gridy = 1;
@@ -117,7 +121,7 @@ public class CombatFrame extends JFrame {
         localGridBagLayout.setConstraints( this.secretTurnLabelPanel, localGridBagConstraints );
         this.secretTurn = new JTextArea();
         this.secretTurn.setLineWrap( true );
-        this.secretTurnScrollPane = new JScrollPane( this.secretTurn, 22, 31 );
+        this.secretTurnScrollPane = new JScrollPane( this.secretTurn, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
         this.secretTurn.setEditable( false );
         localGridBagConstraints.gridwidth = 3;
         localGridBagConstraints.gridheight = 3;
@@ -196,7 +200,7 @@ public class CombatFrame extends JFrame {
         this.turnPanel.add( this.secretTurnLabelPanel );
         this.turnPanel.add( this.secretTurnScrollPane );
         this.turnPanel.add( this.skipAndPublishPanel );
-        this.contentPane.setLayout( new javax.swing.BoxLayout( this.contentPane, 0 ) );
+        this.contentPane.setLayout( new javax.swing.BoxLayout( this.contentPane, BoxLayout.X_AXIS ) );
         this.contentPane.add( this.buttonPanel );
         this.contentPane.add( this.turnPanel );
         if ( this.waitingPlayers.size() == 0 ) {
@@ -266,8 +270,7 @@ public class CombatFrame extends JFrame {
         if ( paramServerPlayer != this.currentPlayer ) {
             return;
         }
-        String str1 = paramString;
-        this.st = new StringTokenizer( str1, "~" );
+        this.st = new StringTokenizer( paramString, "~" );
         this.proposedPublicTurn.setText( this.st.nextToken() );
         String str2;
         if ( this.st.hasMoreTokens() ) {

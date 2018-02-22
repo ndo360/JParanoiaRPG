@@ -17,8 +17,7 @@ public class ConsoleReader {
 
     public int readInt() {
         String str = readLine();
-        int i = Integer.parseInt( str );
-        return i;
+        return Integer.parseInt( str );
     }
 
     public String readLine() {
@@ -34,13 +33,11 @@ public class ConsoleReader {
 
     public long readLong() {
         String str = readLine();
-        long l = Long.parseLong( str );
-        return l;
+        return Long.parseLong( str );
     }
 
     public double readDouble() {
         String str = readLine();
-        double d = Double.parseDouble( str );
-        return d;
+        return Double.parseDouble( str );
     }
 }

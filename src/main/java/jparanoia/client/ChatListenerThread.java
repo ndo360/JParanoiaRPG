@@ -186,7 +186,7 @@ public class ChatListenerThread extends Thread {
             JPClient.frozen = false;
         } catch ( SocketException localSocketException ) {
             System.out.println( localSocketException.getMessage() );
-            JOptionPane.showMessageDialog( null, "Connection to host lost.", "Connection lost", 0 );
+            JOptionPane.showMessageDialog( null, "Connection to host lost.", "Connection lost", JOptionPane.ERROR_MESSAGE );
             JPClient.disconnect( false );
             JPClient.loggedIn = false;
             JPClient.connected = false;

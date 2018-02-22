@@ -68,10 +68,10 @@ public class Prefs {
                         str2 = localStringTokenizer.nextToken();
                         str3 = localStringTokenizer.nextToken();
                         if ( str2.startsWith( "b" ) ) {
-                            this.prefsArray[i] = new Boolean( str3.equals( "true" ) );
+                            this.prefsArray[i] = str3.equals( "true" );
                             str4 = "BOOLEAN";
                         } else if ( str2.startsWith( "i" ) ) {
-                            this.prefsArray[i] = new Integer( Integer.parseInt( str3 ) );
+                            this.prefsArray[i] = Integer.parseInt( str3 );
                             str4 = "INTEGER";
                         } else if ( str2.startsWith( "s" ) ) {
                             this.prefsArray[i] = str3;

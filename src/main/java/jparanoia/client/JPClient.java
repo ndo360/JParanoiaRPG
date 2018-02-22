@@ -2,14 +2,17 @@ package jparanoia.client;
 import java.awt.Color;
 import java.io.PrintWriter;
 import static java.lang.invoke.MethodHandles.lookup;
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
@@ -17,7 +20,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
     public static final jparanoia.shared.JPVersionNumber VERSION_NUMBER = new jparanoia.shared.JPVersionNumber( 1, 31, 1 );
     public static final String VERSION_NAME = VERSION_NUMBER.toString();
     public static final jparanoia.shared.JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new jparanoia.shared.JPVersionNumber( 1, 31, 0 );
-    static Integer mainFontSize = new Integer( 99 );
+    static Integer mainFontSize = 99;
     static int computerFontIncrease = 0;
     static int maxNumClones;
     static boolean observer = false;
@@ -120,7 +123,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
     static PrivateMessageFrame[] PMFrame;
 
     public JPClient() {
-        clobberAqua = ( (Boolean) prefs.getPref( 18 ) ).booleanValue();
+        clobberAqua = (Boolean) prefs.getPref( 18 );
         if ( clobberAqua ) {
             try {
                 javax.swing.UIManager.setLookAndFeel( javax.swing.UIManager.getCrossPlatformLookAndFeelClassName() );
@@ -143,7 +146,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
         displayArea.setEnabled( true );
         displayArea.setDisabledTextColor( Color.white );
         displayArea.setBackground( Color.black );
-        scrollPane = new javax.swing.JScrollPane( displayArea, 22, 31 );
+        scrollPane = new javax.swing.JScrollPane( displayArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
         chatDocument = new javax.swing.text.DefaultStyledDocument();
         brightColors = new jparanoia.shared.BrightColorArray().getColors();
         darkColors = new Color[10];
@@ -244,7 +247,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
             jparanoia.shared.JParanoia.autoScroll = !jparanoia.shared.JParanoia.autoScroll;
         } );
         chatNotifyNewPMMenuItem = new JCheckBoxMenuItem( "New PM alert in chat" );
-        chatNotifyNewPMMenuItem.setSelected( ( (Boolean) prefs.getPref( 19 ) ).booleanValue() );
+        chatNotifyNewPMMenuItem.setSelected( (Boolean) prefs.getPref( 19 ) );
         optionsMenu.add( soundMenu );
         optionsMenu.addSeparator();
         optionsMenu.add( autoScrollMenuItem );
@@ -266,7 +269,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
         pmWindowsMenu.addSeparator();
         menuBar.add( pmWindowsMenu );
         infoPanel = new JPanel();
-        infoPanel.setLayout( new javax.swing.BoxLayout( infoPanel, 1 ) );
+        infoPanel.setLayout( new javax.swing.BoxLayout( infoPanel, BoxLayout.Y_AXIS ) );
         lipArray[0][0] = "Player List";
         lipTable = new javax.swing.JTable( lipArray, columnNameArray );
         lipTable.setMinimumSize( lipTablePreferredSize );
@@ -274,7 +277,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
         lipTable.setShowGrid( false );
         lipTable.setEnabled( false );
         statusPanel = new JPanel();
-        statusPanel.setLayout( new javax.swing.BoxLayout( statusPanel, 0 ) );
+        statusPanel.setLayout( new javax.swing.BoxLayout( statusPanel, BoxLayout.X_AXIS ) );
         notConnectedIcon = new javax.swing.ImageIcon( lookup().lookupClass()
                 .getClassLoader()
                 .getResource( "graphics/notConnectedIcon.jpg" ) );
@@ -314,12 +317,12 @@ public class JPClient extends jparanoia.shared.JParanoia {
         inputLine.setMaximumSize( new java.awt.Dimension( 999, 22 ) );
         inputLine.setPreferredSize( new java.awt.Dimension( 997, 22 ) );
         inputLinePanel = new JPanel();
-        inputLinePanel.setLayout( new javax.swing.BoxLayout( inputLinePanel, 0 ) );
+        inputLinePanel.setLayout( new javax.swing.BoxLayout( inputLinePanel, BoxLayout.X_AXIS ) );
         inputLinePanel.add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 5, 0 ) ) );
         inputLinePanel.add( inputLine );
         inputLinePanel.add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 5, 0 ) ) );
         mainPanel = new JPanel();
-        mainPanel.setLayout( new javax.swing.BoxLayout( mainPanel, 1 ) );
+        mainPanel.setLayout( new javax.swing.BoxLayout( mainPanel, BoxLayout.Y_AXIS ) );
         mainPanel.add( scrollPane );
         mainPanel.add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 0, 5 ) ) );
         mainPanel.add( inputLinePanel );
@@ -338,12 +341,12 @@ public class JPClient extends jparanoia.shared.JParanoia {
         charsheetArea = new JTextPane();
         charsheetArea.setEditable( false );
         charsheetArea.setEnabled( true );
-        charScrollPane = new javax.swing.JScrollPane( charsheetArea, 22, 31 );
+        charScrollPane = new javax.swing.JScrollPane( charsheetArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
         charsheetFrame.getContentPane().add( charScrollPane );
         charsheetAttributes = new SimpleAttributeSet();
-        charsheetAttributes.addAttribute( javax.swing.text.StyleConstants.Bold, new Boolean( true ) );
+        charsheetAttributes.addAttribute( javax.swing.text.StyleConstants.Bold, Boolean.TRUE );
         charsheetAttributes.addAttribute( StyleConstants.CharacterConstants.Family, "SansSerif" );
-        charsheetAttributes.addAttribute( StyleConstants.CharacterConstants.Size, new Integer( 12 ) );
+        charsheetAttributes.addAttribute( StyleConstants.CharacterConstants.Size, 12 );
         charsheetMenu = new JMenu( "Character Sheet" );
         showCharsheetMenuItem = new JMenuItem( "Show character sheet" );
         showCharsheetMenuItem.addActionListener( paramAnonymousActionEvent -> {
@@ -374,8 +377,8 @@ public class JPClient extends jparanoia.shared.JParanoia {
         displayWrite( Color.white, "For news, bug report forms, a complete version history, or to make a financial contribution, visit the " );
         displayWrite( Color.cyan, "JParanoia website: " );
         displayWrite( Color.orange, "http://www.byronbarry.com/jparanoia/\n" );
-        keepLog = ( (Boolean) prefs.getPref( 20 ) ).booleanValue();
-        htmlLog = ( (Boolean) prefs.getPref( 21 ) ).booleanValue();
+        keepLog = (Boolean) prefs.getPref( 20 );
+        htmlLog = (Boolean) prefs.getPref( 21 );
         realName = (String) prefs.getPref( 22 );
 //        net.roydesign.mac.MRJAdapter.addQuitApplicationListener(paramAnonymousActionEvent -> {
 //        });
@@ -388,14 +391,18 @@ public class JPClient extends jparanoia.shared.JParanoia {
 
     public static void setColorScheme() {
         if ( !currentColorScheme.equals( newColorScheme ) ) {
-            if ( newColorScheme.equals( "White on Black" ) ) {
-                textColor = Color.white;
-                displayArea.setBackground( Color.black );
-            } else if ( newColorScheme.equals( "Black on White" ) ) {
-                textColor = Color.black;
-                displayArea.setBackground( Color.white );
-            } else {
-                System.out.println( "Error: invalid color logic." );
+            switch ( newColorScheme ) {
+                case "White on Black":
+                    textColor = Color.white;
+                    displayArea.setBackground( Color.black );
+                    break;
+                case "Black on White":
+                    textColor = Color.black;
+                    displayArea.setBackground( Color.white );
+                    break;
+                default:
+                    System.out.println( "Error: invalid color logic." );
+                    break;
             }
             currentColorScheme = newColorScheme;
             assignColorsToCharacters();
@@ -539,10 +546,9 @@ public class JPClient extends jparanoia.shared.JParanoia {
     }
 
     public static void sendPrivateMessage( String paramString ) {
-        String str1 = paramString;
         String str2 = "200";
         if ( loggedIn && stayConnected ) {
-            out.println( str2 + str1 );
+            out.println( str2 + paramString );
         }
     }
 
@@ -575,14 +581,14 @@ public class JPClient extends jparanoia.shared.JParanoia {
 
     public static String nameCompletion( String paramString, boolean paramBoolean ) {
         String str1 = "";
-        String str2 = "";
+        StringBuilder str2 = new StringBuilder();
         if ( paramBoolean ) {
             paramString = paramString.substring( 0, paramString.length() - lastNameCompleted.length() + 1 );
         }
         st = new java.util.StringTokenizer( paramString );
         str1 = st.nextToken();
         while ( st.hasMoreTokens() ) {
-            str2 = str2 + str1 + " ";
+            str2.append( str1 ).append( " " );
             str1 = st.nextToken();
         }
         if ( paramBoolean ) {
@@ -624,8 +630,8 @@ public class JPClient extends jparanoia.shared.JParanoia {
             return;
         }
         for ( ;
-              realName.trim().equals( "default" ) || realName == null || realName.trim().equals( "" );
-              realName = (String) javax.swing.JOptionPane.showInputDialog( null, "You have not provided your \"real\" name in the\njpConfig.ini file. The sooner you do, the sooner\nthis message will stop appearing. Your \"real\" name\nis announced when you join and logged for posterity.\nMost likely the best choice rather than your actual\nname would be the name you are known by in your RPG\ncircles or your Internet persona. For example, your\nuser name on Paranoia-Live.net would be an excellent\nname to provide here.\n\n\"Real\" name:", "\"Real\" name...", -1, null, null, realName ) ) {
+              realName.trim().equals( "default" ) /*|| realName == null*/ || realName.trim().equals( "" );
+              realName = (String) javax.swing.JOptionPane.showInputDialog( null, "You have not provided your \"real\" name in the\njpConfig.ini file. The sooner you do, the sooner\nthis message will stop appearing. Your \"real\" name\nis announced when you join and logged for posterity.\nMost likely the best choice rather than your actual\nname would be the name you are known by in your RPG\ncircles or your Internet persona. For example, your\nuser name on Paranoia-Live.net would be an excellent\nname to provide here.\n\n\"Real\" name:", "\"Real\" name...", JOptionPane.PLAIN_MESSAGE, null, null, realName ) ) {
             System.out.println( "realName == \"" + realName + "\"" );
             new javax.swing.JOptionPane();
         }
@@ -648,13 +654,13 @@ public class JPClient extends jparanoia.shared.JParanoia {
             myListener.setDaemon( true );
             myListener.start();
         } catch ( java.net.UnknownHostException localUnknownHostException ) {
-            javax.swing.JOptionPane.showMessageDialog( null, paramString2 + "\nUnknown host.", "Uknown host", 0 );
+            javax.swing.JOptionPane.showMessageDialog( null, paramString2 + "\nUnknown host.", "Uknown host", JOptionPane.ERROR_MESSAGE );
             connectMenuItem.setEnabled( true );
             disconnectMenuItem.setEnabled( false );
         } catch ( java.net.ConnectException localConnectException ) {
             javax.swing.JOptionPane.showMessageDialog( null, paramString2 +
                     "\nConnection at this host failed.\n" +
-                    "Host may not be running a server.", "Connect failed", 0 );
+                    "Host may not be running a server.", "Connect failed", JOptionPane.ERROR_MESSAGE );
             if ( paramBoolean ) {
                 jparanoia.shared.GameRegistrar.deleteUnreachableGame( paramString1 );
             }
@@ -968,15 +974,15 @@ public class JPClient extends jparanoia.shared.JParanoia {
         styleBegin = "<span class=\"computer\">";
         styleEnd = "</span>";
         mainFontSize = (Integer) textAttributes.getAttribute( javax.swing.text.StyleConstants.FontConstants.Size );
-        int i = mainFontSize.intValue() + computerFontIncrease;
-        textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, new Integer( i ) );
+        int i = mainFontSize + computerFontIncrease;
+        textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, i );
         if ( !fontIsBold ) {
             setFontBold( true );
         }
     }
 
     public static void setFontBold( boolean paramBoolean ) {
-        Boolean localBoolean = new Boolean( paramBoolean );
+        Boolean localBoolean = paramBoolean;
         textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Bold, localBoolean );
     }
 
@@ -1263,6 +1269,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
         java.awt.Toolkit.getDefaultToolkit().beep();
         long l = System.currentTimeMillis();
         while ( System.currentTimeMillis() - l < 300L ) {
+            //lol, looks like this is how sleep works here
         }
         java.awt.Toolkit.getDefaultToolkit().beep();
         turnFrame.sendButton.setEnabled( true );
@@ -1382,8 +1389,8 @@ public class JPClient extends jparanoia.shared.JParanoia {
         observer = paramBoolean;
         if ( paramBoolean ) {
             for ( ;
-                  realName.trim().equals( "default" ) || realName == null || realName.trim().equals( "" );
-                  realName = (String) javax.swing.JOptionPane.showInputDialog( null, "Enter your observer name:", "Observer name...", -1, null, null, realName ) ) {
+                  realName.trim().equals( "default" ) /*|| realName == null*/ || realName.trim().equals( "" );
+                  realName = (String) javax.swing.JOptionPane.showInputDialog( null, "Enter your observer name:", "Observer name...", JOptionPane.PLAIN_MESSAGE, null, null, realName ) ) {
                 new javax.swing.JOptionPane();
             }
             myTitle.setPlayerName( realName );
