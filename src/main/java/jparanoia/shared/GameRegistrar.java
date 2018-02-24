@@ -1,220 +1,204 @@
-/*     */ package jparanoia.shared;
-/*     */ 
-/*     */ import http.HttpPoster;
-/*     */ import java.io.BufferedReader;
-/*     */ import java.io.IOException;
-/*     */ import java.util.ArrayList;
-/*     */ import java.util.StringTokenizer;
-/*     */ 
-/*     */ public class GameRegistrar
-/*     */ {
-/*  11 */   public static String formattedDesc = "";
-/*     */   
-/*     */   public static JPGameInfo[] getGames()
-/*     */   {
-/*  15 */     if (!urlsLoaded(true)) { return null;
-/*     */     }
-/*     */     
-/*     */ 
-/*     */ 
-/*  20 */     ArrayList localArrayList = new ArrayList(10);
-/*     */     
-/*     */ 
-/*     */     try
-/*     */     {
-/*  25 */       BufferedReader localBufferedReader = HttpPoster.postToURL(JPURLs.gameRegistrarURL, "description=getgames");
-/*     */       
-/*     */       String str;
-/*     */       
-/*  29 */       while ((str = localBufferedReader.readLine()) != null)
-/*     */       {
-/*     */ 
-/*     */ 
-/*  33 */         StringTokenizer localStringTokenizer = new StringTokenizer(str, "\t");
-/*     */         
-/*  35 */         if (localStringTokenizer.countTokens() == 2)
-/*     */         {
-/*  37 */           localArrayList.add(new JPGameInfo(localStringTokenizer.nextToken(), localStringTokenizer.nextToken()));
-/*     */         }
-/*     */       }
-/*     */       
-/*  41 */       localBufferedReader.close();
-/*     */     }
-/*     */     catch (IOException localIOException)
-/*     */     {
-/*  45 */       localIOException.printStackTrace();
-/*  46 */       JParanoia.errorMessage("Network Error", "Unable to get games from game registry:\nRegistry inaccessible. Check your network connection.\n(JParanoia server may be down.)");
-/*     */       
-/*     */ 
-/*     */ 
-/*     */ 
-/*  51 */       return null;
-/*     */     }
-/*     */     
-/*  54 */     JPGameInfo[] arrayOfJPGameInfo = (JPGameInfo[])localArrayList.toArray(new JPGameInfo[localArrayList.size()]);
-/*     */     
-/*  56 */     return arrayOfJPGameInfo;
-/*     */   }
-/*     */   
-/*     */   public static void addGame(String paramString)
-/*     */   {
-/*  61 */     if (!urlsLoaded(true)) { return;
-/*     */     }
-/*     */     
-/*     */     try
-/*     */     {
-/*  66 */       BufferedReader localBufferedReader = HttpPoster.postToURL(JPURLs.gameRegistrarURL, "description=" + paramString);
-/*     */       
-/*     */ 
-/*     */ 
-/*     */ 
-/*  71 */       int i = -1;
-/*     */       String str;
-/*  73 */       while ((str = localBufferedReader.readLine()) != null) {}
-/*     */       
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*  80 */       localBufferedReader.close();
-/*     */       
-/*     */ 
-/*     */ 
-/*  84 */       jparanoia.server.JPServer.gameRegistered = true;
-/*     */     }
-/*     */     catch (IOException localIOException)
-/*     */     {
-/*  88 */       localIOException.printStackTrace();
-/*  89 */       JParanoia.errorMessage("Network Error", "Unable to add game to game registry:\nRegistry inaccessible. Check your network connection.");
-/*     */       
-/*     */ 
-/*     */ 
-/*  93 */       return;
-/*     */     }
-/*     */   }
-/*     */   
-/*     */   public static void removeGame()
-/*     */   {
-/*  99 */     if (!urlsLoaded(true)) { return;
-/*     */     }
-/*     */     try
-/*     */     {
-/* 103 */       BufferedReader localBufferedReader = HttpPoster.postToURL(JPURLs.gameRegistrarURL, "erase=1");
-/*     */       
-/*     */       String str;
-/*     */       
-/* 107 */       while ((str = localBufferedReader.readLine()) != null) {}
-/*     */       
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/* 113 */       localBufferedReader.close();
-/*     */       
-/* 115 */       jparanoia.server.JPServer.gameRegistered = false;
-/*     */     }
-/*     */     catch (IOException localIOException) {
-/* 118 */       localIOException.printStackTrace();
-/* 119 */       JParanoia.errorMessage("Network Error", "Unable to erase game from game registry:\nRegistry inaccessible. Check your network connection.");
-/*     */       
-/*     */ 
-/*     */ 
-/* 123 */       return;
-/*     */     }
-/*     */   }
-/*     */   
-/*     */   public static void deleteUnreachableGame(String paramString)
-/*     */   {
-/* 129 */     if (!urlsLoaded(true)) { return;
-/*     */     }
-/* 131 */     System.out.println("Attempting to remove unreachable game " + paramString + " ...");
-/*     */     
-/*     */     try
-/*     */     {
-/* 135 */       BufferedReader localBufferedReader = HttpPoster.postToURL(JPURLs.gameRegistrarURL, "description=JP-REMOVE:" + paramString);
-/*     */       
-/*     */       String str;
-/*     */       
-/* 139 */       while ((str = localBufferedReader.readLine()) != null) {}
-/*     */       
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/* 145 */       localBufferedReader.close();
-/*     */     }
-/*     */     catch (IOException localIOException)
-/*     */     {
-/* 149 */       localIOException.printStackTrace();
-/* 150 */       JParanoia.errorMessage("Network Error", "Unable to remove unreachable game from game registry:\nRegistry inaccessible. Check your network connection.");
-/*     */       
-/*     */ 
-/*     */ 
-/* 154 */       return;
-/*     */     }
-/*     */   }
-/*     */   
-/*     */   public static String getIP()
-/*     */   {
-/* 160 */     if (!urlsLoaded(false)) { return "fail";
-/*     */     }
-/*     */     
-/*     */     try
-/*     */     {
-/* 165 */       BufferedReader localBufferedReader = HttpPoster.postToURL(JPURLs.gameRegistrarURL, "description=getip");
-/*     */       
-/*     */ 
-/* 168 */       String str2 = null;
-/*     */       String str1;
-/* 170 */       while ((str1 = localBufferedReader.readLine()) != null)
-/*     */       {
-/*     */ 
-/*     */ 
-/* 174 */         if (str1.indexOf("JP-REMOTE-IP") != -1) {
-/* 175 */           str2 = str1.substring(str1.indexOf(":") + 1);
-/*     */         }
-/*     */       }
-/*     */       
-/*     */ 
-/* 180 */       localBufferedReader.close();
-/* 181 */       return str2;
-/*     */     }
-/*     */     catch (IOException localIOException) {}
-/*     */     
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/* 190 */     return "fail";
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   private static boolean urlsLoaded(boolean paramBoolean)
-/*     */   {
-/* 196 */     if (JPURLs.gameRegistrarURL == null) {
-/*     */       try {
-/* 198 */         JPURLs.getURLs();
-/*     */       } catch (IOException localIOException) {
-/* 200 */         if (paramBoolean)
-/*     */         {
-/* 202 */           localIOException.printStackTrace();
-/* 203 */           JParanoia.errorMessage("Network Error", "Unable to acquire game registry URL:\nServer inaccessible. Check your network connection.");
-/*     */         }
-/*     */         
-/*     */ 
-/*     */ 
-/* 208 */         return false;
-/*     */       }
-/*     */     }
-/*     */     
-/* 212 */     return true;
-/*     */   }
-/*     */ }
+package jparanoia.shared;
+import java.lang.invoke.MethodHandles;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
+public class GameRegistrar {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
-/* Location:              C:\Users\noahc\Desktop\JParanoia(1.31.1)\JParanoia(1.31.1).jar!\jparanoia\shared\GameRegistrar.class
- * Java compiler version: 2 (46.0)
- * JD-Core Version:       0.7.1
- */
+    public static String formattedDesc = "";
+
+    public static JPGameInfo[] getGames() {
+        return null;
+//
+//        if ( !urlsLoaded( true ) ) {
+//            return null;
+//        }
+//
+//        ArrayList localArrayList = new ArrayList( 10 );
+//        try {
+//
+//            BufferedReader localBufferedReader = HttpPoster.postToURL( JPURLs.gameRegistrarURL, "description=getgames" );
+//            String str;
+//
+//
+//            while ( ( str = localBufferedReader.readLine() ) != null ) {
+//
+//
+//
+//                StringTokenizer localStringTokenizer = new StringTokenizer( str, "\t" );
+//
+//
+//                if ( localStringTokenizer.countTokens() == 2 ) {
+//
+//                    localArrayList.add( new JPGameInfo( localStringTokenizer.nextToken(), localStringTokenizer.nextToken() ) );
+//                }
+//            }
+//
+//
+//            localBufferedReader.close();
+//        } catch ( IOException localIOException ) {
+//
+//            localIOException.printStackTrace();
+//
+//            JParanoia.errorMessage( "Network Error", "Unable to get games from game registry:\nRegistry inaccessible. Check your network connection.\n(JParanoia server may be down.)" );
+//
+//
+//            return null;
+//        }
+//
+//        JPGameInfo[] arrayOfJPGameInfo = (JPGameInfo[]) localArrayList.toArray( new JPGameInfo[localArrayList.size()] );
+//
+//
+//        return arrayOfJPGameInfo;
+    }
+
+    private static boolean urlsLoaded( boolean paramBoolean ) {
+        return false;
+//
+//        if ( JPURLs.gameRegistrarURL == null ) {
+//            try {
+//
+//                JPURLs.getURLs();
+//            } catch ( IOException localIOException ) {
+//
+//                if ( paramBoolean ) {
+//
+//                    localIOException.printStackTrace();
+//
+//                    JParanoia.errorMessage( "Network Error", "Unable to acquire game registry URL:\nServer inaccessible. Check your network connection." );
+//                }
+//
+//
+//
+//
+//                return false;
+//            }
+//        }
+//
+//
+//        return true;
+    }
+
+    public static void addGame( String paramString ) {
+        logger.info( "Not adding game to the list as paranoia-live is obviously dead" );
+//        return;
+//
+//
+//        if ( !urlsLoaded( true ) ) {
+//            return;
+//        }
+//        try {
+//
+//            BufferedReader localBufferedReader = HttpPoster.postToURL( JPURLs.gameRegistrarURL, "description=" +
+//                    paramString );
+//
+//            int i = -1;
+//            String str;
+//
+//            while ( ( str = localBufferedReader.readLine() ) != null ) {
+//            }
+//
+//            localBufferedReader.close();
+//
+//            jparanoia.server.JPServer.gameRegistered = true;
+//        } catch ( IOException localIOException ) {
+//
+//            localIOException.printStackTrace();
+//
+//            JParanoia.errorMessage( "Network Error", "Unable to add game to game registry:\nRegistry inaccessible. Check your network connection." );
+//
+//            return;
+//        }
+    }
+
+    public static void removeGame() {
+//
+//        if ( !urlsLoaded( true ) ) {
+//            return;
+//        }
+//        try {
+//
+//            BufferedReader localBufferedReader = HttpPoster.postToURL( JPURLs.gameRegistrarURL, "erase=1" );
+//            String str;
+//
+//
+//            while ( ( str = localBufferedReader.readLine() ) != null ) {
+//            }
+//
+//            localBufferedReader.close();
+//
+//
+//            jparanoia.server.JPServer.gameRegistered = false;
+//        } catch ( IOException localIOException ) {
+//
+//            localIOException.printStackTrace();
+//
+//            JParanoia.errorMessage( "Network Error", "Unable to erase game from game registry:\nRegistry inaccessible. Check your network connection." );
+//        }
+    }
+
+    public static void deleteUnreachableGame( String paramString ) {
+//
+//        if ( !urlsLoaded( true ) ) {
+//            return;
+//        }
+//
+//        System.out.println( "Attempting to remove unreachable game " + paramString + " ..." );
+//        try {
+//
+//            BufferedReader localBufferedReader = HttpPoster.postToURL( JPURLs.gameRegistrarURL, "description=JP-REMOVE:" +
+//                    paramString );
+//            String str;
+//
+//
+//            while ( ( str = localBufferedReader.readLine() ) != null ) {
+//            }
+//
+//            localBufferedReader.close();
+//        } catch ( IOException localIOException ) {
+//
+//            localIOException.printStackTrace();
+//
+//            JParanoia.errorMessage( "Network Error", "Unable to remove unreachable game from game registry:\nRegistry inaccessible. Check your network connection." );
+//
+//        }
+    }
+
+    public static String getIP() {
+        //FIXME: get public IPs modern way
+        return "go figure!";
+//
+//        if ( !urlsLoaded( false ) ) {
+//            return "fail";
+//        }
+//        try {
+//
+//            BufferedReader localBufferedReader = HttpPoster.postToURL( JPURLs.gameRegistrarURL, "description=getip" );
+//
+//
+//
+//            String str2 = null;
+//            String str1;
+//
+//            while ( ( str1 = localBufferedReader.readLine() ) != null ) {
+//
+//
+//
+//                if (str1.contains("JP-REMOTE-IP")) {
+//
+//                    str2 = str1.substring( str1.indexOf( ":" ) + 1 );
+//                }
+//            }
+//
+//
+//
+//            localBufferedReader.close();
+//
+//            return str2;
+//        } catch ( IOException localIOException ) {
+//        }
+//
+//        return "fail";
+    }
+}

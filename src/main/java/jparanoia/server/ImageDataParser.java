@@ -1,58 +1,49 @@
-/*    */ package jparanoia.server;
-/*    */ 
-/*    */ import java.io.BufferedReader;
-/*    */ import java.io.FileReader;
-/*    */ import java.io.PrintStream;
-/*    */ import java.net.URL;
-/*    */ import java.util.ArrayList;
-/*    */ import java.util.StringTokenizer;
-/*    */ import jparanoia.shared.JPImage;
-/*    */ 
-/*    */ public class ImageDataParser
-/*    */ {
-/*    */   BufferedReader reader;
-/*    */   String input;
-/*    */   String name;
-/*    */   StringTokenizer st;
-/* 17 */   ArrayList imageInfo = new ArrayList(20);
-/*    */   
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   public void parseImageURLs(String paramString)
-/*    */   {
-/*    */     try
-/*    */     {
-/* 28 */       this.reader = new BufferedReader(new FileReader(paramString));
-/* 29 */       this.input = this.reader.readLine();
-/* 30 */       while (this.input != null)
-/*    */       {
-/*    */ 
-/* 33 */         if (!this.input.startsWith("#"))
-/*    */         {
-/*    */ 
-/* 36 */           this.st = new StringTokenizer(this.input, "|");
-/*    */           
-/* 38 */           while (this.st.hasMoreTokens())
-/*    */           {
-/* 40 */             String str = this.st.nextToken();
-/* 41 */             System.out.println("     Image: " + str);
-/* 42 */             this.imageInfo.add(new JPImage(str, new URL(this.st.nextToken())));
-/*    */           }
-/*    */         }
-/* 45 */         this.input = this.reader.readLine();
-/*    */       }
-/*    */     } catch (Exception localException) {
-/* 48 */       localException.printStackTrace();
-/*    */     }
-/*    */   }
-/*    */   
-/*    */   public ArrayList getImageInfo() {
-/* 53 */     return this.imageInfo;
-/*    */   }
-/*    */ }
+package jparanoia.server;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.lang.invoke.MethodHandles;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+import jparanoia.shared.JPImage;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
+
+public class ImageDataParser {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
+    BufferedReader reader;
+    String input;
+    String name;
+    StringTokenizer st;
+    ArrayList imageInfo = new ArrayList( 20 );
+
+    public void parseImageURLs( String paramString ) {
+        try {
+            final Class cl = MethodHandles.lookup().lookupClass();
+
+            this.reader = new BufferedReader( new InputStreamReader( cl.getResourceAsStream( "/" + paramString ) ) );
+            this.input = this.reader.readLine();
+            while ( this.input != null ) {
+                if ( !this.input.startsWith( "#" ) ) {
+                    this.st = new StringTokenizer( this.input, "|" );
+                    while ( this.st.hasMoreTokens() ) {
+                        String str = this.st.nextToken();
+                        logger.info( "     Image: " + str );
+                        this.imageInfo.add( new JPImage( str, new URL( this.st.nextToken() ) ) );
+                    }
+                }
+                this.input = this.reader.readLine();
+            }
+        } catch ( Exception localException ) {
+            localException.printStackTrace();
+        }
+    }
+
+    public ArrayList getImageInfo() {
+        return this.imageInfo;
+    }
+}
 
 
 /* Location:              C:\Users\noahc\Desktop\JParanoia(1.31.1)\JParanoia(1.31.1).jar!\jparanoia\server\ImageDataParser.class

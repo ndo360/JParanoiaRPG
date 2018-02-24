@@ -1,120 +1,106 @@
-/*     */ package jparanoia.shared;
-/*     */ 
-/*     */ import java.io.File;
-/*     */ import java.io.FileNotFoundException;
-/*     */ import java.io.PrintStream;
-/*     */ import javax.sound.sampled.AudioFormat;
-/*     */ import javax.sound.sampled.AudioInputStream;
-/*     */ import javax.sound.sampled.AudioSystem;
-/*     */ import javax.sound.sampled.Clip;
-/*     */ import javax.sound.sampled.DataLine.Info;
-/*     */ import javax.sound.sampled.Mixer;
-/*     */ import javax.sound.sampled.Mixer.Info;
-/*     */ 
-/*     */ 
-/*     */ public class SoundManager
-/*     */ {
-/*     */   String fileString;
-/*  18 */   int mixerToUse = 0;
-/*     */   
-/*     */   AudioFormat format;
-/*     */   
-/*     */   DataLine.Info info;
-/*     */   AudioInputStream[] audioStreams;
-/*     */   Clip[] clipList;
-/*     */   SoundPlayer player;
-/*     */   SoundLooper looper;
-/*  27 */   static boolean stopLoop = false;
-/*     */   
-/*     */   public SoundManager(File[] paramArrayOfFile)
-/*     */   {
-/*  31 */     if (paramArrayOfFile.length > 32) { System.out.println("WARNING: Preparing to attempt acquisition of more than 32 voices!");
-/*     */     }
-/*     */     try
-/*     */     {
-/*  35 */       Mixer.Info[] arrayOfInfo = AudioSystem.getMixerInfo();
-/*     */       
-/*  37 */       int i = 0;
-/*  38 */       System.out.println(arrayOfInfo[i]);
-/*  39 */       Mixer localMixer = AudioSystem.getMixer(arrayOfInfo[i]);
-/*     */       
-/*  41 */       this.clipList = new Clip[paramArrayOfFile.length];
-/*  42 */       this.audioStreams = new AudioInputStream[paramArrayOfFile.length];
-/*     */       
-/*  44 */       for (int j = 0; j < paramArrayOfFile.length; j++)
-/*     */       {
-/*     */ 
-/*  47 */         this.fileString = paramArrayOfFile[j].toString();
-/*     */         
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */         try
-/*     */         {
-/*  55 */           this.audioStreams[j] = AudioSystem.getAudioInputStream(paramArrayOfFile[j]);
-/*     */         }
-/*     */         catch (FileNotFoundException localFileNotFoundException) {
-/*  58 */           JParanoia.errorMessage("Sound not found", "JParanoia was unable to locate:\n" + paramArrayOfFile[j].toString() + "\n\n" + "Sound files should not be renamed or moved.\n\n" + "If you have downloaded a JParanoia zip archive\n" + "that did not include a sounds directory, you will\n" + "need to copy one over from a previous installation\n" + "or acquire one from the JParanoia download page or\n" + "a fellow player.\n\n" + "Alternately, you can play without sounds\n" + "by setting bPlaySounds to false in the\n" + "jpConfig.ini file and prevent this error\n" + "from appearing again.\n\n" + "JParanoia will now terminate.");
-/*     */           
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*  77 */           System.exit(0);
-/*     */         }
-/*     */         
-/*  80 */         this.format = this.audioStreams[j].getFormat();
-/*     */         
-/*     */ 
-/*  83 */         this.info = new DataLine.Info(Clip.class, this.format);
-/*  84 */         this.clipList[j] = ((Clip)localMixer.getLine(this.info));
-/*  85 */         this.clipList[j].open(this.audioStreams[j]);
-/*     */       }
-/*  87 */       System.out.println("SoundManager finished acquiring resources for audio playback.");
-/*     */     }
-/*     */     catch (Exception localException) {
-/*  90 */       localException.printStackTrace();
-/*     */     }
-/*     */   }
-/*     */   
-/*     */   public void play(int paramInt) {
-/*  95 */     this.player = new SoundPlayer(this.clipList[paramInt], this.audioStreams[paramInt]);
-/*  96 */     this.player.start();
-/*     */   }
-/*     */   
-/*     */   public void loopPlay(int paramInt)
-/*     */   {
-/* 101 */     this.looper = new SoundLooper(this.clipList[paramInt], this.audioStreams[paramInt]);
-/* 102 */     this.looper.start();
-/*     */   }
-/*     */   
-/*     */ 
-/*     */   public static void stopLoop(boolean paramBoolean)
-/*     */   {
-/* 108 */     stopLoop = paramBoolean;
-/*     */   }
-/*     */   
-/*     */   public void terminate()
-/*     */   {
-/* 113 */     for (int i = 0; i < this.clipList.length; i++)
-/* 114 */       this.clipList[i].close();
-/* 115 */     System.out.println("Sound engine terminated.");
-/*     */   }
-/*     */ }
+package jparanoia.shared;
+import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import static java.lang.System.exit;
+import java.lang.invoke.MethodHandles;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import static javax.sound.sampled.AudioSystem.getAudioInputStream;
+import static javax.sound.sampled.AudioSystem.getMixer;
+import static javax.sound.sampled.AudioSystem.getMixerInfo;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.Mixer;
+import static javax.sound.sampled.Mixer.Info;
+import static jparanoia.shared.JParanoia.errorMessage;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
+
+public class SoundManager {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
+    static boolean stopLoop = false;
+    String fileString;
+    int mixerToUse = 0;
+    AudioFormat format;
+    DataLine.Info info;
+    AudioInputStream[] audioStreams;
+    Clip[] clipList;
+    SoundPlayer player;
+    SoundLooper looper;
+
+    public SoundManager( String[] paramArrayOfFile ) {
+        if ( paramArrayOfFile.length > 32 ) {
+            logger.info( "WARNING: Preparing to attempt acquisition of more than 32 voices!" );
+        }
+        try {
+            this.clipList = new Clip[paramArrayOfFile.length];
+            this.audioStreams = new AudioInputStream[paramArrayOfFile.length];
+            //looks like sound system init
+            Info[] arrayOfInfo = getMixerInfo();
+            if ( arrayOfInfo == null || arrayOfInfo.length == 0 ) {
+                errorMessage( "No soundcard detected", "Soundcard init failed, you won't get any sounds!" );
+                return;
+            }
+            Info info = arrayOfInfo[0];
+            logger.info( info.toString() );
+            Mixer localMixer = getMixer( info );
+            //some archaic sound loading
+            for ( int j = 0; j < paramArrayOfFile.length; j++ ) {
+                this.fileString = paramArrayOfFile[j];
+                try {
+                    InputStream is = getClass().getResourceAsStream( "/" + paramArrayOfFile[j] );
+                    this.audioStreams[j] = getAudioInputStream( new BufferedInputStream( is ) );
+                } catch ( FileNotFoundException localFileNotFoundException ) {
+                    errorMessage( "Sound not found", "JParanoia was unable to locate:\n" +
+                            paramArrayOfFile[j] +
+                            "\n\n" +
+                            "Sound files should not be renamed or moved.\n\n" +
+                            "If you have downloaded a JParanoia zip archive\n" +
+                            "that did not include a sounds directory, you will\n" +
+                            "need to copy one over from a previous installation\n" +
+                            "or acquire one from the JParanoia download page or\n" +
+                            "a fellow player.\n\n" +
+                            "Alternately, you can play without sounds\n" +
+                            "by setting bPlaySounds to false in the\n" +
+                            "jpConfig.ini file and prevent this error\n" +
+                            "from appearing again.\n\n" +
+                            "JParanoia will now terminate." );
+                    exit( 0 );
+                }
+                this.format = this.audioStreams[j].getFormat();
+                this.info = new DataLine.Info( Clip.class, this.format );
+                this.clipList[j] = (Clip) localMixer.getLine( this.info );
+                this.clipList[j].open( this.audioStreams[j] );
+            }
+            logger.info( "SoundManager finished acquiring resources for audio playback." );
+        } catch ( Exception localException ) {
+            localException.printStackTrace();
+        }
+    }
+
+    public static void stopLoop( boolean paramBoolean ) {
+        stopLoop = paramBoolean;
+    }
+
+    public void play( int paramInt ) {
+        this.player = new SoundPlayer( this.clipList[paramInt], this.audioStreams[paramInt] );
+        this.player.start();
+    }
+
+    public void loopPlay( int paramInt ) {
+        this.looper = new SoundLooper( this.clipList[paramInt], this.audioStreams[paramInt] );
+        this.looper.start();
+    }
+
+    public void terminate() {
+        for ( int i = 0; i < this.clipList.length; i++ ) {
+            this.clipList[i].close();
+        }
+        logger.info( "Sound engine terminated." );
+    }
+}
 
 
 /* Location:              C:\Users\noahc\Desktop\JParanoia(1.31.1)\JParanoia(1.31.1).jar!\jparanoia\shared\SoundManager.class

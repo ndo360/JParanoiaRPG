@@ -1,153 +1,259 @@
-/*     */ package jparanoia.client;
-/*     */ 
-/*     */ import java.io.BufferedReader;
-/*     */ import java.io.IOException;
-/*     */ import java.io.PrintStream;
-/*     */ import java.io.PrintWriter;
-/*     */ import java.net.Socket;
-/*     */ import java.net.SocketException;
-/*     */ import javax.swing.JOptionPane;
-/*     */ import javax.swing.JTextField;
-/*     */ import jparanoia.shared.JPVersionNumber;
-/*     */ 
-/*     */ 
-/*     */ public class ChatListenerThread
-/*     */   extends Thread
-/*     */ {
-/*     */   public void run()
-/*     */   {
-/*     */     try
-/*     */     {
-/*  21 */       while (JPClient.stayConnected)
-/*     */       {
-/*  23 */         if (JPClient.stayConnected)
-/*     */         {
-/*  25 */           String str = JPClient.in.readLine();
-/*     */           
-/*     */ 
-/*     */ 
-/*  29 */           if (str != null) switch (Integer.parseInt(str.substring(0, 3))) {
-/*     */             case 100: 
-/*  31 */               JPClient.generalChat(str.substring(3)); break;
-/*  32 */             case 110:  JPClient.actionChat(str.substring(3)); break;
-/*  33 */             case 120:  JPClient.speechChat(str.substring(3)); break;
-/*  34 */             case 130:  JPClient.thoughtChat(str.substring(3)); break;
-/*  35 */             case 199:  JPClient.absoluteChat(str.substring(3)); break;
-/*  36 */             case 200:  if (!JPClient.observer) JPClient.receivePrivateMessage(str.substring(3));
-/*     */               break; case 210:  JPClient.gmSendingPrivateMessage(str.substring(3)); break;
-/*  38 */             case 211:  JPClient.clearMessageStatusLabel(); break;
-/*  39 */             case 400:  JPClient.receiveCharacterSheet();yield(); break;
-/*     */             case 404: 
-/*  41 */               JPClient.displayImage(str.substring(3)); break;
-/*  42 */             case 597:  JPClient.combatComplete(); break;
-/*  43 */             case 599:  JPClient.startCombat(); break;
-/*  44 */             case 600:  if (!JPClient.observer) JPClient.takeCombatTurn();
-/*     */               break; case 609:  if (!JPClient.observer) JPClient.abortCombatTurn();
-/*     */               break;
-/*     */             case 900: 
-/*  48 */               JPClient.absoluteChat(str.substring(3)); break;
-/*  49 */             case 902:  JPClient.absoluteChat(str.substring(3));JPClient.out.println("901"); break;
-/*  50 */             case 904:  JPClient.initializePlayerList(str.substring(3)); break;
-/*  51 */             case 906:  JPClient.receiveMyPlayerID(str.substring(3));JPClient.loggedIn = true; break;
-/*  52 */             case 910:  JPClient.loginError();JPClient.absoluteChat(str.substring(3)); break;
-/*     */             
-/*     */             case 950: 
-/*  55 */               JPClient.inputLine.setEnabled(true);JPClient.inputLine.requestFocus(); break;
-/*     */             
-/*     */             case 955: 
-/*  58 */               JPClient.out.println(JPClient.VERSION_NUMBER.toString()); break;
-/*     */             
-/*     */ 
-/*     */             case 960: 
-/*  62 */               JPClient.checkVersion(str.substring(3)); break;
-/*     */             case 961: 
-/*  64 */               JPClient.absoluteChat(str.substring(3));JPClient.disconnect(false); break;
-/*     */             case 970: 
-/*  66 */               JPClient.respond(str.substring(3)); break;
-/*     */             case 999: 
-/*  68 */               JPClient.absoluteChat(str.substring(3)); break;
-/*  69 */             case 10:  JPClient.receivePlayerUpdate(str.substring(3)); break;
-/*  70 */             case 11:  JPClient.playerHasJoined(str.substring(3)); break;
-/*  71 */             case 12:  JPClient.playerHasLeft(str.substring(3)); break;
-/*  72 */             case 13:  JPClient.updateTitle(str.substring(3)); break;
-/*  73 */             case 20:  JPClient.playerDemoted(); break;
-/*  74 */             case 21:  JPClient.playerPromoted(); break;
-/*  75 */             case 40:  JPClient.setObserver(true);JPClient.loggedIn = true; break;
-/*  76 */             case 41:  JPClient.setObserver(false); break;
-/*  77 */             case 50:  JPClient.checkUnmuted(str.substring(3)); break;
-/*  78 */             case 51:  JPClient.checkMuted(str.substring(3)); break;
-/*  79 */             case 52:  if (!JPClient.observer) JPClient.freezeMe();
-/*     */               break; case 53:  if (!JPClient.observer) JPClient.unfreezeMe();
-/*     */               break; case 60:  JPClient.playerHasDied(str.substring(3)); break;
-/*  82 */             case 61:  JPClient.playerHasUndied(str.substring(3)); break;
-/*  83 */             case 70:  JPClient.updateComputerFontIncrease(str.substring(3)); break;
-/*  84 */             case 74:  JPClient.updateMaxCloneNumber(str.substring(3)); break;
-/*     */             
-/*     */             case 86: 
-/*  87 */               if (!JPClient.disconnectCalled) JPClient.disconnect(true); else
-/*  88 */                 JPClient.disconnectCalled = false;
-/*     */               break; case 97:  JPClient.listenObservers(); break;
-/*  90 */             case 98:  JPClient.muteObservers(); break;
-/*  91 */             case 99:  if ((JPClient.observer) || (JPClient.hearObservers)) JPClient.observerChat(str.substring(3));
-/*     */               break; default:  System.out.println("\nError: unknown command type\n" + str + "\n");
-/*     */             }
-/*     */             
-/*     */         }
-/*  96 */         yield();
-/*     */       }
-/*     */       
-/*  99 */       JPClient.in.close();
-/* 100 */       JPClient.out.close();
-/* 101 */       JPClient.mySock.close();
-/* 102 */       JPClient.loggedIn = false;
-/* 103 */       JPClient.connected = false;
-/*     */       
-/* 105 */       JPClient.absoluteChat("\nDisconnected from server.\n");
-/* 106 */       JPClient.muted = false;
-/* 107 */       JPClient.frozen = false;
-/*     */ 
-/*     */     }
-/*     */     catch (SocketException localSocketException)
-/*     */     {
-/* 112 */       System.out.println(localSocketException.getMessage());
-/* 113 */       JOptionPane.showMessageDialog(null, "Connection to host lost.", "Connection lost", 0);
-/* 114 */       JPClient.disconnect(false);
-/* 115 */       JPClient.loggedIn = false;
-/* 116 */       JPClient.connected = false;
-/* 117 */       JPClient.muted = false;
-/* 118 */       JPClient.frozen = false;
-/* 119 */       System.out.println("JPClient.socket closed\n");
-/* 120 */       JPClient.absoluteChat("\nDisconnected from server.\n");
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */     }
-/*     */     catch (IOException localIOException) {}catch (StringIndexOutOfBoundsException localStringIndexOutOfBoundsException)
-/*     */     {
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/*     */ 
-/* 147 */       run();
-/*     */     }
-/*     */   }
-/*     */ }
+package jparanoia.client;
+import java.io.IOException;
+import java.lang.invoke.MethodHandles;
+import java.net.SocketException;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.showMessageDialog;
+import static jparanoia.client.JPClient.VERSION_NUMBER;
+import static jparanoia.client.JPClient.abortCombatTurn;
+import static jparanoia.client.JPClient.absoluteChat;
+import static jparanoia.client.JPClient.actionChat;
+import static jparanoia.client.JPClient.checkMuted;
+import static jparanoia.client.JPClient.checkUnmuted;
+import static jparanoia.client.JPClient.checkVersion;
+import static jparanoia.client.JPClient.clearMessageStatusLabel;
+import static jparanoia.client.JPClient.combatComplete;
+import static jparanoia.client.JPClient.connected;
+import static jparanoia.client.JPClient.disconnect;
+import static jparanoia.client.JPClient.disconnectCalled;
+import static jparanoia.client.JPClient.displayImage;
+import static jparanoia.client.JPClient.freezeMe;
+import static jparanoia.client.JPClient.frozen;
+import static jparanoia.client.JPClient.generalChat;
+import static jparanoia.client.JPClient.gmSendingPrivateMessage;
+import static jparanoia.client.JPClient.hearObservers;
+import static jparanoia.client.JPClient.initializePlayerList;
+import static jparanoia.client.JPClient.inputLine;
+import static jparanoia.client.JPClient.listenObservers;
+import static jparanoia.client.JPClient.loggedIn;
+import static jparanoia.client.JPClient.loginError;
+import static jparanoia.client.JPClient.muteObservers;
+import static jparanoia.client.JPClient.muted;
+import static jparanoia.client.JPClient.observer;
+import static jparanoia.client.JPClient.observerChat;
+import static jparanoia.client.JPClient.out;
+import static jparanoia.client.JPClient.playerDemoted;
+import static jparanoia.client.JPClient.playerHasDied;
+import static jparanoia.client.JPClient.playerHasJoined;
+import static jparanoia.client.JPClient.playerHasLeft;
+import static jparanoia.client.JPClient.playerHasUndied;
+import static jparanoia.client.JPClient.playerPromoted;
+import static jparanoia.client.JPClient.receiveCharacterSheet;
+import static jparanoia.client.JPClient.receiveMyPlayerID;
+import static jparanoia.client.JPClient.receivePlayerUpdate;
+import static jparanoia.client.JPClient.receivePrivateMessage;
+import static jparanoia.client.JPClient.respond;
+import static jparanoia.client.JPClient.setObserver;
+import static jparanoia.client.JPClient.speechChat;
+import static jparanoia.client.JPClient.startCombat;
+import static jparanoia.client.JPClient.takeCombatTurn;
+import static jparanoia.client.JPClient.thoughtChat;
+import static jparanoia.client.JPClient.unfreezeMe;
+import static jparanoia.client.JPClient.updateComputerFontIncrease;
+import static jparanoia.client.JPClient.updateMaxCloneNumber;
+import static jparanoia.client.JPClient.updateTitle;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
+
+public class ChatListenerThread extends Thread {
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
+    public void run() {
+        try {
+            while ( JPClient.stayConnected ) {
+                if ( JPClient.stayConnected ) {
+                    String str = JPClient.in.readLine();
+                    if ( str != null ) {
+                        switch ( Integer.parseInt( str.substring( 0, 3 ) ) ) {
+                            case 100:
+                                generalChat( str.substring( 3 ) );
+                                break;
+                            case 110:
+                                actionChat( str.substring( 3 ) );
+                                break;
+                            case 120:
+                                speechChat( str.substring( 3 ) );
+                                break;
+                            case 130:
+                                thoughtChat( str.substring( 3 ) );
+                                break;
+                            case 199:
+                                absoluteChat( str.substring( 3 ) );
+                                break;
+                            case 200:
+                                if ( !observer ) {
+                                    receivePrivateMessage( str.substring( 3 ) );
+                                }
+                                break;
+                            case 210:
+                                gmSendingPrivateMessage( str.substring( 3 ) );
+                                break;
+                            case 211:
+                                clearMessageStatusLabel();
+                                break;
+                            case 400:
+                                receiveCharacterSheet();
+                                yield();
+                                break;
+                            case 404:
+                                displayImage( str.substring( 3 ) );
+                                break;
+                            case 597:
+                                combatComplete();
+                                break;
+                            case 599:
+                                startCombat();
+                                break;
+                            case 600:
+                                if ( !observer ) {
+                                    takeCombatTurn();
+                                }
+                                break;
+                            case 609:
+                                if ( !observer ) {
+                                    abortCombatTurn();
+                                }
+                                break;
+                            case 900:
+                                absoluteChat( str.substring( 3 ) );
+                                break;
+                            case 902:
+                                absoluteChat( str.substring( 3 ) );
+                                out.println( "901" );
+                                break;
+                            case 904:
+                                initializePlayerList( str.substring( 3 ) );
+                                break;
+                            case 906:
+                                receiveMyPlayerID( str.substring( 3 ) );
+                                loggedIn = true;
+                                break;
+                            case 910:
+                                loginError();
+                                absoluteChat( str.substring( 3 ) );
+                                break;
+                            case 950:
+                                inputLine.setEnabled( true );
+                                inputLine.requestFocus();
+                                break;
+                            case 955:
+                                out.println( VERSION_NUMBER.toString() );
+                                break;
+                            case 960:
+                                checkVersion( str.substring( 3 ) );
+                                break;
+                            case 961:
+                                absoluteChat( str.substring( 3 ) );
+                                disconnect( false );
+                                break;
+                            case 970:
+                                respond( str.substring( 3 ) );
+                                break;
+                            case 999:
+                                absoluteChat( str.substring( 3 ) );
+                                break;
+                            case 10:
+                                receivePlayerUpdate( str.substring( 3 ) );
+                                break;
+                            case 11:
+                                playerHasJoined( str.substring( 3 ) );
+                                break;
+                            case 12:
+                                playerHasLeft( str.substring( 3 ) );
+                                break;
+                            case 13:
+                                updateTitle( str.substring( 3 ) );
+                                break;
+                            case 20:
+                                playerDemoted();
+                                break;
+                            case 21:
+                                playerPromoted();
+                                break;
+                            case 40:
+                                setObserver( true );
+                                loggedIn = true;
+                                break;
+                            case 41:
+                                setObserver( false );
+                                break;
+                            case 50:
+                                checkUnmuted( str.substring( 3 ) );
+                                break;
+                            case 51:
+                                checkMuted( str.substring( 3 ) );
+                                break;
+                            case 52:
+                                if ( !observer ) {
+                                    freezeMe();
+                                }
+                                break;
+                            case 53:
+                                if ( !observer ) {
+                                    unfreezeMe();
+                                }
+                                break;
+                            case 60:
+                                playerHasDied( str.substring( 3 ) );
+                                break;
+                            case 61:
+                                playerHasUndied( str.substring( 3 ) );
+                                break;
+                            case 70:
+                                updateComputerFontIncrease( str.substring( 3 ) );
+                                break;
+                            case 74:
+                                updateMaxCloneNumber( str.substring( 3 ) );
+                                break;
+                            case 86:
+                                if ( !disconnectCalled ) {
+                                    disconnect( true );
+                                } else {
+                                    disconnectCalled = false;
+                                }
+                                break;
+                            case 97:
+                                listenObservers();
+                                break;
+                            case 98:
+                                muteObservers();
+                                break;
+                            case 99:
+                                if ( observer || hearObservers ) {
+                                    observerChat( str.substring( 3 ) );
+                                }
+                                break;
+                            default:
+                                logger.info( "\nError: unknown command type\n" + str + "\n" );
+                        }
+                    }
+                }
+                yield();
+            }
+            JPClient.in.close();
+            JPClient.out.close();
+            JPClient.mySock.close();
+            JPClient.loggedIn = false;
+            JPClient.connected = false;
+            JPClient.absoluteChat( "\nDisconnected from server.\n" );
+            JPClient.muted = false;
+            JPClient.frozen = false;
+        } catch ( SocketException localSocketException ) {
+            logger.info( localSocketException.getMessage() );
+            showMessageDialog( null, "Connection to host lost.", "Connection lost", ERROR_MESSAGE );
+            disconnect( false );
+            loggedIn = false;
+            connected = false;
+            muted = false;
+            frozen = false;
+            logger.info( "JPClient.socket closed\n" );
+            absoluteChat( "\nDisconnected from server.\n" );
+        } catch ( IOException localIOException ) {
+        } catch ( StringIndexOutOfBoundsException localStringIndexOutOfBoundsException ) {
+            run();
+        }
+    }
+}
 
 
 /* Location:              C:\Users\noahc\Desktop\JParanoia(1.31.1)\JParanoia(1.31.1).jar!\jparanoia\client\ChatListenerThread.class

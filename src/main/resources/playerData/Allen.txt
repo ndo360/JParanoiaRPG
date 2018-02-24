@@ -1,0 +1,10 @@
+Va-R-NEY-1
+Service Group: Tech	Secret Society: FCCCP
+Power: Hypersenses
+
+Strength: 19		Carrying Capacity: 13
+Endurance: 9	Macho Bonus: 13
+Agility: 4		Damage Bonus: 9
+
+
+.

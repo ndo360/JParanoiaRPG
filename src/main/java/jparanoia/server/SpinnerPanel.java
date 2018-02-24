@@ -1,29 +1,22 @@
-/*    */ package jparanoia.server;
-/*    */ 
-/*    */ import java.awt.Dimension;
-/*    */ import javax.swing.BoxLayout;
-/*    */ import javax.swing.JPanel;
-/*    */ 
-/*    */ public class SpinnerPanel extends JPanel
-/*    */ {
-/*  9 */   Spinner gppSpinner = new Spinner("PPs");
-/* 10 */   Spinner powerSpinner = new Spinner("Pow");
-/* 11 */   Spinner accessSpinner = new Spinner("Acc");
-/*    */   
-/*    */ 
-/*    */ 
-/*    */   public SpinnerPanel()
-/*    */   {
-/* 17 */     setLayout(new BoxLayout(this, 1));
-/*    */     
-/* 19 */     setPreferredSize(new Dimension(85, 70));
-/* 20 */     setMinimumSize(new Dimension(85, 70));
-/*    */     
-/* 22 */     add(this.gppSpinner);
-/* 23 */     add(this.powerSpinner);
-/* 24 */     add(this.accessSpinner);
-/*    */   }
-/*    */ }
+package jparanoia.server;
+import java.awt.Dimension;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+
+public class SpinnerPanel extends JPanel {
+    Spinner gppSpinner = new Spinner( "PPs" );
+    Spinner powerSpinner = new Spinner( "Pow" );
+    Spinner accessSpinner = new Spinner( "Acc" );
+
+    public SpinnerPanel() {
+        setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
+        setPreferredSize( new Dimension( 85, 70 ) );
+        setMinimumSize( new Dimension( 85, 70 ) );
+        add( this.gppSpinner );
+        add( this.powerSpinner );
+        add( this.accessSpinner );
+    }
+}
 
 
 /* Location:              C:\Users\noahc\Desktop\JParanoia(1.31.1)\JParanoia(1.31.1).jar!\jparanoia\server\SpinnerPanel.class
