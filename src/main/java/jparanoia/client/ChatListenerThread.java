@@ -248,8 +248,8 @@ public class ChatListenerThread extends Thread {
             frozen = false;
             logger.info( "JPClient.socket closed\n" );
             absoluteChat( "\nDisconnected from server.\n" );
-        } catch ( IOException localIOException ) {
-        } catch ( StringIndexOutOfBoundsException localStringIndexOutOfBoundsException ) {
+        } catch ( IOException ignored) {}
+          catch ( StringIndexOutOfBoundsException localStringIndexOutOfBoundsException ) {
             run();
         }
     }

@@ -244,8 +244,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                     }
                 }
 
-                public void changedUpdate( DocumentEvent paramAnonymousDocumentEvent ) {
-                }
+                public void changedUpdate( DocumentEvent paramAnonymousDocumentEvent ) {}
             } );
             this.playerMenu = new ServerPlayerMenu( this );
             this.globalExcludeCheckBox = new JCheckBox( getName() );

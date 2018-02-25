@@ -7,15 +7,13 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class ReturnListener implements java.awt.event.KeyListener {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
-    public void keyTyped( KeyEvent paramKeyEvent ) {
-    }
+    public void keyTyped( KeyEvent paramKeyEvent ) {}
 
     public void keyPressed( KeyEvent paramKeyEvent ) {
         logger.info( "Key Code = " + paramKeyEvent.getKeyCode() );
     }
 
-    public void keyReleased( KeyEvent paramKeyEvent ) {
-    }
+    public void keyReleased( KeyEvent paramKeyEvent ) {}
 }
 
 

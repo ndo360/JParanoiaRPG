@@ -65,8 +65,7 @@ public class HttpListener {
             while ( incomingLine == null ) {
                 try {
                     incomingLine = in.readLine();
-                } catch ( Exception localException1 ) {
-                }
+                } catch ( Exception ignored ) {}
                 if ( incomingLine != null ) {
                     logger.info( incomingLine + "*" );
                     doStuff();
