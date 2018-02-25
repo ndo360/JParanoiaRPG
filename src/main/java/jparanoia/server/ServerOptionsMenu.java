@@ -198,27 +198,21 @@ public class ServerOptionsMenu extends javax.swing.JMenu {
             }
         } );
         this.clearTitleMessageMenuItem = new javax.swing.JMenuItem( "Clear Title Message" );
-        this.clearTitleMessageMenuItem.addActionListener( paramAnonymousActionEvent -> {
-        } );
+        this.clearTitleMessageMenuItem.addActionListener( paramAnonymousActionEvent -> JPServer.clearTitleMessage() );
         this.useAnnouncementMenuItem = new javax.swing.JCheckBoxMenuItem( "Use Announcement" );
         this.useAnnouncementMenuItem.setSelected( (Boolean) JPServer.prefs.getPref( 37 ) );
         this.setAnnouncementMenuItem = new javax.swing.JMenuItem( "Set Announcement..." );
-        this.setAnnouncementMenuItem.addActionListener( paramAnonymousActionEvent -> {
-        } );
+        this.setAnnouncementMenuItem.addActionListener( paramAnonymousActionEvent -> JPServer.setAnnouncement());
         this.clearAnnouncementMenuItem = new javax.swing.JMenuItem( "Clear Announcement" );
-        this.clearAnnouncementMenuItem.addActionListener( paramAnonymousActionEvent -> {
-        } );
+        this.clearAnnouncementMenuItem.addActionListener( paramAnonymousActionEvent -> JPServer.clearAnnouncement() );
         this.allowGMEmotesMenuItem = new javax.swing.JCheckBoxMenuItem( "Allow GM Emotes" );
         this.allowGMEmotesMenuItem.setToolTipText( "<HTML> When disabled, if the you attempt to use speech <BR> or perform an action when you are not spoofing <BR> a character, you will receive a warning and the <BR> text will not be sent.</HTML>" );
         this.allowGMEmotesMenuItem.setSelected( JPServer.allowGMEmotes );
-        this.allowGMEmotesMenuItem.addActionListener( paramAnonymousActionEvent -> {
-            JPServer.allowGMEmotes = !JPServer.allowGMEmotes;
-        } );
+        this.allowGMEmotesMenuItem.addActionListener( paramAnonymousActionEvent -> JPServer.allowGMEmotes = !JPServer.allowGMEmotes);
         this.singleUseSpoofMenuItem = new javax.swing.JCheckBoxMenuItem( "Single Use Spoofing" );
         this.singleUseSpoofMenuItem.setToolTipText( "<HTML> When checked, the Spoof checkbox will <BR>automatically deselect itself when you send a <BR>spoofed line.</HTML>" );
         this.singleUseSpoofMenuItem.setSelected( (Boolean) JPServer.prefs.getPref( 36 ) );
-        this.singleUseSpoofMenuItem.addActionListener( paramAnonymousActionEvent -> {
-        } );
+        this.singleUseSpoofMenuItem.addActionListener( paramAnonymousActionEvent -> { /*FIXME: empty brackets!*/} );
         this.computerFontMenu = new javax.swing.JMenu( "Computer font" );
         this.computerFontMenu.add( this.bigComputerFontMenuItem );
         this.computerFontMenu.add( this.computerAllCapsMenuItem );

@@ -118,9 +118,6 @@ public class StatusPanel extends javax.swing.JPanel {
     class TimerListener implements java.awt.event.ActionListener {
         int frameNumber = 0;
 
-        TimerListener() {
-        }
-
         public void actionPerformed( java.awt.event.ActionEvent paramActionEvent ) {
             if ( StatusPanel.this.freshTimer ) {
                 this.frameNumber = 0;

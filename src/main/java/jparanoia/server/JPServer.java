@@ -253,8 +253,7 @@ public class JPServer extends JParanoia {
         frame.setIconImage( getDefaultToolkit().getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
         frame.setDefaultCloseOperation( DO_NOTHING_ON_CLOSE );
         frame.addWindowListener( new WindowAdapter() {
-            public void windowClosing( WindowEvent paramAnonymousWindowEvent ) {
-            }
+            public void windowClosing( WindowEvent paramAnonymousWindowEvent ) { JPServer.exit(); }
         } );
         try {
             localIP = getLocalHost();
@@ -357,8 +356,7 @@ public class JPServer extends JParanoia {
         inputLine.setLineWrap( true );
         inputLine.setWrapStyleWord( true );
         inputLine.addKeyListener( new KeyListener() {
-            public void keyTyped( KeyEvent paramAnonymousKeyEvent ) {
-            }
+            public void keyTyped( KeyEvent paramAnonymousKeyEvent ) {}
 
             public void keyPressed( KeyEvent paramAnonymousKeyEvent ) {
                 previousKey = thisKey;
@@ -441,8 +439,7 @@ public class JPServer extends JParanoia {
             }
         } );
         combatButton = new JButton( "Combat!" );
-        combatButton.addActionListener( paramAnonymousActionEvent -> {
-        } );
+        combatButton.addActionListener( paramAnonymousActionEvent -> JPServer.startCombat());
         combatButton.setEnabled( false );
         freezePanel.add( combatButton );
         freezePanel.add( freezeButton );
@@ -532,12 +529,10 @@ public class JPServer extends JParanoia {
         observersMenu = new JMenu( "Observers" );
         hearObserversMenuItem = new JCheckBoxMenuItem( "Hear Observers" );
         hearObserversMenuItem.setSelected( (Boolean) prefs.getPref( 29 ) );
-        hearObserversMenuItem.addActionListener( paramAnonymousActionEvent -> {
-        } );
+        hearObserversMenuItem.addActionListener( paramAnonymousActionEvent -> JPServer.toggleHearObservers());
         announceObserversMenuItem = new JCheckBoxMenuItem( "Announce Observers" );
         announceObserversMenuItem.setSelected( (Boolean) prefs.getPref( 30 ) );
-        announceObserversMenuItem.addActionListener( paramAnonymousActionEvent -> {
-        } );
+        announceObserversMenuItem.addActionListener( paramAnonymousActionEvent -> JPServer.toggleAnnounceObservers());
         showObserversListMenuItem = new JMenuItem( "Show Observers List" );
         showObserversListMenuItem.addActionListener( paramAnonymousActionEvent -> obsFrame.setVisible( true ) );
         observersMenu.add( hearObserversMenuItem );

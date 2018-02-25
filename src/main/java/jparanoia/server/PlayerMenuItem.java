@@ -21,8 +21,7 @@ public abstract class PlayerMenuItem extends JMenuItem {
         } );
     }
 
-    protected void action() {
-    }
+    protected void action() {}
 }
 
 

@@ -337,9 +337,6 @@ public class CombatFrame extends JFrame {
     class CombatListener implements java.awt.event.ActionListener {
         Object source;
 
-        CombatListener() {
-        }
-
         public void actionPerformed( ActionEvent paramActionEvent ) {
             this.source = paramActionEvent.getSource();
             CombatButton localCombatButton1 = (CombatButton) this.source;

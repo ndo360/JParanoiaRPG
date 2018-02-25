@@ -149,6 +149,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
         frame.addWindowListener( new java.awt.event.WindowAdapter() {
             public void windowClosing( java.awt.event.WindowEvent paramAnonymousWindowEvent ) {
+                JPClient.exit();
             }
         } );
         frame.setSize( 700, 500 );
@@ -210,8 +211,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
             }
         } );
         inputLine.addKeyListener( new java.awt.event.KeyListener() {
-            public void keyTyped( java.awt.event.KeyEvent paramAnonymousKeyEvent ) {
-            }
+            public void keyTyped( java.awt.event.KeyEvent paramAnonymousKeyEvent ) {}
 
             public void keyPressed( java.awt.event.KeyEvent paramAnonymousKeyEvent ) {
                 jparanoia.shared.JParanoia.previousKey = jparanoia.shared.JParanoia.thisKey;
@@ -232,8 +232,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 }
             }
 
-            public void keyReleased( java.awt.event.KeyEvent paramAnonymousKeyEvent ) {
-            }
+            public void keyReleased( java.awt.event.KeyEvent paramAnonymousKeyEvent ) {}
         } );
         inputPanel = new JPanel();
         inputPanel.add( inputLine, "Center" );
@@ -241,8 +240,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
         frame.setJMenuBar( menuBar );
         connectionMenu = new JMenu( "Connection" );
         connectMenuItem = new JMenuItem( "Connect..." );
-        connectMenuItem.addActionListener( paramAnonymousActionEvent -> {
-        } );
+        connectMenuItem.addActionListener( paramAnonymousActionEvent -> { ConnectManager.activate(); } );
         disconnectMenuItem = new JMenuItem( "Disconnect" );
         disconnectMenuItem.addActionListener( paramAnonymousActionEvent -> JPClient.disconnect( false ) );
         connectionMenu.add( connectMenuItem );
