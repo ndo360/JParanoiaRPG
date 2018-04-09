@@ -20,9 +20,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.FileReader;
 import static java.lang.Boolean.TRUE;
 import static java.lang.System.arraycopy;
 import static java.lang.System.getProperty;
@@ -31,7 +29,6 @@ import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
 import static java.net.InetAddress.getLocalHost;
 import java.net.UnknownHostException;
-import java.util.Objects;
 import java.util.Vector;
 import static javax.swing.BorderFactory.createTitledBorder;
 import static javax.swing.Box.createRigidArea;
@@ -70,6 +67,7 @@ import static javax.swing.text.StyleConstants.Family;
 import static javax.swing.text.StyleConstants.Foreground;
 import static javax.swing.text.StyleConstants.Size;
 import jparanoia.shared.BrightColorArray;
+import jparanoia.shared.GameLogger;
 import static jparanoia.shared.GameRegistrar.addGame;
 import static jparanoia.shared.GameRegistrar.removeGame;
 import jparanoia.shared.JParanoia;
@@ -267,7 +265,7 @@ public class JPServer extends JParanoia {
 
         profiler.start( "player list init" );
         DataParser localDataParser = new DataParser();
-        players = localDataParser.parsePlayerList( "playerData/playerList.txt" );
+        players = localDataParser.parsePlayerList( "playerList.txt" );
 
         profiler.start( "image data init" );
         logger.info( "Processing imageData.txt:" );
@@ -608,15 +606,15 @@ public class JPServer extends JParanoia {
         displayWrite( yellow, "READ THE README.\n" );
 
         profiler.start( "log init" );
-//        keepLog = (Boolean) prefs.getPref( 20 );
-//        htmlLog = (Boolean) prefs.getPref( 21 );
-//        if ( keepLog ) {
-//            if ( htmlLog ) {
-//                log = new GameLogger( players );
-//            } else {
-//                log = new GameLogger();
-//            }
-//        }
+        keepLog = (Boolean) prefs.getPref( 20 );
+        htmlLog = (Boolean) prefs.getPref( 21 );
+        if ( keepLog ) {
+            if ( htmlLog ) {
+                log = new GameLogger( players );
+            } else {
+                log = new GameLogger();
+            }
+        }
         logger.info( "JPServer.frame constructed.\n" );
 
         profiler.start( "combat init" );
@@ -1319,11 +1317,7 @@ public class JPServer extends JParanoia {
 
     public static String getAnnouncement() {
         StringBuilder str1 = new StringBuilder();
-        try {
-            final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
-            final File file = new File( Objects.requireNonNull( classLoader.getResource( "conf/announcement.txt" ) )
-                    .getFile() );
-            BufferedReader localBufferedReader = new BufferedReader( new InputStreamReader( new FileInputStream( file ) ) );
+        try ( BufferedReader localBufferedReader = new BufferedReader( new FileReader( "conf/announcement.txt" ) ) ) {
             String str2 = null;
             while ( ( str2 = localBufferedReader.readLine() ) != null ) {
                 str1.append( "199" ).append( str2 ).append( "\n" );

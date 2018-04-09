@@ -3,13 +3,13 @@ import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import static java.lang.System.exit;
 import static java.lang.System.out;
 import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
-import java.util.Objects;
 import static java.util.Objects.requireNonNull;
 import java.util.StringTokenizer;
 import javax.swing.JCheckBox;
@@ -90,9 +90,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
 
     public void readCharacterSheetFile() {
         try {
-            final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
-            final File file = new File( Objects.requireNonNull( classLoader.getResource( dataFile ) ).getFile() );
-            this.reader = new BufferedReader( new InputStreamReader( new FileInputStream( file ) ) );
+            this.reader = new BufferedReader( new FileReader( dataFile ) );
         } catch ( Exception localException1 ) {
             logger.info( "An exception occured while attemping to access " + this.dataFile );
             localException1.printStackTrace();

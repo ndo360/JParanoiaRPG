@@ -3,12 +3,18 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.invoke.MethodHandles;
 import java.text.SimpleDateFormat;
 import jparanoia.server.JPServer;
+import org.slf4j.Logger;
+import static org.slf4j.LoggerFactory.getLogger;
 
 public abstract class JPLogger {
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyyMMddHHmmss" );
     public static final SimpleDateFormat humanDateFormat = new SimpleDateFormat( "MMM dd yyyy - HH:mm" );
+    public static final String LOGS = "./logs/";
+    private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
+
     public PrintWriter out;
     File logFile;
     String input;
@@ -17,13 +23,18 @@ public abstract class JPLogger {
     int flushLimit;
 
     protected void createLogFile() {
+        File directory = new File( LOGS );
+        if (! directory.exists()){
+            directory.mkdir();
+        }
         try {
-            this.logFile = new File( this.logName );
+            this.logFile = new File( LOGS + this.logName );
             this.out = new PrintWriter( new FileWriter( this.logFile ), true );
+            logger.info( "Writing logs to {}", logFile.toString() );
         } catch ( IOException localIOException ) {
             localIOException.printStackTrace();
             JPServer.logBroken = true;
-            JPServer.errorMessage( "Error creating log file", "JParanoia could not create the log file.\nThis can be caused by deleting or renaming the \"logs\" directory.\nCheck the console for details." );
+            JPServer.errorMessage( "Error creating log file", "JParanoia could not create the log file.\nCheck the console for details." );
         }
     }
 

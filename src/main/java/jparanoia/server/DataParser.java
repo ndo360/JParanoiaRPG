@@ -1,7 +1,7 @@
 package jparanoia.server;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.invoke.MethodHandles;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -10,7 +10,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class DataParser {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
-
+    public static final String DATA_FOLDER = "playerData/";
     BufferedReader reader;
     String input;
     String currentText;
@@ -28,12 +28,7 @@ public class DataParser {
         this.newPlayers = new Vector();
         try {
             logger.info( "\nProcessing playerList.txt:" );
-//            final ClassLoader classLoader = MethodHandles.lookup().lookupClass().getClassLoader();
-//            final File file = new File( Objects.requireNonNull( classLoader.getResource( paramString ) ).getFile() );
-//            this.reader = new BufferedReader( new InputStreamReader(new FileInputStream( file )) );
-            //FIXME for maven build
-            this.reader = new BufferedReader( new InputStreamReader( getClass().getResourceAsStream( "/" +
-                    paramString ) ) );
+            this.reader = new BufferedReader(new FileReader(DATA_FOLDER + paramString));
             this.input = this.reader.readLine();
             int i = 0;
             while ( this.input != null ) {
@@ -52,7 +47,7 @@ public class DataParser {
                             this.playerDataFileName = "npc";
                         }
                         this.somePlayer = new ServerPlayer( this.playerNumber, this.playerName, this.playerIsPlayer, this.playerPassword,
-                                "playerData/" +
+                                DATA_FOLDER +
                                         this.playerDataFileName );
                         if ( this.somePlayer.isAnActualPlayer() ) {
                             this.somePlayer.readCharacterSheetFile();

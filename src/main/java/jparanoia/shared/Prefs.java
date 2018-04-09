@@ -1,7 +1,7 @@
 package jparanoia.shared;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import static java.lang.System.exit;
 import java.lang.invoke.MethodHandles;
 import java.util.StringTokenizer;
@@ -53,42 +53,40 @@ public class Prefs {
     Object[] prefsArray = new Object[40];
 
     public Prefs() {
-        parsePrefs( "jpConfig.ini" );
+        parsePrefs( "conf/jpConfig.ini" );
     }
 
     public void parsePrefs( String paramString ) {
-        try {
-            final Class cl = MethodHandles.lookup().lookupClass();
-            BufferedReader localBufferedReader = new BufferedReader( new InputStreamReader( cl.getResourceAsStream( "/" +
-                    paramString ) ) );
-            String str1 = localBufferedReader.readLine();
-            int i = 0;
-            String str2 = "uninitialized";
-            String str3 = "uninitialized";
-            while ( str1 != null ) {
-                if ( !str1.startsWith( "#" ) ) {
-                    StringTokenizer localStringTokenizer = new StringTokenizer( str1, "=" );
-                    while ( localStringTokenizer.hasMoreTokens() ) {
-                        String str4 = "";
-                        str2 = localStringTokenizer.nextToken();
-                        str3 = localStringTokenizer.nextToken();
-                        if ( str2.startsWith( "b" ) ) {
-                            this.prefsArray[i] = str3.equals( "true" );
-                            str4 = "BOOLEAN";
-                        } else if ( str2.startsWith( "i" ) ) {
-                            this.prefsArray[i] = Integer.parseInt( str3 );
-                            str4 = "INTEGER";
-                        } else if ( str2.startsWith( "s" ) ) {
-                            this.prefsArray[i] = str3;
-                            str4 = "STRING";
+//        logger.info( "location is {}", new File(".").getAbsolutePath() );
+        try ( BufferedReader localBufferedReader = new BufferedReader( new FileReader( paramString ) ) ){
+                String str1 = localBufferedReader.readLine();
+                int i = 0;
+                String key;
+                String value;
+                while ( str1 != null ) {
+                    if ( !str1.startsWith( "#" ) ) {
+                        StringTokenizer localStringTokenizer = new StringTokenizer( str1, "=" );
+                        while ( localStringTokenizer.hasMoreTokens() ) {
+                            String type = "";
+                            key = localStringTokenizer.nextToken();
+                            value = localStringTokenizer.nextToken();
+                            if ( key.startsWith( "b" ) ) {
+                                this.prefsArray[i] = value.equals( "true" );
+                                type = "BOOLEAN";
+                            } else if ( key.startsWith( "i" ) ) {
+                                this.prefsArray[i] = Integer.parseInt( value );
+                                type = "INTEGER";
+                            } else if ( key.startsWith( "s" ) ) {
+                                this.prefsArray[i] = value;
+                                type = "STRING";
+                            }
+                            this.prefStrings[i][0] = key;
+                            this.prefStrings[i][1] = value;
+                            i++;
                         }
-                        this.prefStrings[i][0] = str2;
-                        this.prefStrings[i][1] = str3;
-                        i++;
                     }
+                    str1 = localBufferedReader.readLine();
                 }
-                str1 = localBufferedReader.readLine();
-            }
         } catch ( IOException localIOException ) {
             logger.info( "* Error reading jpConfig.ini" );
             localIOException.printStackTrace();

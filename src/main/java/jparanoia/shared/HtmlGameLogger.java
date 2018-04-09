@@ -5,7 +5,7 @@ import util.HexConverter;
 
 public class HtmlGameLogger extends JPLogger {
     public HtmlGameLogger() {
-        this.logName = "logs/uv_" + dateFormat.format( new Date() ) + ".html";
+        this.logName = "uv_" + dateFormat.format( new Date() ) + ".html";
         createLogFile();
         logEntry( "<html>\n<head>\n<title>JParanoia Game Log - " +
                 humanDateFormat.format( new Date() ) +

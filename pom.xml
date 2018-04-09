@@ -48,7 +48,7 @@
                     <archive>
                         <manifestEntries>
                             <Main-Class>jparanoia.ParanoiaSelector</Main-Class>
-                            <Class-Path>.</Class-Path>
+                            <Class-Path>/conf/,/playerData/</Class-Path>
                         </manifestEntries>
                     </archive>
                     <excludes>
@@ -90,7 +90,7 @@
                     <archive>
                         <manifestEntries>
                             <Main-Class>jparanoia.ParanoiaSelector</Main-Class>
-                            <Class-Path>./conf/</Class-Path>
+                            <Class-Path>/conf/,/playerData/</Class-Path>
                         </manifestEntries>
                     </archive>
 

@@ -1,13 +1,16 @@
 package jparanoia.client;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import static java.awt.Toolkit.getDefaultToolkit;
+import static java.lang.invoke.MethodHandles.lookup;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import static jparanoia.shared.JParanoia.errorMessage;
 
 public class ConnectManager {
     public static JFrame frame = new JFrame( "Connect..." );
-    static java.awt.Dimension dimen = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+    static java.awt.Dimension dimen = getDefaultToolkit().getScreenSize();
     static int screenWidth = (int) dimen.getWidth();
     static int screenHeight = (int) dimen.getHeight();
     static boolean noGames = false;
@@ -75,11 +78,10 @@ public class ConnectManager {
         contentPane.add( manualEntryField );
         frame.setContentPane( contentPane );
         try {
-            frame.setIconImage( java.awt.Toolkit.getDefaultToolkit()
-                    .getImage( Class.forName( "jparanoia.client.ConnectManager" )
-                            .getResource( "graphics/jparanoiaIcon.jpg" ) ) );
+            frame.setIconImage( getDefaultToolkit()
+                    .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
         } catch ( Exception localException ) {
-            jparanoia.shared.JParanoia.errorMessage( "Error getting icon...", "Unable to load icon for ConnectManager frame.\nCheck console." );
+            errorMessage( "Error getting icon...", "Unable to load icon for ConnectManager frame.\nCheck console." );
             localException.printStackTrace();
         }
         int j = noGames ? 1 : games.length;

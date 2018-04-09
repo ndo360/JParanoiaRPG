@@ -25,6 +25,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
+import org.slf4j.profiler.Profiler;
 
 public class JPClient extends jparanoia.shared.JParanoia {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
@@ -134,6 +135,8 @@ public class JPClient extends jparanoia.shared.JParanoia {
     static PrivateMessageFrame[] PMFrame;
 
     public JPClient() {
+        Profiler profiler = new Profiler("JPClient");
+
         clobberAqua = (Boolean) prefs.getPref( 18 );
         if ( clobberAqua ) {
             try {
@@ -142,6 +145,8 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 logger.info( "Exception while setting L&F." );
             }
         }
+
+        profiler.start( "frame init" );
         jparanoia.shared.JParanoia.appInfo = "JParanoia Client " + VERSION_NAME;
         frame.setTitle( "JParanoia Client " + VERSION_NAME );
         myTitle = new jparanoia.shared.TitleClass( "JParanoia Client", VERSION_NAME, true );
@@ -396,6 +401,8 @@ public class JPClient extends jparanoia.shared.JParanoia {
 //            jparanoia.shared.JParanoia.aboutBoxMenuItem.doClick();
 //        });
         mainFontSize = (Integer) textAttributes.getAttribute( javax.swing.text.StyleConstants.FontConstants.Size );
+
+        profiler.stop().print();
     }
 
     public static void setColorScheme() {

@@ -10,13 +10,13 @@ public class GameLogger extends JPLogger {
     private boolean html = false;
 
     public GameLogger() {
-        this.logName = "logs/uv_" + dateFormat.format( new Date() ) + ".txt";
+        this.logName = "uv_" + dateFormat.format( new Date() ) + ".txt";
         createLogFile();
     }
 
     public GameLogger( JPPlayer[] paramArrayOfJPPlayer ) {
         this.html = true;
-        this.logName = "logs/uv_" + dateFormat.format( new Date() ) + ".html";
+        this.logName = "uv_" + dateFormat.format( new Date() ) + ".html";
         createLogFile();
         logEntry( "<html>\n<head>\n<title>JParanoia Game Log - " +
                 humanDateFormat.format( new Date() ) +
