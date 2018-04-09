@@ -1,12 +1,16 @@
 package http;
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.invoke.MethodHandles;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Map;
+import java.util.Set;
 import javax.net.ssl.HttpsURLConnection;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
+import util.TagTosser;
 
 public class Direct {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
@@ -33,19 +37,19 @@ public class Direct {
             localHttpsURLConnection.setDoOutput( true );
             localHttpsURLConnection.setRequestMethod( "POST" );
             PrintWriter localPrintWriter = new PrintWriter( localHttpsURLConnection.getOutputStream(), true );
-            String str1 = "LOGON=" + java.net.URLEncoder.encode( "buried", "UTF-8" );
-            String str2 = "PASSWORDS=" + java.net.URLEncoder.encode( "wdml1299", "UTF-8" );
+            String str1 = "LOGON=" + URLEncoder.encode( "buried", "UTF-8" );
+            String str2 = "PASSWORDS=" + URLEncoder.encode( "wdml1299", "UTF-8" );
             String str3 = str1 + "&" + str2 + "&NEW_PASSWORD=&CONFIRM_NEW_PASSWORD=&";
             localPrintWriter.println( str3 );
             localPrintWriter.flush();
             localPrintWriter.close();
             Map localMap = localHttpsURLConnection.getHeaderFields();
-            java.util.Set localSet = localMap.keySet();
+            Set localSet = localMap.keySet();
             Object[] arrayOfObject = localSet.toArray();
-            for ( int i = 0; i < arrayOfObject.length; i++ ) {
-                logger.info( "*** " + arrayOfObject[i] + ": " + localMap.get( arrayOfObject[i] ).toString() + " ***" );
+            for ( final Object anArrayOfObject : arrayOfObject ) {
+                logger.info( "*** " + anArrayOfObject + ": " + localMap.get( anArrayOfObject ).toString() + " ***" );
             }
-            BufferedReader localBufferedReader = util.TagTosser.tossTags( new BufferedReader( new java.io.InputStreamReader( localHttpsURLConnection
+            BufferedReader localBufferedReader = TagTosser.tossTags( new BufferedReader( new InputStreamReader( localHttpsURLConnection
                     .getInputStream() ) ) );
             String str4;
             while ( ( str4 = localBufferedReader.readLine() ) != null ) {

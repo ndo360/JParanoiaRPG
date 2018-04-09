@@ -1,24 +1,29 @@
 package jparanoia.server;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import static java.lang.invoke.MethodHandles.lookup;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Spinner extends javax.swing.JPanel {
+public class Spinner extends JPanel {
     JTextField textField = new JTextField( 4 );
-    JButton plus = new JButton( new javax.swing.ImageIcon( java.awt.Toolkit.getDefaultToolkit()
+    JButton plus = new JButton( new ImageIcon( Toolkit.getDefaultToolkit()
             .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/plusIcon.jpg" ) ) ) );
-    JButton minus = new JButton( new javax.swing.ImageIcon( java.awt.Toolkit.getDefaultToolkit()
+    JButton minus = new JButton( new ImageIcon( Toolkit.getDefaultToolkit()
             .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/minusIcon.jpg" ) ) ) );
-    javax.swing.JLabel label = new javax.swing.JLabel( "NO LABEL" );
+    JLabel label = new JLabel( "NO LABEL" );
     int value = 0;
     int minValue = 0;
     int maxValue = 999;
 
     public Spinner( String paramString ) {
         if ( paramString != null ) {
-            this.label = new javax.swing.JLabel( paramString );
+            this.label = new JLabel( paramString );
         }
         this.textField.setHorizontalAlignment( 4 );
         this.plus.addActionListener( paramAnonymousActionEvent -> {
@@ -35,7 +40,7 @@ public class Spinner extends javax.swing.JPanel {
         } );
         setPreferredSize( new Dimension( 40, 30 ) );
         setMaximumSize( new Dimension( 40, 30 ) );
-        setLayout( new javax.swing.BoxLayout( this, BoxLayout.X_AXIS ) );
+        setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
         this.label.setMinimumSize( new Dimension( 30, 24 ) );
         this.label.setPreferredSize( new Dimension( 30, 24 ) );
         this.label.setMaximumSize( new Dimension( 30, 24 ) );
@@ -55,7 +60,7 @@ public class Spinner extends javax.swing.JPanel {
         add( this.textField );
         add( this.minus );
         add( this.plus );
-        add( javax.swing.Box.createRigidArea( new Dimension( 2, 0 ) ) );
+        add( Box.createRigidArea( new Dimension( 2, 0 ) ) );
         updateField();
     }
 

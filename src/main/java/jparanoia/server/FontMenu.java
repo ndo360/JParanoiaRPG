@@ -1,15 +1,19 @@
 package jparanoia.server;
 import java.lang.invoke.MethodHandles;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.text.StyleConstants;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class FontMenu extends javax.swing.JMenu {
+public class FontMenu extends JMenu {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
-    javax.swing.JMenu fontFamilyMenu;
-    javax.swing.JMenu fontSizeMenu;
-    javax.swing.JCheckBoxMenuItem fontBoldMenuItem;
+    JMenu fontFamilyMenu;
+    JMenu fontSizeMenu;
+    JCheckBoxMenuItem fontBoldMenuItem;
     JRadioButtonMenuItem serifButton;
     JRadioButtonMenuItem sansSerifButton;
     JRadioButtonMenuItem monospacedButton;
@@ -27,20 +31,20 @@ public class FontMenu extends javax.swing.JMenu {
 
     public FontMenu( String paramString ) {
         super( paramString );
-        this.fontFamilyMenu = new javax.swing.JMenu( "Family" );
+        this.fontFamilyMenu = new JMenu( "Family" );
         this.serifButton = new JRadioButtonMenuItem( "Serif" );
         this.serifButton.addActionListener( paramAnonymousActionEvent -> {
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Family, "Serif" );
+            JPServer.textAttributes.addAttribute( StyleConstants.FontConstants.Family, "Serif" );
         } );
         this.sansSerifButton = new JRadioButtonMenuItem( "Sans-Serif" );
         this.sansSerifButton.addActionListener( paramAnonymousActionEvent -> {
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Family, "SansSerif" );
+            JPServer.textAttributes.addAttribute( StyleConstants.FontConstants.Family, "SansSerif" );
         } );
         this.monospacedButton = new JRadioButtonMenuItem( "Monospaced" );
         this.monospacedButton.addActionListener( paramAnonymousActionEvent -> {
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Family, "Monospaced" );
+            JPServer.textAttributes.addAttribute( StyleConstants.FontConstants.Family, "Monospaced" );
         } );
-        javax.swing.ButtonGroup localButtonGroup1 = new javax.swing.ButtonGroup();
+        ButtonGroup localButtonGroup1 = new ButtonGroup();
         localButtonGroup1.add( this.serifButton );
         localButtonGroup1.add( this.sansSerifButton );
         localButtonGroup1.add( this.monospacedButton );
@@ -51,63 +55,63 @@ public class FontMenu extends javax.swing.JMenu {
         this.fontFamilyMenu.add( this.sansSerifButton );
         this.fontFamilyMenu.add( this.monospacedButton );
         add( this.fontFamilyMenu );
-        this.fontSizeMenu = new javax.swing.JMenu( "Size" );
+        this.fontSizeMenu = new JMenu( "Size" );
         this.size10Button = new JRadioButtonMenuItem( "10" );
         this.size10Button.addActionListener( paramAnonymousActionEvent -> {
             JPServer.mainFontSize = 10;
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, 10 );
+            JPServer.textAttributes.addAttribute( StyleConstants.FontConstants.Size, 10 );
         } );
         this.size12Button = new JRadioButtonMenuItem( "12" );
         this.size12Button.addActionListener( paramAnonymousActionEvent -> {
             JPServer.mainFontSize = 12;
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, 12 );
+            JPServer.textAttributes.addAttribute( StyleConstants.FontConstants.Size, 12 );
         } );
         this.size14Button = new JRadioButtonMenuItem( "14" );
         this.size14Button.addActionListener( paramAnonymousActionEvent -> {
             JPServer.mainFontSize = 14;
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, 14 );
+            JPServer.textAttributes.addAttribute( StyleConstants.FontConstants.Size, 14 );
         } );
         this.size16Button = new JRadioButtonMenuItem( "16" );
         this.size16Button.addActionListener( paramAnonymousActionEvent -> {
             JPServer.mainFontSize = 16;
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, 16 );
+            JPServer.textAttributes.addAttribute( StyleConstants.FontConstants.Size, 16 );
         } );
         this.size18Button = new JRadioButtonMenuItem( "18" );
         this.size18Button.addActionListener( paramAnonymousActionEvent -> {
             JPServer.mainFontSize = 18;
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, 18 );
+            JPServer.textAttributes.addAttribute( StyleConstants.FontConstants.Size, 18 );
         } );
         this.size24Button = new JRadioButtonMenuItem( "24" );
         this.size24Button.addActionListener( paramAnonymousActionEvent -> {
             JPServer.mainFontSize = 24;
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 24 );
+            JPServer.textAttributes.addAttribute( StyleConstants.CharacterConstants.Size, 24 );
         } );
         this.size36Button = new JRadioButtonMenuItem( "36" );
         this.size36Button.addActionListener( paramAnonymousActionEvent -> {
             JPServer.mainFontSize = 36;
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 36 );
+            JPServer.textAttributes.addAttribute( StyleConstants.CharacterConstants.Size, 36 );
         } );
         this.size48Button = new JRadioButtonMenuItem( "48" );
         this.size48Button.addActionListener( paramAnonymousActionEvent -> {
             JPServer.mainFontSize = 48;
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 48 );
+            JPServer.textAttributes.addAttribute( StyleConstants.CharacterConstants.Size, 48 );
         } );
         this.size72Button = new JRadioButtonMenuItem( "72" );
         this.size72Button.addActionListener( paramAnonymousActionEvent -> {
             JPServer.mainFontSize = 72;
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 72 );
+            JPServer.textAttributes.addAttribute( StyleConstants.CharacterConstants.Size, 72 );
         } );
         this.size96Button = new JRadioButtonMenuItem( "96" );
         this.size96Button.addActionListener( paramAnonymousActionEvent -> {
             JPServer.mainFontSize = 96;
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 96 );
+            JPServer.textAttributes.addAttribute( StyleConstants.CharacterConstants.Size, 96 );
         } );
         this.size120Button = new JRadioButtonMenuItem( "120" );
         this.size120Button.addActionListener( paramAnonymousActionEvent -> {
             JPServer.mainFontSize = 120;
-            JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Size, 120 );
+            JPServer.textAttributes.addAttribute( StyleConstants.CharacterConstants.Size, 120 );
         } );
-        javax.swing.ButtonGroup localButtonGroup2 = new javax.swing.ButtonGroup();
+        ButtonGroup localButtonGroup2 = new ButtonGroup();
         localButtonGroup2.add( this.size10Button );
         localButtonGroup2.add( this.size12Button );
         localButtonGroup2.add( this.size14Button );
@@ -168,14 +172,14 @@ public class FontMenu extends javax.swing.JMenu {
         this.fontSizeMenu.add( this.size96Button );
         this.fontSizeMenu.add( this.size120Button );
         add( this.fontSizeMenu );
-        this.fontBoldMenuItem = new javax.swing.JCheckBoxMenuItem( "Bold" );
+        this.fontBoldMenuItem = new JCheckBoxMenuItem( "Bold" );
         this.fontBoldMenuItem.setSelected( JPServer.prefs.getPref( 17 ).equals( Boolean.TRUE ) );
         this.fontBoldMenuItem.addActionListener( paramAnonymousActionEvent -> {
             if ( JPServer.fontIsBold ) {
-                JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Bold, Boolean.FALSE );
+                JPServer.textAttributes.addAttribute( StyleConstants.FontConstants.Bold, Boolean.FALSE );
                 JPServer.fontIsBold = false;
             } else if ( !JPServer.fontIsBold ) {
-                JPServer.textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Bold, Boolean.TRUE );
+                JPServer.textAttributes.addAttribute( StyleConstants.FontConstants.Bold, Boolean.TRUE );
                 JPServer.fontIsBold = true;
             }
         } );

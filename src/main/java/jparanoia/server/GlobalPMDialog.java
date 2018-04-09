@@ -1,22 +1,30 @@
 package jparanoia.server;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class GlobalPMDialog extends javax.swing.JFrame {
+public class GlobalPMDialog extends JFrame {
     static ServerPlayer[] ts = JPServer.troubleshooters;
     Container contentPane;
     JTextField textField = new JTextField( 40 );
     JPanel excludePanel = new JPanel();
     JPanel textPanel = new JPanel();
-    javax.swing.JButton resetButton = new javax.swing.JButton( "Reset" );
+    JButton resetButton = new JButton( "Reset" );
 
     public GlobalPMDialog() {
         super( "Global PM..." );
-        addWindowListener( new java.awt.event.WindowAdapter() {
-            public void windowClosing( java.awt.event.WindowEvent paramAnonymousWindowEvent ) {
+        addWindowListener( new WindowAdapter() {
+            public void windowClosing( WindowEvent paramAnonymousWindowEvent ) {
                 JPServer.spamString( "211" );
             }
         } );
@@ -28,29 +36,29 @@ public class GlobalPMDialog extends javax.swing.JFrame {
         } );
         this.resetButton.setAlignmentX( 0.5F );
         this.contentPane = getContentPane();
-        this.excludePanel.setLayout( new javax.swing.BoxLayout( this.excludePanel, BoxLayout.Y_AXIS ) );
-        this.excludePanel.add( javax.swing.Box.createRigidArea( new Dimension( 2, 0 ) ) );
-        for ( int i = 0; i < ts.length; i++ ) {
-            this.excludePanel.add( ts[i].getExcludeCheckBox() );
-            this.excludePanel.add( javax.swing.Box.createRigidArea( new Dimension( 2, 0 ) ) );
+        this.excludePanel.setLayout( new BoxLayout( this.excludePanel, BoxLayout.Y_AXIS ) );
+        this.excludePanel.add( Box.createRigidArea( new Dimension( 2, 0 ) ) );
+        for ( final ServerPlayer t : ts ) {
+            this.excludePanel.add( t.getExcludeCheckBox() );
+            this.excludePanel.add( Box.createRigidArea( new Dimension( 2, 0 ) ) );
         }
-        this.excludePanel.setBorder( javax.swing.BorderFactory.createTitledBorder( "Exclude" ) );
-        this.contentPane.setLayout( new javax.swing.BoxLayout( this.contentPane, BoxLayout.X_AXIS ) );
+        this.excludePanel.setBorder( BorderFactory.createTitledBorder( "Exclude" ) );
+        this.contentPane.setLayout( new BoxLayout( this.contentPane, BoxLayout.X_AXIS ) );
         this.textField.setMaximumSize( new Dimension( 500, 25 ) );
-        this.textPanel.setLayout( new javax.swing.BoxLayout( this.textPanel, BoxLayout.Y_AXIS ) );
+        this.textPanel.setLayout( new BoxLayout( this.textPanel, BoxLayout.Y_AXIS ) );
         this.textPanel.add( this.textField );
-        this.textPanel.add( javax.swing.Box.createRigidArea( new Dimension( 4, 0 ) ) );
+        this.textPanel.add( Box.createRigidArea( new Dimension( 4, 0 ) ) );
         this.textPanel.add( this.resetButton );
         setSize( 400, ts.length * 22 + 72 );
-        this.textField.addFocusListener( new java.awt.event.FocusAdapter() {
-            public void focusGained( java.awt.event.FocusEvent paramAnonymousFocusEvent ) {
+        this.textField.addFocusListener( new FocusAdapter() {
+            public void focusGained( FocusEvent paramAnonymousFocusEvent ) {
                 for ( int i = 0; i < GlobalPMDialog.ts.length; i++ ) {
                     GlobalPMDialog.ts[i].getExcludeCheckBox().setEnabled( false );
                     GlobalPMDialog.ts[i].sendingGlobalPM();
                 }
             }
 
-            public void focusLost( java.awt.event.FocusEvent paramAnonymousFocusEvent ) {
+            public void focusLost( FocusEvent paramAnonymousFocusEvent ) {
             }
         } );
         this.textField.addActionListener( paramAnonymousActionEvent -> {
@@ -61,17 +69,17 @@ public class GlobalPMDialog extends javax.swing.JFrame {
     }
 
     public void sendGlobalPM( String paramString ) {
-        for ( int i = 0; i < ts.length; i++ ) {
-            ts[i].sendGlobalPM( paramString );
+        for ( final ServerPlayer t : ts ) {
+            t.sendGlobalPM( paramString );
         }
         JPServer.spamString( "211" );
         dispose();
     }
 
     public static void resetExcludeCheckBoxes() {
-        for ( int i = 0; i < ts.length; i++ ) {
-            ts[i].getExcludeCheckBox().setEnabled( true );
-            ts[i].getExcludeCheckBox().setSelected( false );
+        for ( final ServerPlayer t : ts ) {
+            t.getExcludeCheckBox().setEnabled( true );
+            t.getExcludeCheckBox().setSelected( false );
         }
     }
 }

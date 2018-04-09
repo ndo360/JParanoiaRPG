@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import jparanoia.shared.JPImage;
+import jparanoia.shared.JParanoia;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -20,7 +22,7 @@ public class ServerImageMenu extends JMenu {
         this.imageInfo = JPServer.idp.getImageInfo();
         this.sendImageMenuItems = new SendImageMenuItem[this.imageInfo.size()];
         for ( this.i = 0; this.i < this.imageInfo.size(); this.i += 1 ) {
-            this.sendImageMenuItems[this.i] = new SendImageMenuItem( (jparanoia.shared.JPImage) this.imageInfo.get( this.i ) );
+            this.sendImageMenuItems[this.i] = new SendImageMenuItem( (JPImage) this.imageInfo.get( this.i ) );
             add( this.sendImageMenuItems[this.i] );
         }
         addSeparator();
@@ -46,7 +48,7 @@ public class ServerImageMenu extends JMenu {
             str2 = "http://" + str2;
         }
         JPServer.spamString( "404" + str1 + str2 );
-        jparanoia.shared.JParanoia.displayImage( str1 + str2 );
+        JParanoia.displayImage( str1 + str2 );
         if ( JPServer.keepLog ) {
             String str3;
             if ( JPServer.htmlLog ) {

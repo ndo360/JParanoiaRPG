@@ -95,8 +95,8 @@ public class SoundManager {
     }
 
     public void terminate() {
-        for ( int i = 0; i < this.clipList.length; i++ ) {
-            this.clipList[i].close();
+        for ( final Clip aClipList : this.clipList ) {
+            aClipList.close();
         }
         logger.info( "Sound engine terminated." );
     }

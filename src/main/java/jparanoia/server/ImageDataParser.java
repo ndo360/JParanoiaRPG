@@ -1,6 +1,6 @@
 package jparanoia.server;
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.FileReader;
 import java.lang.invoke.MethodHandles;
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,9 +20,7 @@ public class ImageDataParser {
 
     public void parseImageURLs( String paramString ) {
         try {
-            final Class cl = MethodHandles.lookup().lookupClass();
-
-            this.reader = new BufferedReader( new InputStreamReader( cl.getResourceAsStream( "/" + paramString ) ) );
+            this.reader = new BufferedReader( new FileReader( "conf/" + paramString ) );
             this.input = this.reader.readLine();
             while ( this.input != null ) {
                 if ( !this.input.startsWith( "#" ) ) {

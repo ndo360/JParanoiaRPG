@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import static java.lang.Integer.parseInt;
 import java.lang.invoke.MethodHandles;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.Random;
 import java.util.Vector;
 import static jparanoia.server.JPServer.MIN_COMPATIBLE_VERSION_NUMBER;
 import static jparanoia.server.JPServer.absoluteChat;
@@ -139,7 +141,7 @@ class ServerChatThread extends Thread {
                 }
             }
             logger.info( "ServerChatThread.run() exiting naturally." );
-        } catch ( java.net.SocketException localSocketException ) {
+        } catch ( SocketException localSocketException ) {
             if ( !this.observer && !this.disconnectCalled ) {
                 logger.info( this.thisPlayer.getName() + " unexpectedly lost their connection. (SocketException)" );
                 spamString( "199" +
@@ -341,7 +343,7 @@ class ServerChatThread extends Thread {
 
     public boolean challenge() {
         try {
-            java.util.Random localRandom = new java.util.Random();
+            Random localRandom = new Random();
             int i = localRandom.nextInt( 40000 ) + 10000;
             if ( i % 10 == 0 ) {
                 i++;

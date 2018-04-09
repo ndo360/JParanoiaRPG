@@ -1,5 +1,7 @@
 package jparanoia.shared;
+import http.HttpGetter;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -17,8 +19,8 @@ public class JPURLs {
         }
     }
 
-    public static void getURLs() throws java.io.IOException {
-        BufferedReader localBufferedReader = http.HttpGetter.getFromURL( URLS_URL );
+    public static void getURLs() throws IOException {
+        BufferedReader localBufferedReader = HttpGetter.getFromURL( URLS_URL );
         String str1 = "";
         int i = -1;
         String str2 = null;

@@ -1,17 +1,24 @@
 package jparanoia.shared;
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Toolkit;
 import static java.lang.System.exit;
 import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 import java.util.Vector;
+import javax.swing.FocusManager;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.ToolTipManager;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -38,10 +45,10 @@ public abstract class JParanoia {
     public static GameLogger log;
     public static ErrorLogger errLog;
     public static JMenuItem aboutBoxMenuItem;
-    public static java.util.StringTokenizer st;
+    public static StringTokenizer st;
     public static Color textColor = Color.white;
     public static JTextPane displayArea;
-    public static javax.swing.text.SimpleAttributeSet textAttributes;
+    public static SimpleAttributeSet textAttributes;
     public static StyledDocument chatDocument;
     public static ObserversFrame obsFrame = new ObserversFrame();
     public static ToolTipManager ttm = ToolTipManager.sharedInstance();
@@ -73,7 +80,7 @@ public abstract class JParanoia {
                     "\n© 2002-2004 Byron Barry" +
                     str, "About JParanoia", JOptionPane.INFORMATION_MESSAGE, JParanoia.aboutIcon );
         } );
-        javax.swing.FocusManager.setCurrentManager( ntfm );
+        FocusManager.setCurrentManager( ntfm );
         ttm.setDismissDelay( 100000000 );
     }
 
@@ -113,12 +120,12 @@ public abstract class JParanoia {
             ImageIcon localImageIcon = new ImageIcon( localURL );
             localJTextPane.insertIcon( localImageIcon );
             localJFrame.setSize( localImageIcon.getIconWidth() + 8 + 6, localImageIcon.getIconHeight() + 26 + 6 );
-            java.awt.Container localContainer = localJFrame.getContentPane();
+            Container localContainer = localJFrame.getContentPane();
             localContainer.add( localJTextPane );
             localJFrame.setTitle( str );
             localJTextPane.setToolTipText( str );
             try {
-                localJFrame.setIconImage( java.awt.Toolkit.getDefaultToolkit()
+                localJFrame.setIconImage( Toolkit.getDefaultToolkit()
                         .getImage( lookup().lookupClass()
                                 .getClassLoader()
                                 .getResource( "graphics/jparanoiaIcon.jpg" ) ) );
@@ -143,16 +150,16 @@ public abstract class JParanoia {
 
     public static void displayWrite( Color paramColor, String paramString ) {
         try {
-            textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Foreground, paramColor );
+            textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, paramColor );
             chatDocument.insertString( chatDocument.getLength(), paramString, textAttributes );
             displayArea.setDocument( chatDocument );
             if ( autoScroll ) {
                 displayArea.setCaretPosition( chatDocument.getLength() );
             }
-        } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
+        } catch ( BadLocationException localBadLocationException ) {
             System.err.println( "Unhandled exception. (Bad Location)" );
         }
-        textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Foreground, textColor );
+        textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, textColor );
     }
 
     public static void addObsName( String paramString ) {

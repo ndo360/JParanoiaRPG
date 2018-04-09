@@ -48,13 +48,7 @@ public class VersionNumber implements Comparable {
         if ( this.minor > localVersionNumber.minor ) {
             return 1;
         }
-        if ( this.patch < localVersionNumber.patch ) {
-            return -1;
-        }
-        if ( this.patch > localVersionNumber.patch ) {
-            return 1;
-        }
-        return 0;
+        return Integer.compare( this.patch, localVersionNumber.patch );
     }
 }
 

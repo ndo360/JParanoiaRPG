@@ -2,35 +2,64 @@ package jparanoia.client;
 import java.awt.Color;
 import static java.awt.Color.black;
 import static java.awt.Color.white;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import static java.lang.System.getProperty;
 import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.Random;
+import java.util.StringTokenizer;
+import java.util.Vector;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import jparanoia.shared.BrightColorArray;
+import jparanoia.shared.GameLogger;
+import jparanoia.shared.GameRegistrar;
+import jparanoia.shared.JPVersionNumber;
+import jparanoia.shared.JParanoia;
+import jparanoia.shared.TitleClass;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
+import org.slf4j.profiler.Profiler;
 
-public class JPClient extends jparanoia.shared.JParanoia {
+public class JPClient extends JParanoia {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
-    public static final jparanoia.shared.JPVersionNumber VERSION_NUMBER = new jparanoia.shared.JPVersionNumber( 1, 31, 1 );
+    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 1 );
     public static final String VERSION_NAME = VERSION_NUMBER.toString();
-    public static final jparanoia.shared.JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new jparanoia.shared.JPVersionNumber( 1, 31, 0 );
+    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 0 );
     static Integer mainFontSize = 99;
     static int computerFontIncrease = 0;
     static int maxNumClones;
@@ -42,22 +71,22 @@ public class JPClient extends jparanoia.shared.JParanoia {
     static JPanel mainPanel;
     static JPanel inputLinePanel;
     static JMenuItem showAllPMWindowsMenuItem;
-    static java.util.Random rand = new java.util.Random();
+    static Random rand = new Random();
     static String addressToTry = "127.0.0.1";
-    static jparanoia.shared.TitleClass myTitle;
+    static TitleClass myTitle;
     static ChatListenerThread myListener;
     static PrintWriter out;
-    static java.io.BufferedReader in;
-    static java.net.Socket mySock = null;
+    static BufferedReader in;
+    static Socket mySock = null;
     static JTextPane charsheetArea;
-    static java.awt.Container contentPane;
+    static Container contentPane;
     static JPanel inputPanel;
     static JPanel infoPanel;
     static JPanel statusPanel;
     static JFrame charsheetFrame;
-    static javax.swing.JOptionPane connectOPane;
-    static javax.swing.JOptionPane errorPane;
-    static javax.swing.JMenuBar menuBar;
+    static JOptionPane connectOPane;
+    static JOptionPane errorPane;
+    static JMenuBar menuBar;
     static JMenu connectionMenu;
     static JMenu fontMenu;
     static JMenu fontFamilyMenu;
@@ -69,35 +98,35 @@ public class JPClient extends jparanoia.shared.JParanoia {
     static JMenuItem disconnectMenuItem;
     static JMenuItem showCharsheetMenuItem;
     static JMenuItem[] pmWindowMenuItem;
-    static javax.swing.JRadioButtonMenuItem whiteOnBlackButton;
-    static javax.swing.JRadioButtonMenuItem blackOnWhiteButton;
-    static javax.swing.JRadioButtonMenuItem serifButton;
-    static javax.swing.JRadioButtonMenuItem sansSerifButton;
-    static javax.swing.JRadioButtonMenuItem monospacedButton;
-    static javax.swing.JRadioButtonMenuItem size10Button;
-    static javax.swing.JRadioButtonMenuItem size12Button;
-    static javax.swing.JRadioButtonMenuItem size14Button;
-    static javax.swing.JRadioButtonMenuItem size16Button;
-    static javax.swing.JRadioButtonMenuItem size18Button;
-    static javax.swing.JRadioButtonMenuItem size24Button;
+    static JRadioButtonMenuItem whiteOnBlackButton;
+    static JRadioButtonMenuItem blackOnWhiteButton;
+    static JRadioButtonMenuItem serifButton;
+    static JRadioButtonMenuItem sansSerifButton;
+    static JRadioButtonMenuItem monospacedButton;
+    static JRadioButtonMenuItem size10Button;
+    static JRadioButtonMenuItem size12Button;
+    static JRadioButtonMenuItem size14Button;
+    static JRadioButtonMenuItem size16Button;
+    static JRadioButtonMenuItem size18Button;
+    static JRadioButtonMenuItem size24Button;
     static JCheckBoxMenuItem autoScrollMenuItem;
     static JCheckBoxMenuItem fontBoldMenuItem;
     static JCheckBoxMenuItem chatNotifyNewPMMenuItem;
-    static javax.swing.JScrollPane scrollPane;
-    static javax.swing.JScrollPane charScrollPane;
-    static javax.swing.JTable lipTable;
+    static JScrollPane scrollPane;
+    static JScrollPane charScrollPane;
+    static JTable lipTable;
     static JTextField inputLine;
     static JLabel connectionStatusLabel;
     static JLabel messageStatusLabel;
-    static javax.swing.ImageIcon notConnectedIcon;
-    static javax.swing.ImageIcon connectedIcon;
-    static javax.swing.ImageIcon mutedIcon;
-    static javax.swing.ImageIcon incomingMsgIcon;
-    static javax.swing.ImageIcon nullMsgIcon;
-    static javax.swing.ImageIcon gmSendingMsgIcon;
-    static javax.swing.ImageIcon frozenIcon;
-    static javax.swing.ImageIcon combatIcon;
-    static java.awt.Dimension lipTablePreferredSize = new java.awt.Dimension( 130, 160 );
+    static ImageIcon notConnectedIcon;
+    static ImageIcon connectedIcon;
+    static ImageIcon mutedIcon;
+    static ImageIcon incomingMsgIcon;
+    static ImageIcon nullMsgIcon;
+    static ImageIcon gmSendingMsgIcon;
+    static ImageIcon frozenIcon;
+    static ImageIcon combatIcon;
+    static Dimension lipTablePreferredSize = new Dimension( 130, 160 );
     static CombatTurnFrame turnFrame;
     static SimpleAttributeSet charsheetAttributes;
     static SimpleAttributeSet systemTextAttributes = new SimpleAttributeSet();
@@ -124,9 +153,9 @@ public class JPClient extends jparanoia.shared.JParanoia {
     static boolean clobberAqua;
     static Object[][] lipArray = new Object[40][1];
     static Object[] columnNameArray = {"Players"};
-    static java.util.Vector onlinePlayers;
-    static java.util.Vector lipRowVector = new java.util.Vector();
-    static java.util.Vector columnNameVector = new java.util.Vector();
+    static Vector onlinePlayers;
+    static Vector lipRowVector = new Vector();
+    static Vector columnNameVector = new Vector();
     static int numberOfPlayers;
     static int numberOfPCs;
     static ClientPlayer[] playerList;
@@ -134,21 +163,25 @@ public class JPClient extends jparanoia.shared.JParanoia {
     static PrivateMessageFrame[] PMFrame;
 
     public JPClient() {
+        Profiler profiler = new Profiler("JPClient");
+
         clobberAqua = (Boolean) prefs.getPref( 18 );
         if ( clobberAqua ) {
             try {
-                javax.swing.UIManager.setLookAndFeel( javax.swing.UIManager.getCrossPlatformLookAndFeelClassName() );
+                UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
             } catch ( Exception localException ) {
                 logger.info( "Exception while setting L&F." );
             }
         }
-        jparanoia.shared.JParanoia.appInfo = "JParanoia Client " + VERSION_NAME;
+
+        profiler.start( "frame init" );
+        JParanoia.appInfo = "JParanoia Client " + VERSION_NAME;
         frame.setTitle( "JParanoia Client " + VERSION_NAME );
-        myTitle = new jparanoia.shared.TitleClass( "JParanoia Client", VERSION_NAME, true );
-        frame.setIconImage( java.awt.Toolkit.getDefaultToolkit()
+        myTitle = new TitleClass( "JParanoia Client", VERSION_NAME, true );
+        frame.setIconImage( Toolkit.getDefaultToolkit()
                 .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
-        frame.addWindowListener( new java.awt.event.WindowAdapter() {
-            public void windowClosing( java.awt.event.WindowEvent paramAnonymousWindowEvent ) {
+        frame.addWindowListener( new WindowAdapter() {
+            public void windowClosing( WindowEvent paramAnonymousWindowEvent ) {
                 JPClient.exit();
             }
         } );
@@ -158,9 +191,9 @@ public class JPClient extends jparanoia.shared.JParanoia {
         displayArea.setEnabled( true );
         displayArea.setDisabledTextColor( Color.white );
         displayArea.setBackground( Color.black );
-        scrollPane = new javax.swing.JScrollPane( displayArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
-        chatDocument = new javax.swing.text.DefaultStyledDocument();
-        brightColors = new jparanoia.shared.BrightColorArray().getColors();
+        scrollPane = new JScrollPane( displayArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
+        chatDocument = new DefaultStyledDocument();
+        brightColors = new BrightColorArray().getColors();
         darkColors = new Color[10];
         for ( int i = 0; i < 10; i++ ) {
             switch ( i ) {
@@ -200,8 +233,8 @@ public class JPClient extends jparanoia.shared.JParanoia {
             darkColors[i] = newColor;
         }
         textAttributes = new SimpleAttributeSet();
-        textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, prefs.getPref( 15 ) );
-        textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Family, prefs.getPref( 16 ) );
+        textAttributes.addAttribute( StyleConstants.FontConstants.Size, prefs.getPref( 15 ) );
+        textAttributes.addAttribute( StyleConstants.FontConstants.Family, prefs.getPref( 16 ) );
         setColorScheme();
         inputLine = new JTextField( 35 );
         inputLine.setEnabled( false );
@@ -210,33 +243,33 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 JPClient.sendChat( JPClient.inputLine.getText() );
             }
         } );
-        inputLine.addKeyListener( new java.awt.event.KeyListener() {
-            public void keyTyped( java.awt.event.KeyEvent paramAnonymousKeyEvent ) {}
+        inputLine.addKeyListener( new KeyListener() {
+            public void keyTyped( KeyEvent paramAnonymousKeyEvent ) {}
 
-            public void keyPressed( java.awt.event.KeyEvent paramAnonymousKeyEvent ) {
-                jparanoia.shared.JParanoia.previousKey = jparanoia.shared.JParanoia.thisKey;
-                jparanoia.shared.JParanoia.thisKey = paramAnonymousKeyEvent.getKeyCode();
-                if ( jparanoia.shared.JParanoia.thisKey == 9 ) {
+            public void keyPressed( KeyEvent paramAnonymousKeyEvent ) {
+                JParanoia.previousKey = JParanoia.thisKey;
+                JParanoia.thisKey = paramAnonymousKeyEvent.getKeyCode();
+                if ( JParanoia.thisKey == 9 ) {
                     paramAnonymousKeyEvent.consume();
                     if ( JPClient.inputLine.getText().length() > 0 ) {
                         String str = JPClient.inputLine.getText();
                         if ( str.startsWith( "'" ) && str.length() > 1 ) {
                             JPClient.inputLine.setText( "'" +
-                                    JPClient.nameCompletion( str.substring( 1 ), jparanoia.shared.JParanoia.thisKey ==
-                                            jparanoia.shared.JParanoia.previousKey ) );
+                                    JPClient.nameCompletion( str.substring( 1 ), JParanoia.thisKey ==
+                                            JParanoia.previousKey ) );
                         } else if ( !str.startsWith( "'" ) ) {
-                            JPClient.inputLine.setText( JPClient.nameCompletion( str, jparanoia.shared.JParanoia.thisKey ==
-                                    jparanoia.shared.JParanoia.previousKey ) );
+                            JPClient.inputLine.setText( JPClient.nameCompletion( str, JParanoia.thisKey ==
+                                    JParanoia.previousKey ) );
                         }
                     }
                 }
             }
 
-            public void keyReleased( java.awt.event.KeyEvent paramAnonymousKeyEvent ) {}
+            public void keyReleased( KeyEvent paramAnonymousKeyEvent ) {}
         } );
         inputPanel = new JPanel();
         inputPanel.add( inputLine, "Center" );
-        menuBar = new javax.swing.JMenuBar();
+        menuBar = new JMenuBar();
         frame.setJMenuBar( menuBar );
         connectionMenu = new JMenu( "Connection" );
         connectMenuItem = new JMenuItem( "Connect..." );
@@ -253,7 +286,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
         autoScrollMenuItem = new JCheckBoxMenuItem( "Autoscroll" );
         autoScrollMenuItem.setSelected( true );
         autoScrollMenuItem.addActionListener( paramAnonymousActionEvent -> {
-            jparanoia.shared.JParanoia.autoScroll = !jparanoia.shared.JParanoia.autoScroll;
+            JParanoia.autoScroll = !JParanoia.autoScroll;
         } );
         chatNotifyNewPMMenuItem = new JCheckBoxMenuItem( "New PM alert in chat" );
         chatNotifyNewPMMenuItem.setSelected( (Boolean) prefs.getPref( 19 ) );
@@ -278,82 +311,82 @@ public class JPClient extends jparanoia.shared.JParanoia {
         pmWindowsMenu.addSeparator();
         menuBar.add( pmWindowsMenu );
         infoPanel = new JPanel();
-        infoPanel.setLayout( new javax.swing.BoxLayout( infoPanel, BoxLayout.Y_AXIS ) );
+        infoPanel.setLayout( new BoxLayout( infoPanel, BoxLayout.Y_AXIS ) );
         lipArray[0][0] = "Player List";
-        lipTable = new javax.swing.JTable( lipArray, columnNameArray );
+        lipTable = new JTable( lipArray, columnNameArray );
         lipTable.setMinimumSize( lipTablePreferredSize );
         lipTable.setPreferredSize( lipTablePreferredSize );
         lipTable.setShowGrid( false );
         lipTable.setEnabled( false );
         statusPanel = new JPanel();
-        statusPanel.setLayout( new javax.swing.BoxLayout( statusPanel, BoxLayout.X_AXIS ) );
-        notConnectedIcon = new javax.swing.ImageIcon( lookup().lookupClass()
+        statusPanel.setLayout( new BoxLayout( statusPanel, BoxLayout.X_AXIS ) );
+        notConnectedIcon = new ImageIcon( lookup().lookupClass()
                 .getClassLoader()
                 .getResource( "graphics/notConnectedIcon.jpg" ) );
-        connectedIcon = new javax.swing.ImageIcon( lookup().lookupClass()
+        connectedIcon = new ImageIcon( lookup().lookupClass()
                 .getClassLoader()
                 .getResource( "graphics/connectedIcon.jpg" ) );
-        mutedIcon = new javax.swing.ImageIcon( lookup().lookupClass()
+        mutedIcon = new ImageIcon( lookup().lookupClass()
                 .getClassLoader()
                 .getResource( "graphics/mutedIcon.jpg" ) );
-        frozenIcon = new javax.swing.ImageIcon( lookup().lookupClass()
+        frozenIcon = new ImageIcon( lookup().lookupClass()
                 .getClassLoader()
                 .getResource( "graphics/frozenIcon.jpg" ) );
-        nullMsgIcon = new javax.swing.ImageIcon( lookup().lookupClass()
+        nullMsgIcon = new ImageIcon( lookup().lookupClass()
                 .getClassLoader()
                 .getResource( "graphics/nullMsgIcon.jpg" ) );
-        incomingMsgIcon = new javax.swing.ImageIcon( lookup().lookupClass()
+        incomingMsgIcon = new ImageIcon( lookup().lookupClass()
                 .getClassLoader()
                 .getResource( "graphics/incomingMsgIcon.jpg" ) );
-        gmSendingMsgIcon = new javax.swing.ImageIcon( lookup().lookupClass()
+        gmSendingMsgIcon = new ImageIcon( lookup().lookupClass()
                 .getClassLoader()
                 .getResource( "graphics/gmSendingMsgIcon.jpg" ) );
-        combatIcon = new javax.swing.ImageIcon( lookup().lookupClass()
+        combatIcon = new ImageIcon( lookup().lookupClass()
                 .getClassLoader()
                 .getResource( "graphics/combatIcon.jpg" ) );
         connectionStatusLabel = new JLabel( notConnectedIcon );
         messageStatusLabel = new JLabel( nullMsgIcon );
         statusPanel.add( connectionStatusLabel );
-        statusPanel.add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 15, 0 ) ) );
+        statusPanel.add( Box.createRigidArea( new Dimension( 15, 0 ) ) );
         statusPanel.add( messageStatusLabel );
-        statusPanel.setMinimumSize( new java.awt.Dimension( 100, 30 ) );
-        statusPanel.setPreferredSize( new java.awt.Dimension( 100, 30 ) );
-        statusPanel.setMaximumSize( new java.awt.Dimension( 100, 30 ) );
+        statusPanel.setMinimumSize( new Dimension( 100, 30 ) );
+        statusPanel.setPreferredSize( new Dimension( 100, 30 ) );
+        statusPanel.setMaximumSize( new Dimension( 100, 30 ) );
         infoPanel.add( lipTable );
-        infoPanel.add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 0, 5 ) ) );
+        infoPanel.add( Box.createRigidArea( new Dimension( 0, 5 ) ) );
         infoPanel.add( statusPanel );
-        inputLine.setMinimumSize( new java.awt.Dimension( 100, 22 ) );
-        inputLine.setMaximumSize( new java.awt.Dimension( 999, 22 ) );
-        inputLine.setPreferredSize( new java.awt.Dimension( 997, 22 ) );
+        inputLine.setMinimumSize( new Dimension( 100, 22 ) );
+        inputLine.setMaximumSize( new Dimension( 999, 22 ) );
+        inputLine.setPreferredSize( new Dimension( 997, 22 ) );
         inputLinePanel = new JPanel();
-        inputLinePanel.setLayout( new javax.swing.BoxLayout( inputLinePanel, BoxLayout.X_AXIS ) );
-        inputLinePanel.add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 5, 0 ) ) );
+        inputLinePanel.setLayout( new BoxLayout( inputLinePanel, BoxLayout.X_AXIS ) );
+        inputLinePanel.add( Box.createRigidArea( new Dimension( 5, 0 ) ) );
         inputLinePanel.add( inputLine );
-        inputLinePanel.add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 5, 0 ) ) );
+        inputLinePanel.add( Box.createRigidArea( new Dimension( 5, 0 ) ) );
         mainPanel = new JPanel();
-        mainPanel.setLayout( new javax.swing.BoxLayout( mainPanel, BoxLayout.Y_AXIS ) );
+        mainPanel.setLayout( new BoxLayout( mainPanel, BoxLayout.Y_AXIS ) );
         mainPanel.add( scrollPane );
-        mainPanel.add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 0, 5 ) ) );
+        mainPanel.add( Box.createRigidArea( new Dimension( 0, 5 ) ) );
         mainPanel.add( inputLinePanel );
-        mainPanel.add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 0, 5 ) ) );
-        java.awt.Container localContainer = frame.getContentPane();
+        mainPanel.add( Box.createRigidArea( new Dimension( 0, 5 ) ) );
+        Container localContainer = frame.getContentPane();
         localContainer.add( mainPanel, "Center" );
         localContainer.add( infoPanel, "East" );
-        connectOPane = new javax.swing.JOptionPane();
-        errorPane = new javax.swing.JOptionPane();
+        connectOPane = new JOptionPane();
+        errorPane = new JOptionPane();
         textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, Color.white );
         systemTextAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, Color.gray );
         charsheetFrame = new JFrame( "Character Sheet" );
         charsheetFrame.setSize( 500, 300 );
-        charsheetFrame.setIconImage( java.awt.Toolkit.getDefaultToolkit()
+        charsheetFrame.setIconImage( Toolkit.getDefaultToolkit()
                 .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
         charsheetArea = new JTextPane();
         charsheetArea.setEditable( false );
         charsheetArea.setEnabled( true );
-        charScrollPane = new javax.swing.JScrollPane( charsheetArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
+        charScrollPane = new JScrollPane( charsheetArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
         charsheetFrame.getContentPane().add( charScrollPane );
         charsheetAttributes = new SimpleAttributeSet();
-        charsheetAttributes.addAttribute( javax.swing.text.StyleConstants.Bold, Boolean.TRUE );
+        charsheetAttributes.addAttribute( StyleConstants.Bold, Boolean.TRUE );
         charsheetAttributes.addAttribute( StyleConstants.CharacterConstants.Family, "SansSerif" );
         charsheetAttributes.addAttribute( StyleConstants.CharacterConstants.Size, 12 );
         charsheetMenu = new JMenu( "Character Sheet" );
@@ -395,7 +428,9 @@ public class JPClient extends jparanoia.shared.JParanoia {
 //
 //            jparanoia.shared.JParanoia.aboutBoxMenuItem.doClick();
 //        });
-        mainFontSize = (Integer) textAttributes.getAttribute( javax.swing.text.StyleConstants.FontConstants.Size );
+        mainFontSize = (Integer) textAttributes.getAttribute( StyleConstants.FontConstants.Size );
+
+        profiler.stop().print();
     }
 
     public static void setColorScheme() {
@@ -488,7 +523,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
             in.close();
             out.close();
             mySock.close();
-        } catch ( java.io.IOException localIOException ) {
+        } catch ( IOException localIOException ) {
             System.err.println( "Error: unable to close outgoing streams/writers/sockets" );
             localIOException.printStackTrace();
         }
@@ -516,7 +551,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                     inputLine.setText( "" );
                     return;
                 }
-                st = new java.util.StringTokenizer( str1, "`" );
+                st = new StringTokenizer( str1, "`" );
                 if ( st.hasMoreTokens() ) {
                     str1 = st.nextToken();
                 }
@@ -583,7 +618,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 }
                 log.logEntry( str );
             }
-        } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
+        } catch ( BadLocationException localBadLocationException ) {
             System.err.println( "Unhandled exception. (Bad Location)" );
         }
     }
@@ -594,7 +629,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
         if ( paramBoolean ) {
             paramString = paramString.substring( 0, paramString.length() - lastNameCompleted.length() + 1 );
         }
-        st = new java.util.StringTokenizer( paramString );
+        st = new StringTokenizer( paramString );
         str1 = st.nextToken();
         while ( st.hasMoreTokens() ) {
             str2.append( str1 ).append( " " );
@@ -640,7 +675,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
         }
         for ( ;
               realName.trim().equals( "default" ) /*|| realName == null*/ || realName.trim().equals( "" );
-              realName = (String) javax.swing.JOptionPane.showInputDialog( null, "You have not provided your \"real\" name in the\njpConfig.ini file. The sooner you do, the sooner\nthis message will stop appearing. Your \"real\" name\nis announced when you join and logged for posterity.\nMost likely the best choice rather than your actual\nname would be the name you are known by in your RPG\ncircles or your Internet persona. For example, your\nuser name on Paranoia-Live.net would be an excellent\nname to provide here.\n\n\"Real\" name:", "\"Real\" name...", JOptionPane.PLAIN_MESSAGE, null, null, realName ) ) {
+              realName = (String) JOptionPane.showInputDialog( null, "You have not provided your \"real\" name in the\njpConfig.ini file. The sooner you do, the sooner\nthis message will stop appearing. Your \"real\" name\nis announced when you join and logged for posterity.\nMost likely the best choice rather than your actual\nname would be the name you are known by in your RPG\ncircles or your Internet persona. For example, your\nuser name on Paranoia-Live.net would be an excellent\nname to provide here.\n\n\"Real\" name:", "\"Real\" name...", JOptionPane.PLAIN_MESSAGE, null, null, realName ) ) {
             logger.info( "realName == \"" + realName + "\"" );
             new JOptionPane();
         }
@@ -662,27 +697,27 @@ public class JPClient extends jparanoia.shared.JParanoia {
             myListener = new ChatListenerThread();
             myListener.setDaemon( true );
             myListener.start();
-        } catch ( java.net.UnknownHostException localUnknownHostException ) {
-            javax.swing.JOptionPane.showMessageDialog( null, paramString2 + "\nUnknown host.", "Uknown host", JOptionPane.ERROR_MESSAGE );
+        } catch ( UnknownHostException localUnknownHostException ) {
+            JOptionPane.showMessageDialog( null, paramString2 + "\nUnknown host.", "Uknown host", JOptionPane.ERROR_MESSAGE );
             connectMenuItem.setEnabled( true );
             disconnectMenuItem.setEnabled( false );
-        } catch ( java.net.ConnectException localConnectException ) {
-            javax.swing.JOptionPane.showMessageDialog( null, paramString2 +
+        } catch ( ConnectException localConnectException ) {
+            JOptionPane.showMessageDialog( null, paramString2 +
                     "\nConnection at this host failed.\n" +
                     "Host may not be running a server.", "Connect failed", JOptionPane.ERROR_MESSAGE );
             if ( paramBoolean ) {
-                jparanoia.shared.GameRegistrar.deleteUnreachableGame( paramString1 );
+                GameRegistrar.deleteUnreachableGame( paramString1 );
             }
             connectMenuItem.setEnabled( true );
             disconnectMenuItem.setEnabled( false );
-        } catch ( java.io.IOException localIOException ) {
+        } catch ( IOException localIOException ) {
             logger.info( "ERROR: Unhandled IO Exception..." );
             localIOException.printStackTrace();
         }
     }
 
     public static void checkVersion( String paramString ) {
-        if ( new jparanoia.shared.JPVersionNumber( paramString ).compareTo( MIN_COMPATIBLE_VERSION_NUMBER ) < 0 ) {
+        if ( new JPVersionNumber( paramString ).compareTo( MIN_COMPATIBLE_VERSION_NUMBER ) < 0 ) {
             out.println( "961Someone using client version " +
                     VERSION_NUMBER.toString() +
                     " has attempted (and failed) to connect." +
@@ -702,7 +737,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
     }
 
     public static void respond( String paramString ) {
-        java.util.Random localRandom = new java.util.Random();
+        Random localRandom = new Random();
         int i = Integer.parseInt( paramString.substring( 2 ) );
         i *= localRandom.nextInt( 845 ) + 154;
         out.println( i );
@@ -764,7 +799,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
     }
 
     public static void updateLipArray() {
-        java.util.Vector localVector = new java.util.Vector();
+        Vector localVector = new Vector();
         int i = 0;
         for ( int j = 0; j < numberOfPCs; j++ ) {
             if ( playerList[j].isLoggedIn() && playerList[j].isAPlayer() ) {
@@ -890,9 +925,9 @@ public class JPClient extends jparanoia.shared.JParanoia {
         connectionStatusLabel.setIcon( connectedIcon );
         if ( keepLog ) {
             if ( htmlLog ) {
-                log = new jparanoia.shared.GameLogger( playerList );
+                log = new GameLogger( playerList );
             } else {
-                log = new jparanoia.shared.GameLogger();
+                log = new GameLogger();
             }
         }
         if ( soundIsOn && soundMenu.loginBadLoginMenuItem.isSelected() ) {
@@ -906,7 +941,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
     public static void receiveCharacterSheet() {
         synchronized ( in ) {
             try {
-                myPlayer.characterSheet = new javax.swing.text.DefaultStyledDocument();
+                myPlayer.characterSheet = new DefaultStyledDocument();
                 String str = in.readLine();
                 while ( !str.equals( "402" ) ) {
                     myPlayer.characterSheet.insertString( myPlayer.characterSheet.getLength(), str +
@@ -966,7 +1001,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 }
                 log.logEntry( str );
             }
-        } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
+        } catch ( BadLocationException localBadLocationException ) {
             System.err.println( "Unhandled exception. (Bad Location)" );
         }
         if ( i == numberOfPCs ) {
@@ -982,9 +1017,9 @@ public class JPClient extends jparanoia.shared.JParanoia {
     public static void useComputerFont() {
         styleBegin = "<span class=\"computer\">";
         styleEnd = "</span>";
-        mainFontSize = (Integer) textAttributes.getAttribute( javax.swing.text.StyleConstants.FontConstants.Size );
+        mainFontSize = (Integer) textAttributes.getAttribute( StyleConstants.FontConstants.Size );
         int i = mainFontSize + computerFontIncrease;
-        textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, i );
+        textAttributes.addAttribute( StyleConstants.FontConstants.Size, i );
         if ( !fontIsBold ) {
             setFontBold( true );
         }
@@ -992,7 +1027,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
 
     public static void setFontBold( boolean paramBoolean ) {
         Boolean localBoolean = paramBoolean;
-        textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Bold, localBoolean );
+        textAttributes.addAttribute( StyleConstants.FontConstants.Bold, localBoolean );
     }
 
     public static void useGmFont() {
@@ -1005,7 +1040,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
 
     public static void restoreOriginalFont() {
         styleBegin = styleEnd = "";
-        textAttributes.addAttribute( javax.swing.text.StyleConstants.FontConstants.Size, mainFontSize );
+        textAttributes.addAttribute( StyleConstants.FontConstants.Size, mainFontSize );
         if ( !fontIsBold ) {
             setFontBold( false );
         }
@@ -1050,7 +1085,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 log.logEntry( str );
             }
             textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, textColor );
-        } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
+        } catch ( BadLocationException localBadLocationException ) {
             System.err.println( "Unhandled exception. (Bad Location)" );
         }
         if ( i == numberOfPCs ) {
@@ -1110,7 +1145,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 log.logEntry( str2 );
             }
             textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, textColor );
-        } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
+        } catch ( BadLocationException localBadLocationException ) {
             System.err.println( "Unhandled exception. (Bad Location)" );
         }
         if ( i == numberOfPCs ) {
@@ -1161,7 +1196,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 log.logEntry( str );
             }
             textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, textColor );
-        } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
+        } catch ( BadLocationException localBadLocationException ) {
             System.err.println( "Unhandled exception. (Bad Location)" );
         }
         if ( i == numberOfPCs ) {
@@ -1199,7 +1234,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 }
                 log.logEntry( str2 );
             }
-        } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
+        } catch ( BadLocationException localBadLocationException ) {
             System.err.println( "Unhandled exception. (Bad Location)" );
         }
         if ( soundIsOn && soundMenu.newObserverTextMenuItem.isSelected() ) {
@@ -1251,7 +1286,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
                 if ( !PMFrame[j].isShowing() ) {
                     PMFrame[j].setVisible( true );
                 }
-            } catch ( javax.swing.text.BadLocationException localBadLocationException ) {
+            } catch ( BadLocationException localBadLocationException ) {
                 System.err.println( "Unhandled exception. (Bad Location)" );
             }
         }
@@ -1275,12 +1310,12 @@ public class JPClient extends jparanoia.shared.JParanoia {
 
     public static void takeCombatTurn() {
         connectionStatusLabel.setIcon( combatIcon );
-        java.awt.Toolkit.getDefaultToolkit().beep();
+        Toolkit.getDefaultToolkit().beep();
         long l = System.currentTimeMillis();
         while ( System.currentTimeMillis() - l < 300L ) {
             //lol, looks like this is how sleep works here
         }
-        java.awt.Toolkit.getDefaultToolkit().beep();
+        Toolkit.getDefaultToolkit().beep();
         turnFrame.sendButton.setEnabled( true );
     }
 
@@ -1399,8 +1434,8 @@ public class JPClient extends jparanoia.shared.JParanoia {
         if ( paramBoolean ) {
             for ( ;
                   realName.trim().equals( "default" ) /*|| realName == null*/ || realName.trim().equals( "" );
-                  realName = (String) javax.swing.JOptionPane.showInputDialog( null, "Enter your observer name:", "Observer name...", JOptionPane.PLAIN_MESSAGE, null, null, realName ) ) {
-                new javax.swing.JOptionPane();
+                  realName = (String) JOptionPane.showInputDialog( null, "Enter your observer name:", "Observer name...", JOptionPane.PLAIN_MESSAGE, null, null, realName ) ) {
+                new JOptionPane();
             }
             myTitle.setPlayerName( realName );
             frame.setTitle( myTitle.get() );
@@ -1426,7 +1461,7 @@ public class JPClient extends jparanoia.shared.JParanoia {
     }
 
     public static void displayImage( String paramString ) {
-        jparanoia.shared.JParanoia.displayImage( paramString );
+        JParanoia.displayImage( paramString );
         String str1 = paramString.substring( 0, paramString.indexOf( "http://" ) );
         String str2 = paramString.substring( paramString.indexOf( "http://" ) );
         if ( keepLog ) {

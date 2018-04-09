@@ -1,23 +1,34 @@
 package jparanoia.client;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import static java.lang.invoke.MethodHandles.lookup;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class CombatTurnFrame extends javax.swing.JFrame {
+public class CombatTurnFrame extends JFrame {
     JTextField publicInputLine;
     JTextField secretInputLine;
-    javax.swing.JLabel publicLabel;
-    javax.swing.JLabel secretLabel;
-    javax.swing.JButton sendButton;
-    javax.swing.JPanel inputPanel;
-    javax.swing.JPanel sendPanel;
-    java.awt.Container contentPane;
+    JLabel publicLabel;
+    JLabel secretLabel;
+    JButton sendButton;
+    JPanel inputPanel;
+    JPanel sendPanel;
+    Container contentPane;
 
     public CombatTurnFrame() {
-        addWindowListener( new java.awt.event.WindowAdapter() {
-            public void windowClosing( java.awt.event.WindowEvent paramAnonymousWindowEvent ) {
+        addWindowListener( new WindowAdapter() {
+            public void windowClosing( WindowEvent paramAnonymousWindowEvent ) {
                 JPClient.out.println( "602" );
                 JPClient.connectionStatusLabel.setIcon( JPClient.frozenIcon );
                 CombatTurnFrame.this.dispose();
@@ -26,12 +37,12 @@ public class CombatTurnFrame extends javax.swing.JFrame {
         setTitle( "Combat!" );
         setSize( 300, 135 );
         setResizable( false );
-        setIconImage( java.awt.Toolkit.getDefaultToolkit()
+        setIconImage( Toolkit.getDefaultToolkit()
                 .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
-        this.publicLabel = new javax.swing.JLabel( "Public text:" );
+        this.publicLabel = new JLabel( "Public text:" );
         this.publicInputLine = new JTextField( 40 );
-        this.publicInputLine.setPreferredSize( new java.awt.Dimension( 300, 22 ) );
-        this.publicInputLine.addKeyListener( new java.awt.event.KeyListener() {
+        this.publicInputLine.setPreferredSize( new Dimension( 300, 22 ) );
+        this.publicInputLine.addKeyListener( new KeyListener() {
             public void keyTyped( KeyEvent paramAnonymousKeyEvent ) {
             }
 
@@ -49,10 +60,10 @@ public class CombatTurnFrame extends javax.swing.JFrame {
             public void keyReleased( KeyEvent paramAnonymousKeyEvent ) {
             }
         } );
-        this.secretLabel = new javax.swing.JLabel( "Secret text:" );
+        this.secretLabel = new JLabel( "Secret text:" );
         this.secretInputLine = new JTextField( 40 );
-        this.secretInputLine.setPreferredSize( new java.awt.Dimension( 300, 22 ) );
-        this.secretInputLine.addKeyListener( new java.awt.event.KeyListener() {
+        this.secretInputLine.setPreferredSize( new Dimension( 300, 22 ) );
+        this.secretInputLine.addKeyListener( new KeyListener() {
             public void keyTyped( KeyEvent paramAnonymousKeyEvent ) {
             }
 
@@ -70,8 +81,8 @@ public class CombatTurnFrame extends javax.swing.JFrame {
             public void keyReleased( KeyEvent paramAnonymousKeyEvent ) {
             }
         } );
-        this.sendButton = new javax.swing.JButton( "Send Turn" );
-        this.sendButton.setPreferredSize( new java.awt.Dimension( 100, 30 ) );
+        this.sendButton = new JButton( "Send Turn" );
+        this.sendButton.setPreferredSize( new Dimension( 100, 30 ) );
         this.sendButton.setEnabled( false );
         this.sendButton.addActionListener( paramAnonymousActionEvent -> {
             String str = CombatTurnFrame.this.publicInputLine.getText();
@@ -87,22 +98,22 @@ public class CombatTurnFrame extends javax.swing.JFrame {
                 JPClient.connectionStatusLabel.setIcon( JPClient.frozenIcon );
                 CombatTurnFrame.this.dispose();
             } else {
-                new javax.swing.JOptionPane();
-                javax.swing.JOptionPane.showMessageDialog( null, "Your public text must begin with\n/  or  '\nor you can leave it blank.", "Combat Error", JOptionPane.PLAIN_MESSAGE );
+                new JOptionPane();
+                JOptionPane.showMessageDialog( null, "Your public text must begin with\n/  or  '\nor you can leave it blank.", "Combat Error", JOptionPane.PLAIN_MESSAGE );
             }
         } );
-        this.inputPanel = new javax.swing.JPanel();
-        this.inputPanel.setLayout( new javax.swing.BoxLayout( this.inputPanel, BoxLayout.Y_AXIS ) );
+        this.inputPanel = new JPanel();
+        this.inputPanel.setLayout( new BoxLayout( this.inputPanel, BoxLayout.Y_AXIS ) );
         this.inputPanel.add( this.publicLabel );
         this.inputPanel.add( this.publicInputLine );
         this.inputPanel.add( this.secretLabel );
         this.inputPanel.add( this.secretInputLine );
-        this.sendPanel = new javax.swing.JPanel();
-        this.sendPanel.setLayout( new javax.swing.BoxLayout( this.sendPanel, BoxLayout.X_AXIS ) );
-        this.sendPanel.add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 200, 0 ) ) );
+        this.sendPanel = new JPanel();
+        this.sendPanel.setLayout( new BoxLayout( this.sendPanel, BoxLayout.X_AXIS ) );
+        this.sendPanel.add( Box.createRigidArea( new Dimension( 200, 0 ) ) );
         this.sendPanel.add( this.sendButton );
         this.contentPane = getContentPane();
-        this.contentPane.setLayout( new javax.swing.BoxLayout( this.contentPane, BoxLayout.Y_AXIS ) );
+        this.contentPane.setLayout( new BoxLayout( this.contentPane, BoxLayout.Y_AXIS ) );
         this.contentPane.add( this.inputPanel );
         this.contentPane.add( this.sendPanel );
     }
