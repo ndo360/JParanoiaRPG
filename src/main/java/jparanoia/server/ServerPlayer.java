@@ -15,13 +15,17 @@ import java.util.StringTokenizer;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleContext;
 import static jparanoia.server.JPServer.absoluteChat;
 import static jparanoia.server.JPServer.absoluteSpam;
 import static jparanoia.server.JPServer.repaintMenus;
 import static jparanoia.server.JPServer.spamString;
 import static jparanoia.server.JPServer.spareNpcs;
 import static jparanoia.server.JPServer.stripComments;
+import jparanoia.shared.JPPlayer;
 import jparanoia.shared.JParanoia;
 import static jparanoia.shared.JParanoia.errorMessage;
 import static jparanoia.shared.JParanoia.soundIsOn;
@@ -30,12 +34,12 @@ import static jparanoia.shared.JParanoia.soundPlayer;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class ServerPlayer extends jparanoia.shared.JPPlayer {
+public class ServerPlayer extends JPPlayer {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
     static int numUnsavedCharsheets = 0;
     static FileWriter writer;
-    static javax.swing.text.SimpleAttributeSet sas;
+    static SimpleAttributeSet sas;
     static StringTokenizer st;
     final int PLAYER_NUMBER;
     final boolean IS_PLAYER;
@@ -76,7 +80,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
             spareNpcs.add( this );
         }
         this.dataFile = paramString3;
-        this.characterSheet = new DefaultStyledDocument( new javax.swing.text.StyleContext() );
+        this.characterSheet = new DefaultStyledDocument( new StyleContext() );
         sas = JPServer.charsheetAttributes;
     }
 
@@ -229,7 +233,7 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                 localObject = this.reader.readLine();
             }
             this.reader.close();
-            this.characterSheet.addDocumentListener( new javax.swing.event.DocumentListener() {
+            this.characterSheet.addDocumentListener( new DocumentListener() {
                 public void insertUpdate( DocumentEvent paramAnonymousDocumentEvent ) {
                     if ( !ServerPlayer.this.unsavedCharsheet ) {
                         ServerPlayer.this.charsheetUpdated();
@@ -471,8 +475,8 @@ public class ServerPlayer extends jparanoia.shared.JPPlayer {
                     return;
                 }
                 char[] arrayOfChar = str4.toCharArray();
-                for ( int j = 0; j < arrayOfChar.length; j++ ) {
-                    if ( arrayOfChar[j] < 'A' || arrayOfChar[j] > 'Z' ) {
+                for ( final char anArrayOfChar : arrayOfChar ) {
+                    if ( anArrayOfChar < 'A' || anArrayOfChar > 'Z' ) {
                         errorMessage( "Invalid sector", "The sector \"" +
                                 str4 +
                                 "\" is invalid.\n" +

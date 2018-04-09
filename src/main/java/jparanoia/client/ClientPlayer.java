@@ -1,5 +1,6 @@
 package jparanoia.client;
 import java.awt.Color;
+import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.SimpleAttributeSet;
 import jparanoia.shared.JPPlayer;
 
@@ -10,7 +11,7 @@ public class ClientPlayer extends JPPlayer {
     int cloneNumber;
     boolean loggedIn = true;
     boolean isDead = false;
-    javax.swing.text.DefaultStyledDocument characterSheet;
+    DefaultStyledDocument characterSheet;
     PrivateMessageFrame pmFrame;
     Color chatColor = Color.gray;
     SimpleAttributeSet sas = new SimpleAttributeSet();

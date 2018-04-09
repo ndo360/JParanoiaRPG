@@ -1,11 +1,14 @@
 package http;
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.lang.invoke.MethodHandles;
 import java.net.URL;
 import java.util.Map;
+import java.util.Set;
 import javax.net.ssl.HttpsURLConnection;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
+import util.TagTosser;
 
 public class GetSecure {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
@@ -30,12 +33,12 @@ public class GetSecure {
             localHttpsURLConnection.setInstanceFollowRedirects( true );
             localHttpsURLConnection.setRequestMethod( "GET" );
             Map localMap = localHttpsURLConnection.getHeaderFields();
-            java.util.Set localSet = localMap.keySet();
+            Set localSet = localMap.keySet();
             Object[] arrayOfObject = localSet.toArray();
-            for ( int i = 0; i < arrayOfObject.length; i++ ) {
-                logger.info( "<< " + arrayOfObject[i] + ": " + localMap.get( arrayOfObject[i] ).toString() + " >>" );
+            for ( final Object anArrayOfObject : arrayOfObject ) {
+                logger.info( "<< " + anArrayOfObject + ": " + localMap.get( anArrayOfObject ).toString() + " >>" );
             }
-            BufferedReader localBufferedReader = util.TagTosser.tossTags( new BufferedReader( new java.io.InputStreamReader( localHttpsURLConnection
+            BufferedReader localBufferedReader = TagTosser.tossTags( new BufferedReader( new InputStreamReader( localHttpsURLConnection
                     .getInputStream() ) ) );
             String str;
             while ( ( str = localBufferedReader.readLine() ) != null ) {

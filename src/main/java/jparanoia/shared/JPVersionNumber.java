@@ -66,13 +66,7 @@ public class JPVersionNumber implements Comparable {
         if ( this.minor > localJPVersionNumber.minor ) {
             return 1;
         }
-        if ( this.patch < localJPVersionNumber.patch ) {
-            return -1;
-        }
-        if ( this.patch > localJPVersionNumber.patch ) {
-            return 1;
-        }
-        return 0;
+        return Integer.compare( this.patch, localJPVersionNumber.patch );
     }
 }
 

@@ -2,6 +2,7 @@ package jparanoia.server;
 import java.lang.invoke.MethodHandles;
 import javax.swing.JMenuItem;
 import jparanoia.shared.JPImage;
+import jparanoia.shared.JParanoia;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -15,7 +16,7 @@ public class SendImageMenuItem extends JMenuItem {
         this.imageItem = paramJPImage;
         addActionListener( paramAnonymousActionEvent -> {
             JPServer.spamString( "404" + SendImageMenuItem.this.getImageInfo() );
-            jparanoia.shared.JParanoia.displayImage( SendImageMenuItem.this.getImageInfo() );
+            JParanoia.displayImage( SendImageMenuItem.this.getImageInfo() );
             if ( JPServer.keepLog ) {
                 String str;
                 if ( JPServer.htmlLog ) {

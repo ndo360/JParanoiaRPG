@@ -1,14 +1,17 @@
 package jparanoia.server;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import static java.lang.invoke.MethodHandles.lookup;
+import java.util.Random;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class DicePanel extends javax.swing.JPanel {
+public class DicePanel extends JPanel {
     JButton d10Button;
     JButton d20Button;
     JButton d100Button;
@@ -16,15 +19,15 @@ public class DicePanel extends javax.swing.JPanel {
     ImageIcon d10Icon;
     ImageIcon d20Icon;
     ImageIcon d100Icon;
-    java.util.Random r;
+    Random r;
     int oldRoll = 0;
     int rollValue;
     String rollString;
     String rollZero;
 
     public DicePanel() {
-        this.r = new java.util.Random();
-        setLayout( new javax.swing.BoxLayout( this, BoxLayout.X_AXIS ) );
+        this.r = new Random();
+        setLayout( new BoxLayout( this, BoxLayout.X_AXIS ) );
         this.d10Icon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/d10.jpg" ) );
         this.d20Icon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/d20.jpg" ) );
         this.d100Icon = new ImageIcon( lookup().lookupClass().getClassLoader().getResource( "graphics/d100.jpg" ) );
@@ -53,8 +56,8 @@ public class DicePanel extends javax.swing.JPanel {
         this.diceOutputField = new JTextField( 4 );
         this.diceOutputField.setEnabled( false );
         this.diceOutputField.setEditable( false );
-        this.diceOutputField.setDisabledTextColor( java.awt.Color.black );
-        java.awt.Font localFont = new java.awt.Font( "Monospaced", Font.BOLD, 16 );
+        this.diceOutputField.setDisabledTextColor( Color.black );
+        Font localFont = new Font( "Monospaced", Font.BOLD, 16 );
         this.diceOutputField.setFont( localFont );
         this.diceOutputField.setHorizontalAlignment( 0 );
         add( this.d10Button );
@@ -68,10 +71,10 @@ public class DicePanel extends javax.swing.JPanel {
     }
 
     public void rollDie( int paramInt ) {
-        this.diceOutputField.setDisabledTextColor( java.awt.Color.black );
+        this.diceOutputField.setDisabledTextColor( Color.black );
         this.rollValue = this.r.nextInt( paramInt ) + 1;
         if ( this.oldRoll == this.rollValue ) {
-            this.diceOutputField.setDisabledTextColor( java.awt.Color.red );
+            this.diceOutputField.setDisabledTextColor( Color.red );
             this.oldRoll = 0;
         } else {
             this.oldRoll = this.rollValue;

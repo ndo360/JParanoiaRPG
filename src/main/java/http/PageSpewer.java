@@ -8,7 +8,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.Objects;
 
 public class PageSpewer {
-    static java.io.BufferedReader reader;
+    static BufferedReader reader;
     static String line = "";
 
     public static void spewPage( String paramString, PrintWriter paramPrintWriter ) {

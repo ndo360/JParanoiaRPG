@@ -1,11 +1,16 @@
 package jparanoia.server;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import static java.lang.invoke.MethodHandles.lookup;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class StatusPanel extends javax.swing.JPanel {
+public class StatusPanel extends JPanel {
     int timerInterval = 500;
     TimerListener myTimerListener = new TimerListener();
     Timer newMessageAnimationTimer = new Timer( this.timerInterval, this.myTimerListener );
@@ -44,8 +49,8 @@ public class StatusPanel extends javax.swing.JPanel {
         this.statusButton.setDisabledIcon( this.notConnectedIcon );
         this.statusButton.setDisabledSelectedIcon( this.notConnectedIcon );
         this.statusButton.setIcon( this.connectedIcon );
-        this.statusButton.setPreferredSize( new java.awt.Dimension( 31, 30 ) );
-        this.statusButton.setMinimumSize( new java.awt.Dimension( 31, 30 ) );
+        this.statusButton.setPreferredSize( new Dimension( 31, 30 ) );
+        this.statusButton.setMinimumSize( new Dimension( 31, 30 ) );
         this.statusButton.setSelected( false );
         this.statusButton.addActionListener( paramAnonymousActionEvent -> {
             if ( StatusPanel.this.player.isMuted() ) {
@@ -68,16 +73,16 @@ public class StatusPanel extends javax.swing.JPanel {
         this.newMessageLabel = new JButton( this.nullMessageIcon );
         this.newMessageLabel.setEnabled( true );
         this.newMessageLabel.setBorderPainted( false );
-        this.newMessageLabel.setPreferredSize( new java.awt.Dimension( 31, 30 ) );
-        this.newMessageLabel.setMinimumSize( new java.awt.Dimension( 31, 30 ) );
+        this.newMessageLabel.setPreferredSize( new Dimension( 31, 30 ) );
+        this.newMessageLabel.setMinimumSize( new Dimension( 31, 30 ) );
         this.newMessageLabel.addActionListener( paramAnonymousActionEvent -> {
             StatusPanel.this.newMessageAnimationTimer.stop();
             StatusPanel.this.newMessageLabel.setIcon( StatusPanel.this.nullMessageIcon );
             JPServer.inputLine.requestFocus();
         } );
-        setLayout( new javax.swing.BoxLayout( this, BoxLayout.Y_AXIS ) );
+        setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
         add( this.statusButton );
-        add( javax.swing.Box.createRigidArea( new java.awt.Dimension( 0, 2 ) ) );
+        add( Box.createRigidArea( new Dimension( 0, 2 ) ) );
         add( this.newMessageLabel );
     }
 
@@ -115,10 +120,10 @@ public class StatusPanel extends javax.swing.JPanel {
         }
     }
 
-    class TimerListener implements java.awt.event.ActionListener {
+    class TimerListener implements ActionListener {
         int frameNumber = 0;
 
-        public void actionPerformed( java.awt.event.ActionEvent paramActionEvent ) {
+        public void actionPerformed( ActionEvent paramActionEvent ) {
             if ( StatusPanel.this.freshTimer ) {
                 this.frameNumber = 0;
                 StatusPanel.this.freshTimer = false;

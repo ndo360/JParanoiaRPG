@@ -4,6 +4,7 @@ import static java.lang.System.err;
 import static java.lang.System.out;
 import java.lang.invoke.MethodHandles;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketException;
 import static jparanoia.server.JPServer.absoluteChat;
 import static jparanoia.server.JPServer.displayTimeStamp;
@@ -19,8 +20,8 @@ public class ServerSocketThread extends Thread {
 
     final int PORT_NUMBER = 11777;
     public boolean listening = true;
-    java.net.ServerSocket serverSocket = null;
-    java.net.Socket someSock;
+    ServerSocket serverSocket = null;
+    Socket someSock;
 
     public void run() {
         stopServerMenuItem.setEnabled( true );

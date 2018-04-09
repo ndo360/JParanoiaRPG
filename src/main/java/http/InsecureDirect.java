@@ -1,5 +1,6 @@
 package http;
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.invoke.MethodHandles;
 import java.net.HttpURLConnection;
@@ -37,7 +38,7 @@ public class InsecureDirect {
             localPrintWriter.println( str3 );
             localPrintWriter.flush();
             localPrintWriter.close();
-            BufferedReader localBufferedReader = new BufferedReader( new java.io.InputStreamReader( localHttpURLConnection
+            BufferedReader localBufferedReader = new BufferedReader( new InputStreamReader( localHttpURLConnection
                     .getInputStream() ) );
             String str4;
             while ( ( str4 = localBufferedReader.readLine() ) != null ) {

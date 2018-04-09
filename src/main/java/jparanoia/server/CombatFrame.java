@@ -1,12 +1,19 @@
 package jparanoia.server;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -60,24 +67,24 @@ public class CombatFrame extends JFrame {
             return;
         }
         setDefaultCloseOperation( WindowConstants.DO_NOTHING_ON_CLOSE );
-        addWindowListener( new java.awt.event.WindowAdapter() {
-            public void windowClosing( java.awt.event.WindowEvent paramAnonymousWindowEvent ) {
-                switch ( javax.swing.JOptionPane.showConfirmDialog( CombatFrame.this.thisCombatFrame, "WARNING: Are you SURE you want to end combat?\n", "Abort combat...", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE ) ) {
+        addWindowListener( new WindowAdapter() {
+            public void windowClosing( WindowEvent paramAnonymousWindowEvent ) {
+                switch ( JOptionPane.showConfirmDialog( CombatFrame.this.thisCombatFrame, "WARNING: Are you SURE you want to end combat?\n", "Abort combat...", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE ) ) {
                     case 0:
                         CombatFrame.this.abortCombat();
                         break;
                 }
             }
         } );
-        setIconImage( java.awt.Toolkit.getDefaultToolkit()
+        setIconImage( Toolkit.getDefaultToolkit()
                 .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
         setSize( 500, 260 );
         this.currentPlayer = null;
         this.playerButtons = new CombatButton[JPServer.troubleshooters.length];
         this.contentPane = getContentPane();
         this.buttonPanel = new JPanel();
-        this.buttonPanel.setLayout( new javax.swing.BoxLayout( this.buttonPanel, BoxLayout.Y_AXIS ) );
-        this.buttonPanel.add( javax.swing.Box.createRigidArea( new Dimension( 0, 3 ) ) );
+        this.buttonPanel.setLayout( new BoxLayout( this.buttonPanel, BoxLayout.Y_AXIS ) );
+        this.buttonPanel.add( Box.createRigidArea( new Dimension( 0, 3 ) ) );
         this.waitingPlayers = new Vector();
         this.debugButtonString += "Constructing playerButtons...\n";
         this.debugButtonString = this.debugButtonString + "   JPServer.numberOfPCs == " + JPServer.numberOfPCs + "\n";
@@ -86,7 +93,7 @@ public class CombatFrame extends JFrame {
                 this.playerButtons[i - 1] = new CombatButton( JPServer.players[i] );
                 this.buttonPanel.add( this.playerButtons[i - 1], "Center" );
                 this.playerButtons[i - 1].addActionListener( this.myCombatListener );
-                this.buttonPanel.add( javax.swing.Box.createRigidArea( new Dimension( 0, 3 ) ) );
+                this.buttonPanel.add( Box.createRigidArea( new Dimension( 0, 3 ) ) );
                 this.waitingPlayers.addElement( this.playerButtons[i - 1] );
                 this.turnsToBeReturned += 1;
             }
@@ -97,10 +104,10 @@ public class CombatFrame extends JFrame {
         this.buttonPanel.setMaximumSize( new Dimension( 120, 400 ) );
         this.turnPanel = new JPanel();
         GridBagLayout localGridBagLayout = new GridBagLayout();
-        java.awt.GridBagConstraints localGridBagConstraints = new java.awt.GridBagConstraints();
+        GridBagConstraints localGridBagConstraints = new GridBagConstraints();
         localGridBagConstraints.fill = 1;
         localGridBagConstraints.anchor = 17;
-        localGridBagConstraints.insets = new java.awt.Insets( 2, 2, 2, 2 );
+        localGridBagConstraints.insets = new Insets( 2, 2, 2, 2 );
         this.turnPanel.setLayout( localGridBagLayout );
         this.publicTurnLabel = new JLabel( "Public Turn:       " );
         this.publicTurnLabelPanel = new JPanel();
@@ -211,7 +218,7 @@ public class CombatFrame extends JFrame {
         this.turnPanel.add( this.secretTurnLabelPanel );
         this.turnPanel.add( this.secretTurnScrollPane );
         this.turnPanel.add( this.skipAndPublishPanel );
-        this.contentPane.setLayout( new javax.swing.BoxLayout( this.contentPane, BoxLayout.X_AXIS ) );
+        this.contentPane.setLayout( new BoxLayout( this.contentPane, BoxLayout.X_AXIS ) );
         this.contentPane.add( this.buttonPanel );
         this.contentPane.add( this.turnPanel );
         if ( this.waitingPlayers.size() == 0 ) {
@@ -242,9 +249,9 @@ public class CombatFrame extends JFrame {
         spamString( "609" );
         spamString( "199(GM aborted combat)" );
         absoluteChat( "(GM aborted combat)" );
-        for ( int i = 0; i < troubleshooters.length; i++ ) {
-            if ( troubleshooters[i].isLoggedIn() ) {
-                troubleshooters[i].statusPanel.freeze();
+        for ( final ServerPlayer troubleshooter : troubleshooters ) {
+            if ( troubleshooter.isLoggedIn() ) {
+                troubleshooter.statusPanel.freeze();
             }
         }
         logger.info( this.debugButtonString );
@@ -334,7 +341,7 @@ public class CombatFrame extends JFrame {
         return this.debugButtonString;
     }
 
-    class CombatListener implements java.awt.event.ActionListener {
+    class CombatListener implements ActionListener {
         Object source;
 
         public void actionPerformed( ActionEvent paramActionEvent ) {

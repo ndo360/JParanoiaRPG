@@ -1,5 +1,7 @@
 package jparanoia.shared;
 import javax.swing.JButton;
+import jparanoia.client.ConnectManager;
+import jparanoia.client.JPClient;
 
 public class JPGameInfo {
     public String ipAddress;
@@ -11,8 +13,8 @@ public class JPGameInfo {
         this.description = paramString2;
         this.connectButton = new JButton( "Join" );
         this.connectButton.addActionListener( paramAnonymousActionEvent -> {
-            jparanoia.client.JPClient.connect( JPGameInfo.this.ipAddress, true, JPGameInfo.this.description );
-            jparanoia.client.ConnectManager.frame.setVisible( false );
+            JPClient.connect( JPGameInfo.this.ipAddress, true, JPGameInfo.this.description );
+            ConnectManager.frame.setVisible( false );
         } );
     }
 }

@@ -2,25 +2,31 @@ package jparanoia.client;
 import static java.awt.Color.black;
 import static java.awt.Color.white;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
+import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.StyleConstants;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class PrivateMessageFrame extends javax.swing.JFrame {
+public class PrivateMessageFrame extends JFrame {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
     final ClientPlayer player;
-    final java.awt.Dimension IDEAL_DIMENSION = new java.awt.Dimension( 250, 175 );
+    final Dimension IDEAL_DIMENSION = new Dimension( 250, 175 );
     JTextPane displayArea;
-    javax.swing.JScrollPane scrollPane;
+    JScrollPane scrollPane;
     JMenuItem pmWindowMenuItem;
     Container contentPane;
     DefaultStyledDocument privateMessageDocument;
@@ -29,7 +35,7 @@ public class PrivateMessageFrame extends javax.swing.JFrame {
     public PrivateMessageFrame( ClientPlayer paramClientPlayer ) {
         this.player = paramClientPlayer;
         setTitle( this.player.getName() );
-        setIconImage( java.awt.Toolkit.getDefaultToolkit()
+        setIconImage( Toolkit.getDefaultToolkit()
                 .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
         addItemToMenu();
         setDefaultCloseOperation( WindowConstants.HIDE_ON_CLOSE );
@@ -49,7 +55,7 @@ public class PrivateMessageFrame extends javax.swing.JFrame {
                 logger.info( "PivateMessageFrame error: no recognized color scheme selected..." );
                 break;
         }
-        this.scrollPane = new javax.swing.JScrollPane( this.displayArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
+        this.scrollPane = new JScrollPane( this.displayArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
         this.privateMessageDocument = new DefaultStyledDocument();
         this.inputLine = new JTextField( 20 );
         this.inputLine.addActionListener( paramAnonymousActionEvent -> {
@@ -69,7 +75,7 @@ public class PrivateMessageFrame extends javax.swing.JFrame {
         pack();
         setSize( this.IDEAL_DIMENSION );
         this.player.setPMFrame( this );
-        setLocation( new java.awt.Point( JPClient.rand.nextInt( 500 ), JPClient.rand.nextInt( 400 ) ) );
+        setLocation( new Point( JPClient.rand.nextInt( 500 ), JPClient.rand.nextInt( 400 ) ) );
     }
 
     public void addMyMessage( String paramString ) {
@@ -77,12 +83,12 @@ public class PrivateMessageFrame extends javax.swing.JFrame {
             return;
         }
         try {
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Foreground, JPClient.myPlayer
+            JPClient.textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, JPClient.myPlayer
                     .getChatColor() );
             this.privateMessageDocument.insertString( this.privateMessageDocument.getLength(), "  " +
                     JPClient.myPlayer.getName() +
                     ": ", JPClient.textAttributes );
-            JPClient.textAttributes.addAttribute( javax.swing.text.StyleConstants.CharacterConstants.Foreground, JPClient.textColor );
+            JPClient.textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, JPClient.textColor );
             this.privateMessageDocument.insertString( this.privateMessageDocument.getLength(), paramString +
                     "\n", JPClient.textAttributes );
             this.displayArea.setDocument( this.privateMessageDocument );

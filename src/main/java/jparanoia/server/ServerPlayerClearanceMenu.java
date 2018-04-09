@@ -1,7 +1,9 @@
 package jparanoia.server;
+import javax.swing.ButtonGroup;
+import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 
-public class ServerPlayerClearanceMenu extends javax.swing.JMenu {
+public class ServerPlayerClearanceMenu extends JMenu {
     final ServerPlayer player;
     JRadioButtonMenuItem securityInfraMenuItem;
     JRadioButtonMenuItem securityRedMenuItem;
@@ -12,7 +14,7 @@ public class ServerPlayerClearanceMenu extends javax.swing.JMenu {
     JRadioButtonMenuItem securityIndigoMenuItem;
     JRadioButtonMenuItem securityVioletMenuItem;
     JRadioButtonMenuItem securityUltraMenuItem;
-    javax.swing.ButtonGroup bgroup = new javax.swing.ButtonGroup();
+    ButtonGroup bgroup = new ButtonGroup();
 
     public ServerPlayerClearanceMenu( ServerPlayer paramServerPlayer ) {
         super( "Set clearance" );

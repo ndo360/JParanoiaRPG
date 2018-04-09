@@ -1,22 +1,27 @@
 package jparanoia.client;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import static java.awt.Toolkit.getDefaultToolkit;
 import static java.lang.invoke.MethodHandles.lookup;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import jparanoia.shared.GameRegistrar;
+import jparanoia.shared.JPGameInfo;
 import static jparanoia.shared.JParanoia.errorMessage;
 
 public class ConnectManager {
     public static JFrame frame = new JFrame( "Connect..." );
-    static java.awt.Dimension dimen = getDefaultToolkit().getScreenSize();
+    static Dimension dimen = getDefaultToolkit().getScreenSize();
     static int screenWidth = (int) dimen.getWidth();
     static int screenHeight = (int) dimen.getHeight();
     static boolean noGames = false;
     static JLabel manualLabel;
-    static javax.swing.JTextField manualEntryField = new javax.swing.JTextField( 15 );
-    static jparanoia.shared.JPGameInfo[] games;
+    static JTextField manualEntryField = new JTextField( 15 );
+    static JPGameInfo[] games;
     static JPanel contentPane;
 
     static {
@@ -28,7 +33,7 @@ public class ConnectManager {
     }
 
     public static void activate() {
-        games = jparanoia.shared.GameRegistrar.getGames();
+        games = GameRegistrar.getGames();
         noGames = games == null || games.length == 0;
         contentPane = new JPanel();
         GridBagLayout localGridBagLayout = new GridBagLayout();
@@ -40,12 +45,12 @@ public class ConnectManager {
         localGridBagConstraints.gridwidth = 1;
         localGridBagConstraints.fill = 1;
         localGridBagConstraints.anchor = 17;
-        localGridBagConstraints.insets = new java.awt.Insets( 2, 2, 2, 2 );
+        localGridBagConstraints.insets = new Insets( 2, 2, 2, 2 );
         if ( games != null ) {
-            for ( int i = 0; i < games.length; i++ ) {
-                JLabel localJLabel2 = new JLabel( games[i].description );
-                localGridBagLayout.setConstraints( games[i].connectButton, localGridBagConstraints );
-                contentPane.add( games[i].connectButton );
+            for ( final JPGameInfo game : games ) {
+                JLabel localJLabel2 = new JLabel( game.description );
+                localGridBagLayout.setConstraints( game.connectButton, localGridBagConstraints );
+                contentPane.add( game.connectButton );
                 localGridBagConstraints.gridx += 1;
                 localGridBagConstraints.gridwidth = 50;
                 localGridBagConstraints.weightx = 0.75D;

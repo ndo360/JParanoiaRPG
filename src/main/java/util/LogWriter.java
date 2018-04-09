@@ -1,4 +1,6 @@
 package util;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 public class LogWriter {
@@ -6,8 +8,8 @@ public class LogWriter {
 
     public LogWriter( String paramString ) {
         try {
-            this.out = new PrintWriter( new java.io.FileWriter( paramString, true ), true );
-        } catch ( java.io.IOException localIOException ) {
+            this.out = new PrintWriter( new FileWriter( paramString, true ), true );
+        } catch ( IOException localIOException ) {
             localIOException.printStackTrace();
         }
     }

@@ -1,20 +1,27 @@
 package jparanoia.server;
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.text.DefaultStyledDocument;
 
 public class CharsheetPanel extends JPanel {
     static final int IDEAL_WIDTH = 450;
     static final int IDEAL_HEIGHT = 200;
     ServerPlayer selectedPlayer;
-    java.io.InputStreamReader reader;
-    java.io.FileWriter writer;
-    java.io.BufferedReader in;
+    InputStreamReader reader;
+    FileWriter writer;
+    BufferedReader in;
     JTextPane displayArea;
     JPanel savePanel;
     JPanel playerAndDicePanel;
@@ -22,9 +29,9 @@ public class CharsheetPanel extends JPanel {
     JPanel playerPanel;
     JComboBox playerComboBox;
     JButton saveButton;
-    javax.swing.JScrollPane scrollPane;
-    java.awt.Container contentPane;
-    javax.swing.text.DefaultStyledDocument theFile;
+    JScrollPane scrollPane;
+    Container contentPane;
+    DefaultStyledDocument theFile;
 
     public CharsheetPanel() {
         setLayout( new BoxLayout( this, BoxLayout.Y_AXIS ) );
@@ -32,7 +39,7 @@ public class CharsheetPanel extends JPanel {
         this.displayArea.setCharacterAttributes( JPServer.charsheetAttributes, true );
         this.displayArea.setEditable( true );
         this.displayArea.setEnabled( true );
-        this.scrollPane = new javax.swing.JScrollPane( this.displayArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
+        this.scrollPane = new JScrollPane( this.displayArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER );
         this.saveButton = new JButton( "Save / Send" );
         this.saveButton.setMaximumSize( new Dimension( 65, 22 ) );
         this.saveButton.addActionListener( paramAnonymousActionEvent -> {
@@ -56,7 +63,7 @@ public class CharsheetPanel extends JPanel {
         this.playerPanel.add( Box.createRigidArea( new Dimension( 5, 0 ) ) );
         this.playerPanel.add( this.saveButton );
         this.playerAndDicePanel = new JPanel();
-        this.playerAndDicePanel.setLayout( new java.awt.BorderLayout() );
+        this.playerAndDicePanel.setLayout( new BorderLayout() );
         this.playerAndDicePanel.add( this.playerPanel, "West" );
         this.playerAndDicePanel.add( this.dicePanel, "East" );
         this.playerAndDicePanel.setMaximumSize( new Dimension( 1500, 20 ) );
