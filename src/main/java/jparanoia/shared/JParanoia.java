@@ -1,6 +1,7 @@
 package jparanoia.shared;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Image;
 import java.awt.Toolkit;
 import static java.lang.System.exit;
 import java.lang.invoke.MethodHandles;
@@ -9,6 +10,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import javax.imageio.ImageIO;
 import javax.swing.FocusManager;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -27,6 +29,7 @@ public abstract class JParanoia {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
     public static final String JPARANOIA_WEBSITE = "http://www.byronbarry.com/jparanoia/";
+    public static final String IMG_DELIMITER = "|";
     public static JFrame frame = new JFrame();
     public static Prefs prefs = new Prefs();
     public static JPSounds soundPlayer;
@@ -108,24 +111,30 @@ public abstract class JParanoia {
         JOptionPane.showMessageDialog( frame, paramString2, paramString1, JOptionPane.ERROR_MESSAGE );
     }
 
-    public static void displayImage( String paramString ) {
+    public static void displayImage( String descriptionPlusUrl ) {
         try {
-            String str = paramString.substring( 0, paramString.indexOf( "http://" ) );
-            URL localURL = new URL( paramString.substring( paramString.indexOf( "http://" ) ) );
-            JTextPane localJTextPane = new JTextPane();
-            localJTextPane.setEnabled( false );
-            JFrame localJFrame = new JFrame();
-            localJFrame.setResizable( false );
-            localJFrame.setSize( 200, 200 );
-            ImageIcon localImageIcon = new ImageIcon( localURL );
-            localJTextPane.insertIcon( localImageIcon );
-            localJFrame.setSize( localImageIcon.getIconWidth() + 8 + 6, localImageIcon.getIconHeight() + 26 + 6 );
-            Container localContainer = localJFrame.getContentPane();
-            localContainer.add( localJTextPane );
-            localJFrame.setTitle( str );
-            localJTextPane.setToolTipText( str );
+            String description = descriptionPlusUrl.substring( 0, descriptionPlusUrl.indexOf( IMG_DELIMITER ) );
+            String urlSubstring = descriptionPlusUrl.substring( descriptionPlusUrl.indexOf( IMG_DELIMITER ) + IMG_DELIMITER.length() );
+            URL url = new URL( urlSubstring );
+
+            JTextPane pane = new JTextPane();
+            pane.setEnabled( false );
+            JFrame window = new JFrame();
+            window.setResizable( false );
+            window.setSize( 200, 200 );
+
+            Image image = ImageIO.read(url.openStream());
+            ImageIcon icon = new ImageIcon( image );
+            pane.insertIcon( icon );
+            window.setSize( icon.getIconWidth() + 8 + 6, icon.getIconHeight() + 26 + 6 );
+
+            Container localContainer = window.getContentPane();
+            localContainer.add( pane );
+
+            window.setTitle( description );
+            pane.setToolTipText( description );
             try {
-                localJFrame.setIconImage( Toolkit.getDefaultToolkit()
+                window.setIconImage( Toolkit.getDefaultToolkit()
                         .getImage( lookup().lookupClass()
                                 .getClassLoader()
                                 .getResource( "graphics/jparanoiaIcon.jpg" ) ) );
@@ -134,13 +143,15 @@ public abstract class JParanoia {
                 localException2.printStackTrace();
                 exit( -1 );
             }
-            localJFrame.setVisible( true );
+            window.setVisible( true );
         } catch ( Exception localException1 ) {
             errLog = new ErrorLogger( "img", localException1.toString() + " in JParanoia.displayImage()" );
             localException1.printStackTrace( errLog.out );
             errLog.closeLog();
             errLog = null;
-            errorMessage( "Error displaying image", "There was an error displaying the image.\nAn error log has been created in the logs\ndirectory." );
+            errorMessage( "Error displaying image", "There was an error displaying the image.\n" +
+                    "An error log has been created in the logs\n" +
+                    "directory." );
         }
     }
 

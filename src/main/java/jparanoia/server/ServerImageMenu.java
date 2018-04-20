@@ -1,5 +1,6 @@
 package jparanoia.server;
 import java.lang.invoke.MethodHandles;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -32,43 +33,43 @@ public class ServerImageMenu extends JMenu {
     }
 
     private void sendUnplannedImage() {
-        JOptionPane localJOptionPane = new JOptionPane();
-        String str1;
+//        JOptionPane localJOptionPane = new JOptionPane();
+        String imgDescription;
         do {
-            str1 = (String) JOptionPane.showInputDialog( null, "Enter a description of the image:", "Unplanned Image...", JOptionPane.PLAIN_MESSAGE, null, null, "" );
-            if ( str1 == null ) {
+            imgDescription = (String) JOptionPane.showInputDialog( null, "Enter a description of the image:",
+                    "Unplanned Image...", JOptionPane.PLAIN_MESSAGE, null, null, "" );
+            if ( imgDescription == null ) {
                 return;
             }
-        } while ( str1.startsWith( "http://" ) );
-        String str2 = (String) JOptionPane.showInputDialog( null, "Enter the URL of the image (including http://):", "Unplanned Image URL...", JOptionPane.PLAIN_MESSAGE, null, null, "" );
-        if ( str2 == null || str2.equals( "" ) ) {
+        } while ( isLink(imgDescription) ); //For folks that insert links into description
+
+        String imgLink = (String) JOptionPane.showInputDialog( null, "Enter the URL of the image (including http://):",
+                "Unplanned Image URL...", JOptionPane.PLAIN_MESSAGE, null, null, "" );
+        if ( imgLink == null || imgLink.equals( "" ) ) {
             return;
         }
-        if ( !str2.startsWith( "http://" ) ) {
-            str2 = "http://" + str2;
+        if ( !isLink( imgLink ) ) {
+            imgLink = "http://" + imgLink;
         }
-        JPServer.spamString( "404" + str1 + str2 );
-        JParanoia.displayImage( str1 + str2 );
+        JPServer.spamString( "404" + imgDescription + JParanoia.IMG_DELIMITER + imgLink );
+        JParanoia.displayImage( imgDescription + JParanoia.IMG_DELIMITER + imgLink );
         if ( JPServer.keepLog ) {
-            String str3;
+            String logEntry;
             if ( JPServer.htmlLog ) {
-                str3 = "IMAGE: \"" +
-                        str1 +
-                        "\" URL: <a href=\"" +
-                        str2 +
-                        "\">" +
-                        str2 +
-                        "</a><br/>\n<img src=\"" +
-                        str2 +
-                        "\"><br/>";
+                logEntry = MessageFormat.format( "IMAGE: \"{0}\" " +
+                                "URL: <a href=\"{1}\">{2}</a><br/>\n<img src=\"{3}\"><br/>",
+                                imgDescription, imgLink, imgLink, imgLink );
             } else {
-                str3 = "IMAGE: \"" + str1 + "\" URL: " + str2;
+                logEntry = "IMAGE: \"" + imgDescription + "\" URL: " + imgLink;
             }
-            JPServer.log.logEntry( str3 );
+            JPServer.log.logEntry( logEntry );
         }
     }
-}
 
+    private static boolean isLink( String supposedLink ) {
+     return supposedLink.startsWith( "http://" ) || supposedLink.startsWith( "https://" );
+    }
+}
 
 /* Location:              C:\Users\noahc\Desktop\JParanoia(1.31.1)\JParanoia(1.31.1).jar!\jparanoia\server\ServerImageMenu.class
  * Java compiler version: 2 (46.0)
