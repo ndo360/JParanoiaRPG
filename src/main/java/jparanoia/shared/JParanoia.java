@@ -27,6 +27,8 @@ public abstract class JParanoia {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
     public static final String JPARANOIA_WEBSITE = "http://www.byronbarry.com/jparanoia/";
+    public static final String WHITE_ON_BLACK = "White on Black";
+    public static final String BLACK_ON_WHITE = "Black on White";
     public static JFrame frame = new JFrame();
     public static Prefs prefs = new Prefs();
     public static JPSounds soundPlayer;

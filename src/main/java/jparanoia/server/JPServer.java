@@ -225,7 +225,7 @@ public class JPServer extends JParanoia {
     static String[] nonConnectedPlayers;
     static String currentPlayerID = "00";
     static String currentColorScheme = "";
-    static String newColorScheme = "White on Black";
+    static String newColorScheme = WHITE_ON_BLACK;
     static boolean serverRunning = false;
     static String addressToTry = null;
     static InetAddress localIP = null;
@@ -710,16 +710,16 @@ public class JPServer extends JParanoia {
     public static void setColorScheme() {
         if ( !currentColorScheme.equals( newColorScheme ) ) {
             switch ( newColorScheme ) {
-                case "White on Black":
+                case WHITE_ON_BLACK:
                     textColor = white;
                     displayArea.setBackground( black );
                     break;
-                case "Black on White":
+                case BLACK_ON_WHITE:
                     textColor = black;
                     displayArea.setBackground( white );
                     break;
                 default:
-                    logger.info( "Error: invalid color logic." );
+                    logger.error( "Error: invalid color logic." );
                     break;
             }
             currentColorScheme = newColorScheme;
@@ -729,17 +729,21 @@ public class JPServer extends JParanoia {
 
     public static void assignColorsToCharacters() {
         int i;
-        if ( currentColorScheme.equals( "White on Black" ) ) {
-            for ( i = 0; i < numberOfPlayers; i++ ) {
-                players[i].setChatColor( brightColors[i] );
-            }
+        switch ( currentColorScheme ) {
+            case WHITE_ON_BLACK:
+                for ( i = 0; i < numberOfPlayers; i++ ) {
+                    players[i].setChatColor( brightColors[i] );
+                }
+                break;
+            case BLACK_ON_WHITE:
+                for ( i = 0; i < numberOfPlayers; i++ ) {
+                    players[i].setChatColor( darkColors[i] );
+                }
+                break;
+            default:
+                logger.error( "Error: invalid color logic" );
+                break;
         }
-        if ( currentColorScheme.equals( "Black on White" ) ) {
-            for ( i = 0; i < numberOfPlayers; i++ ) {
-                players[i].setChatColor( darkColors[i] );
-            }
-        }
-        logger.info( "Error: invalid color logic" );
     }
 
     public static void playerHasJoined( int paramInt ) {

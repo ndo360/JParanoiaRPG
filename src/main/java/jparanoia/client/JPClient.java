@@ -142,7 +142,7 @@ public class JPClient extends JParanoia {
     static String MY_PLAYER_ID;
     static int MY_PLAYER_NUMBER;
     static String currentColorScheme = "";
-    static String newColorScheme = "White on Black";
+    static String newColorScheme = WHITE_ON_BLACK;
     static String styleBegin;
     static String styleEnd = "";
     static String realName = "default";
@@ -436,16 +436,16 @@ public class JPClient extends JParanoia {
     public static void setColorScheme() {
         if ( !currentColorScheme.equals( newColorScheme ) ) {
             switch ( newColorScheme ) {
-                case "White on Black":
+                case WHITE_ON_BLACK:
                     textColor = white;
                     displayArea.setBackground( black );
                     break;
-                case "Black on White":
+                case BLACK_ON_WHITE:
                     textColor = black;
                     displayArea.setBackground( white );
                     break;
                 default:
-                    logger.info( "Error: invalid color logic." );
+                    logger.error( "Error: invalid color logic." );
                     break;
             }
             currentColorScheme = newColorScheme;
@@ -455,35 +455,38 @@ public class JPClient extends JParanoia {
 
     public static void assignColorsToCharacters() {
         if ( loggedIn ) {
-            if ( currentColorScheme.equals( "White on Black" ) ) {
-                for ( int i = 0; i < numberOfPlayers; i++ ) {
-                    playerList[i].setChatColor( brightColors[i] );
-                }
+            switch ( currentColorScheme ) {
+                case WHITE_ON_BLACK:
+                    for ( int i = 0; i < numberOfPlayers; ++i ) {
+                        playerList[i].setChatColor( brightColors[i] );
+                    }
+                    break;
+                case BLACK_ON_WHITE:
+                    for ( int i = 0; i < numberOfPlayers; ++i ) {
+                        playerList[i].setChatColor( darkColors[i] );
+                    }
+                    break;
+                default:
+                    logger.error( "Error: invalid color logic" );
+                    break;
             }
-            logger.info( "Error: invalid color logic" );
         }
     }
 
-    public static void disconnect( boolean paramBoolean ) {
-        System.out.print( "disconnect() initiated by " );
-        if ( paramBoolean ) {
-            logger.info( "server" );
-        } else {
-            logger.info( "client" );
-        }
+    public static void disconnect( boolean byServer ) {
+        logger.info( "disconnect() initiated by {}", byServer ? "server" : "client" );
+
         disconnectCalled = true;
         if ( stayConnected ) {
-            int i;
             if ( loggedIn && !observer ) {
-                if ( !paramBoolean ) {
+                if ( !byServer ) {
                     out.println( "086" + MY_PLAYER_ID );
                 }
-                for ( i = 0; i < numberOfPCs; ) {
+                for ( int i = 0; i < numberOfPCs; ++i ) {
                     if ( i != MY_PLAYER_NUMBER ) {
                         PMFrame[i].dispose();
                     }
-                    i++;
-                    if ( !paramBoolean ) {
+                    if ( !byServer ) {
                         out.println( "086" );
                     }
                 }
