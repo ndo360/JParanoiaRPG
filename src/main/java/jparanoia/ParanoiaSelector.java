@@ -27,7 +27,7 @@ public class ParanoiaSelector {
 
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
-    static JFrame frame = new JFrame( "Launch JParanoia" );
+    static JFrame frame = new JFrame( "Launch JParanoia Community Edition" );
     static JButton serverButton = new JButton( "Server " + JPServer.getVersionName() );
     static JButton clientButton = new JButton( "Client " + JPClient.getVersionName() );
     static Container contentPane = frame.getContentPane();
