@@ -733,6 +733,7 @@ public class ServerPlayer extends JPPlayer {
         }
         specificSend( "402" );
     }
+    //The above code within the fuction, that isn't commented, is copied from 'public void sendCharsheet()' as that code still works.
     public void saveCharsheet( boolean paramBoolean ) {
         String str = null;
         try {
