@@ -95,9 +95,9 @@ import org.slf4j.profiler.Profiler;
 public class JPServer extends JParanoia {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
-    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 1 );
+    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 2 );
     public static final String VERSION_NAME = VERSION_NUMBER.toString();
-    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 0 );
+    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 2 );
     static final int IDEAL_WIDTH = 770;
     static final int IDEAL_HEIGHT = 540;
     static final String MY_PLAYER_ID = "00";
@@ -141,7 +141,7 @@ public class JPServer extends JParanoia {
     static String announcement = "";
     static String styleBegin;
     static String styleEnd = "";
-    static TitleClass myTitle = new TitleClass( "JParanoia Server", VERSION_NAME, false );
+    static TitleClass myTitle = new TitleClass( "JParanoia Community Server", VERSION_NAME, false );
     static Container contentPane;
     static JPanel inputPanel;
     static JPanel PMContainer;
@@ -214,7 +214,7 @@ public class JPServer extends JParanoia {
     static Date timeStamp;
     static Random rand = new Random();
     static int randInt = rand.nextInt( 1000 );
-    static String defaultGameDescription = "JParanoia " + VERSION_NAME + " (" + randInt + ")";
+    static String defaultGameDescription = "JParanoia Community " + VERSION_NAME + " (" + randInt + ")";
     static String gameDescription = defaultGameDescription;
     static boolean fontIsBold = false;
     static boolean showTimeStamps = true;
@@ -250,7 +250,7 @@ public class JPServer extends JParanoia {
                 logger.info( "Exception while setting L&F." );
             }
         }
-        appInfo = "JParanoia Server " + VERSION_NAME;
+        appInfo = "JParanoia Community Server " + VERSION_NAME;
         allowObservers = (Boolean) prefs.getPref( 28 );
         registerGame = (Boolean) prefs.getPref( 31 );
         behindRouter = (Boolean) prefs.getPref( 32 );
@@ -615,9 +615,13 @@ public class JPServer extends JParanoia {
         connectOPane = new JOptionPane();
         errorPane = new JOptionPane();
         myPlayer = players[0];
-        displayWrite( green, "JParanoia Server " + VERSION_NAME );
+        displayWrite( green, "JParanoia Community Server " + VERSION_NAME );
         displayWrite( orange, "      http://www.byronbarry.com/jparanoia/\n" );
-        displayWrite( cyan, "New in this release:\n\n" );
+        displayWrite( Color.red, "This is an unofficial community edition for JParanoia.\nWe take no credit for the original creation of this program.\nOur only goal is to allow for people to play on the program once again.\n\n" );
+        displayWrite( Color.cyan, "New in this community release:\n\n" );
+        displayWrite( Color.white, "-https links for sending unplanned images now work.\n" );
+        displayWrite( Color.white, "-Character Sheets now load in without throwing an error.\n\n" );
+        displayWrite( Color.cyan, "Previous version's patch notes:\n\n" );
         displayWrite( white, "- Quick Charsheet option (see README).\n- The Computer's text is now large in the logs.\n- The GM's text is now bold in the logs.\n- Unplanned images now appear in the logs.\n- Current passwords appear in Player menu.\n- Other miscellaneous bug fixes.\n\nRead the README.TXT for full details.\nFor a complete version history, visit the JParanoia website.\n\n" );
         displayWrite( white, "If you are new to running a JParanoia server, or find yourself wondering how to do something, " );
         displayWrite( yellow, "READ THE README.\n" );
@@ -659,7 +663,7 @@ public class JPServer extends JParanoia {
     }
 
     public static void main( String[] paramArrayOfString ) {
-        logger.info( "\nThis is the JParanoia Server console.\n" );
+        logger.info( "\nThis is the JParanoia Community Server console.\n" );
         logger.info( "Running under Java Runtime Environment version " + getProperty( "java.version" ) );
         logger.info( "\n" );
         JPServer localJPServer = new JPServer();
