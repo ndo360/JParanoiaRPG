@@ -12,11 +12,11 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class ImageDataParser {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
-    BufferedReader reader;
-    String input;
-    String name;
-    StringTokenizer st;
-    ArrayList imageInfo = new ArrayList( 20 );
+   private BufferedReader reader;
+   private String input;
+   private String name;
+   private StringTokenizer st;
+   private ArrayList<JPImage> imageInfo = new ArrayList<>( 20 );
 
     public void parseImageURLs( String paramString ) {
         try {
