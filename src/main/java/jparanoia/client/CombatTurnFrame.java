@@ -99,7 +99,7 @@ public class CombatTurnFrame extends JFrame {
                 CombatTurnFrame.this.dispose();
             } else {
                 new JOptionPane();
-                JOptionPane.showMessageDialog( null, "Your public text must begin with\n/  or  '\nor you can leave it blank.", "Combat Error", JOptionPane.PLAIN_MESSAGE );
+                JOptionPane.showMessageDialog( null, "Your public text must begin with one of two symbols...\nTo have your character do an action, have the / symbol at the beginning of your public text.\nTo have your character say something, have the ' symbol is at the beginning of your public text.\nYou can also choose to leave the public text box empty.", "Combat Error", JOptionPane.PLAIN_MESSAGE );
             }
         } );
         this.inputPanel = new JPanel();
