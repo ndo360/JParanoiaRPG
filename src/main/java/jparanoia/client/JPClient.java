@@ -57,9 +57,9 @@ import org.slf4j.profiler.Profiler;
 
 public class JPClient extends JParanoia {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
-    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 1 );
+    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 2 );
     public static final String VERSION_NAME = VERSION_NUMBER.toString();
-    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 0 );
+    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 2 );
     static Integer mainFontSize = 99;
     static int computerFontIncrease = 0;
     static int maxNumClones;
@@ -175,8 +175,8 @@ public class JPClient extends JParanoia {
         }
 
         profiler.start( "frame init" );
-        JParanoia.appInfo = "JParanoia Client " + VERSION_NAME;
-        frame.setTitle( "JParanoia Client " + VERSION_NAME );
+        JParanoia.appInfo = "JParanoia Community Client " + VERSION_NAME;
+        frame.setTitle( "JParanoia Community Client " + VERSION_NAME );
         myTitle = new TitleClass( "JParanoia Client", VERSION_NAME, true );
         frame.setIconImage( Toolkit.getDefaultToolkit()
                 .getImage( lookup().lookupClass().getClassLoader().getResource( "graphics/jparanoiaIcon.jpg" ) ) );
@@ -398,8 +398,12 @@ public class JPClient extends JParanoia {
         } );
         charsheetMenu.add( showCharsheetMenuItem );
         menuBar.add( charsheetMenu );
-        displayWrite( Color.green, "JParanoia Client " + VERSION_NAME + "\n\n" );
-        displayWrite( Color.cyan, "New in this release:\n\n" );
+        displayWrite( Color.green, "JParanoia Community Client " + VERSION_NAME + "\n\n" );
+        displayWrite( Color.red, "This is an unofficial community edition for JParanoia.\nWe take no credit for the original creation of this program.\nOur only goal is to allow for people to play on the program once again.\n\n" );
+        displayWrite( Color.cyan, "New in this community release:\n\n" );
+        displayWrite( Color.white, "-https links for sending unplanned images now work.\n" );
+        displayWrite( Color.white, "-Character Sheets now load in without throwing an error.\n\n" );
+        displayWrite( Color.cyan, "Previous version's patch notes:\n\n" );
         displayWrite( Color.white, "- The Computer's text is now large in the log. GM text is bold.\n- Images are now logged.\n- Blank secret combat turns no longer appear in GM PM window.\n- Other miscellaneous bug fixes.\n\n" );
         displayWrite( Color.yellow, "Read the README.TXT" );
         displayWrite( Color.white, " for full details.\n\n" );
@@ -662,7 +666,7 @@ public class JPClient extends JParanoia {
     }
 
     public static void main( String[] paramArrayOfString ) {
-        logger.info( "\n\nThis is the JParanoia client console.\n" );
+        logger.info( "\n\nThis is the JParanoia Community client console.\n" );
         logger.info( "Running under Java Runtime Environment version " + getProperty( "java.version" ) );
         JPClient localJPClient = new JPClient();
         frame.setLocation( new Point( 20, 20 ) );
@@ -724,7 +728,8 @@ public class JPClient extends JParanoia {
             out.println( "961Someone using client version " +
                     VERSION_NUMBER.toString() +
                     " has attempted (and failed) to connect." +
-                    " You must upgrade to server version " +
+                    " You must upgrade to the latest Community build," +
+                    " version " +
                     MIN_COMPATIBLE_VERSION_NUMBER.toString() +
                     " to support this client." +
                     " The current version of JParanoia may be found at " +
