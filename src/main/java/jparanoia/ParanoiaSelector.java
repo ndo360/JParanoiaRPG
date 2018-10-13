@@ -21,16 +21,16 @@ import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class ParanoiaSelector {
+    static {
+        System.setProperty( "swing.metalTheme", "steel" );
+    }
+
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
     static JFrame frame = new JFrame( "Launch JParanoia" );
     static JButton serverButton = new JButton( "Server " + JPServer.getVersionName() );
     static JButton clientButton = new JButton( "Client " + JPClient.getVersionName() );
     static Container contentPane = frame.getContentPane();
-
-    static {
-        System.setProperty( "swing.metalTheme", "steel" );
-    }
 
     public static void main( String[] paramArrayOfString ) {
         logger.info( "JPSERVER VERSION: " + getVersionName() );

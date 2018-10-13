@@ -68,18 +68,18 @@ public class ServerPlayer extends JPPlayer {
     private NPCMenu npcMenu;
     private JCheckBox globalExcludeCheckBox;
 
-    public ServerPlayer( int paramInt, String paramString1, boolean paramBoolean, String paramString2, String paramString3 ) {
-        this.PLAYER_NUMBER = paramInt;
-        this.password = paramString2;
-        this.IS_PLAYER = paramBoolean;
-        this.name = paramString1;
+    public ServerPlayer( int playerNumber, String name, boolean isPlayer, String password, String dataFile ) {
+        this.PLAYER_NUMBER = playerNumber;
+        this.password = password;
+        this.IS_PLAYER = isPlayer;
+        this.name = name;
         if ( !this.IS_PLAYER && this.name.startsWith( "spareNPC" ) ) {
             this.loggedIn = true;
             this.npcMenu = new NPCMenu( this );
             logger.info( "Generated NPCMenu for " + this.name );
             spareNpcs.add( this );
         }
-        this.dataFile = paramString3;
+        this.dataFile = dataFile;
         this.characterSheet = new DefaultStyledDocument( new StyleContext() );
         sas = JPServer.charsheetAttributes;
     }
@@ -112,11 +112,10 @@ public class ServerPlayer extends JPPlayer {
                         "the character's name on the first line. This is mandatory." );
                 System.exit( 0 );
             }
-            int i;
+            String newName;
             if ( this.PLAYER_NUMBER == 0 ) {
                 if ( JPServer.gmNameNag && this.data.substring( 0, this.data.length() - 2 ).equals( "GM" ) ) {
-//           new JOptionPane();
-                    String localObject = (String) JOptionPane.showInputDialog( null, "Your name, as defined in your " +
+                    newName = (String) JOptionPane.showInputDialog( null, "Your name, as defined in your " +
                             "own charsheet file, " +
                             this.dataFile +
                             "\n" +
@@ -128,10 +127,10 @@ public class ServerPlayer extends JPPlayer {
                             "(You can click Cancel to keep \"GM\" if you so choose.\n" +
                             "To permanently surpress this notice, set bGmNameNag=false\n" +
                             "in your jpConfig.ini file.)", "Boring GM Name...", JOptionPane.PLAIN_MESSAGE, null, null, "GM" );
-                    if ( localObject != null && !localObject.equals( "" ) ) {
-                        this.name = localObject;
+                    if ( newName != null && !newName.equals( "" ) ) {
+                        this.name = newName;
                     } else {
-                        logger.info( "NUNAME == " + localObject );
+                        logger.info( "NUNAME == " + newName );
                         this.name = this.data.substring( 0, this.data.length() - 2 );
                     }
                 } else {
@@ -201,9 +200,9 @@ public class ServerPlayer extends JPPlayer {
                             "Correct the error and relaunch the server." );
                     exit( 0 );
                 }
-                char[] localObject = this.sector.toCharArray();
-                for ( i = 0; i < localObject.length; ) {
-                    if ( localObject[i] < 'A' || localObject[i] > 'Z' ) {
+                char[] sectorChars = this.sector.toCharArray();
+                for (int i = 0; i < sectorChars.length; ++i) {
+                    if ( sectorChars[i] < 'A' || sectorChars[i] > 'Z' ) {
                         errorMessage( "Invalid sector", "The character sheet " +
                                 this.dataFile +
                                 "\n" +
@@ -217,20 +216,19 @@ public class ServerPlayer extends JPPlayer {
                                 "Correct the error and relaunch the server." );
                         exit( 0 );
                     }
-                    i++;
-                    this.name = this.data.substring( 0, this.data.length() - 2 );
                 }
+            } else {
+                this.name = this.data.substring( 0, this.data.length() - 2 );
             }
             if ( this.name.startsWith( "(dead)" ) ) {
                 this.isDead = true;
             }
             this.cloneNumber = Integer.parseInt( this.data.substring( this.data.lastIndexOf( "-" ) + 1 ) );
-            Object localObject = this.reader.readLine();
-            while ( localObject != null ) {
-                if ( !( (String) localObject ).startsWith( "#" ) ) {
-                    this.characterSheet.insertString( this.characterSheet.getLength(), localObject + "\n", sas );
+
+            for(newName = this.reader.readLine(); newName != null; newName = this.reader.readLine()) {
+                if (!newName.startsWith("#")) {
+                    this.characterSheet.insertString(this.characterSheet.getLength(), newName + "\n", sas);
                 }
-                localObject = this.reader.readLine();
             }
             this.reader.close();
             this.characterSheet.addDocumentListener( new DocumentListener() {
