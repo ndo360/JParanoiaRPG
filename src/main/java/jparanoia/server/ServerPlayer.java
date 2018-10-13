@@ -701,7 +701,7 @@ public class ServerPlayer extends JPPlayer {
     }
 
     public void sendLastSavedCharsheet() {
-        logger.info( "Sending " + getName() + " their last saved char sheet..." );
+/*        logger.info( "Sending " + getName() + " their last saved char sheet..." );
         specificSend( "400" );
         try {
             final ClassLoader classLoader = lookup().lookupClass().getClassLoader();
@@ -723,7 +723,16 @@ public class ServerPlayer extends JPPlayer {
         }
         specificSend( "402" );
     }
-
+*/
+        logger.info( "Sending " + getName() + " their char sheet..." );
+        specificSend( "400" );
+        try {
+            specificSend( stripComments( this.characterSheet.getText( 0, this.characterSheet.getLength() ) ) );
+        } catch ( Exception localException ) {
+            logger.info( "Bad location exception while sending charsheet." );
+        }
+        specificSend( "402" );
+    }
     public void saveCharsheet( boolean paramBoolean ) {
         String str = null;
         try {
