@@ -118,6 +118,11 @@ public abstract class JParanoia {
             String description = descriptionPlusUrl.substring( 0, descriptionPlusUrl.indexOf( IMG_DELIMITER ) );
             String urlSubstring = descriptionPlusUrl.substring( descriptionPlusUrl.indexOf( IMG_DELIMITER ) + IMG_DELIMITER.length() );
             URL url = new URL( urlSubstring );
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
+            connection.setRequestProperty(
+                    "User-Agent",
+                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31");
 
             JTextPane pane = new JTextPane();
             pane.setEnabled( false );
@@ -125,7 +130,7 @@ public abstract class JParanoia {
             window.setResizable( false );
             window.setSize( 200, 200 );
 
-            Image image = ImageIO.read(url.openStream());
+            Image image = ImageIO.read(connection.getInputStream());
             ImageIcon icon = new ImageIcon( image );
             pane.insertIcon( icon );
             window.setSize( icon.getIconWidth() + 8 + 6, icon.getIconHeight() + 26 + 6 );
