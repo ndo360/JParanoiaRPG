@@ -57,9 +57,9 @@ import org.slf4j.profiler.Profiler;
 
 public class JPClient extends JParanoia {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
-    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 2 );
+    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 3 );
     public static final String VERSION_NAME = VERSION_NUMBER.toString();
-    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 2 );
+    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 3 );
     static Integer mainFontSize = 99;
     static int computerFontIncrease = 0;
     static int maxNumClones;
@@ -401,12 +401,12 @@ public class JPClient extends JParanoia {
         displayWrite( Color.green, "JParanoia Community Client " + VERSION_NAME + "\n\n" );
         displayWrite( Color.red, "This is an unofficial community edition for JParanoia.\nWe take no credit for the original creation of this program.\nOur only goal is to allow for people to play on the program once again.\n\n" );
         displayWrite( Color.cyan, "New in this community release:\n\n" );
+        displayWrite( Color.white, "-ALL https links should work, no more 403 errors.\n" );
+        displayWrite( Color.white, "-New text has been added to Combat Mode, this should \nhelp new GMs and Players understand how it works.\n\n" );
+        displayWrite( Color.cyan, "Previous version's patch notes:\n\n" );
         displayWrite( Color.white, "-https links for sending unplanned images now work.\n" );
         displayWrite( Color.white, "-Character Sheets now load in without throwing an error.\n\n" );
-        displayWrite( Color.cyan, "Previous version's patch notes:\n\n" );
-        displayWrite( Color.white, "- The Computer's text is now large in the log. GM text is bold.\n- Images are now logged.\n- Blank secret combat turns no longer appear in GM PM window.\n- Other miscellaneous bug fixes.\n\n" );
-        displayWrite( Color.yellow, "Read the README.TXT" );
-        displayWrite( Color.white, " for full details.\n\n" );
+        displayWrite( Color.white, "Features within JParanoia.\n\n" );
         displayWrite( Color.cyan, "Name Completion:\n" );
         displayWrite( Color.white, "Tab acts as a name completion key. See README for details.\n\n" );
         displayWrite( Color.cyan, "Expression Keys:\n" );
@@ -422,7 +422,7 @@ public class JPClient extends JParanoia {
         displayWrite( Color.white, ". This is the default password for all players. Good GMs assign passwords for enhanced security.\n\n" );
         displayWrite( Color.white, "For news, bug report forms, a complete version history, or to make a financial contribution, visit the " );
         displayWrite( Color.cyan, "JParanoia website: " );
-        displayWrite( Color.orange, "http://www.byronbarry.com/jparanoia/\n" );
+        displayWrite( Color.orange, "https://github.com/ndo360/JParanoiaRPG/\n" );
         keepLog = (Boolean) prefs.getPref( 20 );
         htmlLog = (Boolean) prefs.getPref( 21 );
         realName = (String) prefs.getPref( 22 );
