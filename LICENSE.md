@@ -672,3 +672,7 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <https://www.gnu.org/licenses/why-not-lgpl.html>.
+
+Paranoia! and The Computer logo are registered trademarks of Greg Costikyan, Eric Goldberg, and Dan Gelber and are used with the permission of the owners.
+
+JParanoia is not affiliated with or endorsed by the owners of Paranoia!.
