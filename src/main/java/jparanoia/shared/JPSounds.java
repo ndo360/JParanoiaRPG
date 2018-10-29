@@ -1,98 +1,90 @@
 package jparanoia.shared;
 import java.lang.invoke.MethodHandles;
-import static java.lang.invoke.MethodHandles.lookup;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
+import kuusisto.tinysound.Music;
+import kuusisto.tinysound.Sound;
+import kuusisto.tinysound.TinySound;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class JPSounds {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
-    public static final int STARTUP = 0;
-    public static final int CONNECTED = 1;
-    public static final int DISCONNECTED = 2;
-    public static final int LOGGED_IN = 3;
-    public static final int BAD_LOGIN = 4;
-    public static final int PLAYER_JOIN = 5;
-    public static final int PLAYER_LEAVE = 6;
-    public static final int NEW_TEXT = 7;
-    public static final int MUTED = 8;
-    public static final int UNMUTED = 9;
-    public static final int FREEZE = 10;
-    public static final int UNFREEZE = 11;
-    public static final int PROMOTED = 12;
-    public static final int DEMOTED = 13;
-    public static final int DEATH_ALERT = 14;
-    public static final int SCREAM_0 = 14;
-    public static final int SCREAM_1 = 15;
-    public static final int SCREAM_2 = 16;
-    public static final int SCREAM_3 = 17;
-    public static final int SCREAM_4 = 18;
-    public static final int NEW_PM_ALERT = 19;
-    public static final int CHARSHEET_ALERT = 20;
-    public static final int COMBAT_ALERT = 21;
-    public static final int COMBAT_MUSIC = 22;
-    SoundManager manager;
-    int deathCounter = 0;
-    ClassLoader loader = lookup().lookupClass().getClassLoader();
+    public static final String STARTUP = "sounds/programLaunch.wav";
+    public static final String CONNECTED = "sounds/connected.wav";
+    public static final String DISCONNECTED = "sounds/disconnected.wav";
+    public static final String LOGGED_IN = "sounds/loggedIn.wav";
+    public static final String BAD_LOGIN = "sounds/badLogin.wav";
+    public static final String PLAYER_JOIN = "sounds/playerJoin.wav";
+    public static final String PLAYER_LEAVE = "sounds/playerLeave.wav";
+    public static final String NEW_TEXT = "sounds/newText.wav";
+    public static final String MUTED = "sounds/muted.wav";
+    public static final String UNMUTED = "sounds/unmuted.wav";
+    public static final String FREEZE = "sounds/freeze.wav";
+    public static final String UNFREEZE = "sounds/unfreeze.wav";
+    public static final String PROMOTED = "sounds/promoted.wav";
+    public static final String DEMOTED = "sounds/demoted.wav";
+    public static final String DEATH_ALERT = "sounds/scream0.wav";
+    public static final String SCREAM_0 = "sounds/scream0.wav";
+    public static final String SCREAM_1 = "sounds/scream1.wav";
+    public static final String SCREAM_2 = "sounds/scream2.wav";
+    public static final String SCREAM_3 = "sounds/scream3.wav";
+    public static final String SCREAM_4 = "sounds/scream4.wav";
+    public static final String NEW_PM_ALERT = "sounds/newPrivateMessage.wav";
+    public static final String CHARSHEET_ALERT = "sounds/charsheetUpdate.wav";
+    public static final String COMBAT_ALERT = "sounds/combatAlert.wav";
+
+    public static final String COMBAT_MUSIC = "sounds/combatMusic.wav";
+
+    private int deathCounter = 0;
+
+    private final Map<String, Sound> soundMap = new HashMap<>();
+    private final Map<String, Music> musicMap = new HashMap<>();
 
     public JPSounds() {
         logger.info( "JPSoundPlayer started\n\n" );
-        String[] arrayOfFile = new String[23];
-        arrayOfFile[0] = "sounds/programLaunch.wav";
-        arrayOfFile[1] = "sounds/connected.wav";
-        arrayOfFile[2] = "sounds/disconnected.wav";
-        arrayOfFile[3] = "sounds/loggedIn.wav";
-        arrayOfFile[4] = "sounds/badLogin.wav";
-        arrayOfFile[5] = "sounds/playerJoin.wav";
-        arrayOfFile[6] = "sounds/playerLeave.wav";
-        arrayOfFile[7] = "sounds/newText.wav";
-        arrayOfFile[8] = "sounds/muted.wav";
-        arrayOfFile[9] = "sounds/unmuted.wav";
-        arrayOfFile[10] = "sounds/freeze.wav";
-        arrayOfFile[11] = "sounds/unfreeze.wav";
-        arrayOfFile[12] = "sounds/promoted.wav";
-        arrayOfFile[13] = "sounds/demoted.wav";
-        arrayOfFile[14] = "sounds/scream0.wav";
-        arrayOfFile[15] = "sounds/scream1.wav";
-        arrayOfFile[16] = "sounds/scream2.wav";
-        arrayOfFile[17] = "sounds/scream3.wav";
-        arrayOfFile[18] = "sounds/scream4.wav";
-        arrayOfFile[19] = "sounds/newPrivateMessage.wav";
-        arrayOfFile[20] = "sounds/charsheetUpdate.wav";
-        arrayOfFile[21] = "sounds/combatAlert.wav";
-        arrayOfFile[22] = "sounds/combatMusic.wav";
-        this.manager = new SoundManager( arrayOfFile );
-    }
-//    private File getFile( final String filename ) {
-//        return new File( Objects.requireNonNull( loader.getResource( filename ) ).getFile());
-//    }
+        TinySound.init();
+        Stream.of(STARTUP,
+                CONNECTED,DISCONNECTED,
+                LOGGED_IN,BAD_LOGIN,
+                PLAYER_JOIN,PLAYER_LEAVE,
+                NEW_TEXT,
+                MUTED,UNMUTED,
+                FREEZE,UNFREEZE,
+                PROMOTED,DEMOTED,
+                DEATH_ALERT,SCREAM_0,SCREAM_1,SCREAM_2,SCREAM_3,SCREAM_4,
+                NEW_PM_ALERT,CHARSHEET_ALERT,COMBAT_ALERT )
+              .forEach( s -> soundMap.put( s, TinySound.loadSound( s ) ) );//?
+        Stream.of( COMBAT_MUSIC ).forEach( s -> musicMap.put( s, TinySound.loadMusic( s ) ) );
 
-    public void play( int paramInt ) {
-        if ( paramInt == 14 ) {
-            if ( this.deathCounter > 4 ) {
-                this.deathCounter = 0;
-            }
-            this.manager.play( 14 + this.deathCounter++ );
+    }
+
+    public void play( String soundName ) {
+        if ( soundName.equals( DEATH_ALERT ) ) {
+            getNextScream().play();
         } else {
-            this.manager.play( paramInt );
+            soundMap.get( soundName ).play();
         }
     }
 
+    private Sound getNextScream(){
+        if ( deathCounter > 4 ) {
+            deathCounter = 0;
+        }
+        return soundMap.get( "sounds/scream"+ deathCounter++ +".wav" );
+    }
+
     public void startCombatMusic() {
-        this.manager.loopPlay( 22 );
+        musicMap.get( COMBAT_MUSIC ).play( true );
     }
 
     public void stopCombatMusic() {
-        SoundManager.stopLoop( true );
+        musicMap.get( COMBAT_MUSIC ).stop();
     }
 
     public void close() {
-        this.manager.terminate();
+        TinySound.shutdown();
     }
 }
-
-
-/* Location:              C:\Users\noahc\Desktop\JParanoia(1.31.1)\JParanoia(1.31.1).jar!\jparanoia\shared\JPSounds.class
- * Java compiler version: 2 (46.0)
- * JD-Core Version:       0.7.1
- */
