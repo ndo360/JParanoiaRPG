@@ -1,7 +1,6 @@
 package jparanoia.server;
 import java.awt.Color;
 import static java.awt.Color.black;
-import static java.awt.Color.cyan;
 import static java.awt.Color.gray;
 import static java.awt.Color.green;
 import static java.awt.Color.orange;
@@ -85,6 +84,18 @@ import jparanoia.shared.GameLogger;
 import jparanoia.shared.GameRegistrar;
 import static jparanoia.shared.GameRegistrar.addGame;
 import static jparanoia.shared.GameRegistrar.removeGame;
+import static jparanoia.shared.JPSounds.COMBAT_ALERT;
+import static jparanoia.shared.JPSounds.CONNECTED;
+import static jparanoia.shared.JPSounds.DEATH_ALERT;
+import static jparanoia.shared.JPSounds.DISCONNECTED;
+import static jparanoia.shared.JPSounds.FREEZE;
+import static jparanoia.shared.JPSounds.MUTED;
+import static jparanoia.shared.JPSounds.NEW_PM_ALERT;
+import static jparanoia.shared.JPSounds.NEW_TEXT;
+import static jparanoia.shared.JPSounds.PLAYER_JOIN;
+import static jparanoia.shared.JPSounds.PLAYER_LEAVE;
+import static jparanoia.shared.JPSounds.UNFREEZE;
+import static jparanoia.shared.JPSounds.UNMUTED;
 import jparanoia.shared.JPVersionNumber;
 import jparanoia.shared.JParanoia;
 import jparanoia.shared.TitleClass;
@@ -765,7 +776,7 @@ public class JPServer extends JParanoia {
         }
         localServerPlayer.statusPanel.statusLoggedIn( true );
         if ( soundIsOn && soundMenu.joinLeaveMenuItem.isSelected() ) {
-            soundPlayer.play( 5 );
+            soundPlayer.play( PLAYER_JOIN );
         }
     }
 
@@ -810,7 +821,7 @@ public class JPServer extends JParanoia {
         localServerPlayer.statusPanel.statusLoggedIn( false );
         localServerPlayer.setRealName( "???" );
         if ( soundIsOn && soundMenu.joinLeaveMenuItem.isSelected() ) {
-            soundPlayer.play( 6 );
+            soundPlayer.play( PLAYER_LEAVE );
         }
     }
 
@@ -917,7 +928,7 @@ public class JPServer extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -969,7 +980,7 @@ public class JPServer extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1029,7 +1040,7 @@ public class JPServer extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1080,7 +1091,7 @@ public class JPServer extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1113,7 +1124,7 @@ public class JPServer extends JParanoia {
             System.err.println( "Unhandled exception. (Bad Location)" );
         }
         if ( soundIsOn && soundMenu.newObserverTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1122,7 +1133,7 @@ public class JPServer extends JParanoia {
         pmTargetPlayer = players[i];
         if ( pmTargetPlayer == myPlayer ) {
             if ( paramBoolean && soundIsOn && soundMenu.newPMAlertMenuItem.isSelected() ) {
-                soundPlayer.play( 19 );
+                soundPlayer.play( NEW_PM_ALERT );
             }
             int j = Integer.parseInt( paramString.substring( 2, 4 ) );
             paramString = paramString.substring( 4 );
@@ -1276,7 +1287,7 @@ public class JPServer extends JParanoia {
                 freezeButton.setEnabled( false );
                 combatButton.setEnabled( false );
                 if ( soundIsOn && soundMenu.combatAlertMenuItem.isSelected() ) {
-                    soundPlayer.play( 21 );
+                    soundPlayer.play( COMBAT_ALERT );
                 }
                 if ( soundIsOn && soundMenu.combatMusicMenuItem.isSelected() ) {
                     soundPlayer.startCombatMusic();
@@ -1305,14 +1316,14 @@ public class JPServer extends JParanoia {
             troubleshooter.statusPanel.freeze();
         }
         if ( soundIsOn && soundMenu.freezeUnfreezeMenuItem.isSelected() ) {
-            soundPlayer.play( 10 );
+            soundPlayer.play( FREEZE );
         }
     }
 
     public static void notifyPlayersOfDeath( ServerPlayer paramServerPlayer ) {
         spamString( "060" + paramServerPlayer.getID() );
         if ( soundIsOn && soundMenu.deathAlertMenuItem.isSelected() ) {
-            soundPlayer.play( 14 );
+            soundPlayer.play( DEATH_ALERT );
         }
     }
 
@@ -1363,14 +1374,14 @@ public class JPServer extends JParanoia {
     public static void mute( String paramString ) {
         spamString( "051" + paramString );
         if ( soundIsOn && soundMenu.mutedUnmutedMenuItem.isSelected() ) {
-            soundPlayer.play( 8 );
+            soundPlayer.play( MUTED );
         }
     }
 
     public static void unmute( String paramString ) {
         spamString( "050" + paramString );
         if ( soundIsOn && soundMenu.mutedUnmutedMenuItem.isSelected() ) {
-            soundPlayer.play( 9 );
+            soundPlayer.play( UNMUTED );
         }
     }
 
@@ -1382,7 +1393,7 @@ public class JPServer extends JParanoia {
             troubleshooter.statusPanel.unfreeze();
         }
         if ( soundIsOn && soundMenu.freezeUnfreezeMenuItem.isSelected() ) {
-            soundPlayer.play( 11 );
+            soundPlayer.play( UNFREEZE );
         }
     }
 
@@ -1459,7 +1470,7 @@ public class JPServer extends JParanoia {
             }
         }
         if ( soundIsOn && soundMenu.connectedDisconnectedMenuItem.isSelected() ) {
-            soundPlayer.play( 1 );
+            soundPlayer.play( CONNECTED );
         }
     }
 
@@ -1472,7 +1483,7 @@ public class JPServer extends JParanoia {
                 GameRegistrar.removeGame();
             }
             if ( soundIsOn && soundMenu.connectedDisconnectedMenuItem.isSelected() ) {
-                soundPlayer.play( 2 );
+                soundPlayer.play( DISCONNECTED );
             }
         } catch ( SocketException localSocketException ) {
             logger.info( "Socket Exception while closing serversocket" );

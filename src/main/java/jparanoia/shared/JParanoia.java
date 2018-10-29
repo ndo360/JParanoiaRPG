@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import static java.lang.System.exit;
 import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -22,6 +23,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import static jparanoia.shared.JPSounds.STARTUP;
+import static jparanoia.shared.Prefs.PLAY_SOUNDS;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -63,13 +66,13 @@ public abstract class JParanoia {
     static NoTabFocusManager ntfm = new NoTabFocusManager();
 
     public JParanoia() {
-        if ( (Boolean) prefs.getPref( 0 ) ) {
+        if ( (Boolean) prefs.getPref( PLAY_SOUNDS ) ) {
             soundPlayer = new JPSounds();
             soundIsOn = true;
         }
         soundMenu = new SoundMenu( "Sounds", prefs, this );
         if ( soundIsOn && soundMenu.startupMenuItem.isSelected() ) {
-            soundPlayer.play( 0 );
+            soundPlayer.play( STARTUP );
         }
         try {
             aboutIconURL = new URL( "http://www.byronbarry.com/jparanoia/aboutIcon.jpg" );

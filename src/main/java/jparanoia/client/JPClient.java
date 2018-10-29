@@ -48,6 +48,23 @@ import javax.swing.text.StyleConstants;
 import jparanoia.shared.BrightColorArray;
 import jparanoia.shared.GameLogger;
 import jparanoia.shared.GameRegistrar;
+import static jparanoia.shared.JPSounds.BAD_LOGIN;
+import static jparanoia.shared.JPSounds.CHARSHEET_ALERT;
+import static jparanoia.shared.JPSounds.COMBAT_ALERT;
+import static jparanoia.shared.JPSounds.CONNECTED;
+import static jparanoia.shared.JPSounds.DEATH_ALERT;
+import static jparanoia.shared.JPSounds.DEMOTED;
+import static jparanoia.shared.JPSounds.DISCONNECTED;
+import static jparanoia.shared.JPSounds.FREEZE;
+import static jparanoia.shared.JPSounds.LOGGED_IN;
+import static jparanoia.shared.JPSounds.MUTED;
+import static jparanoia.shared.JPSounds.NEW_PM_ALERT;
+import static jparanoia.shared.JPSounds.NEW_TEXT;
+import static jparanoia.shared.JPSounds.PLAYER_JOIN;
+import static jparanoia.shared.JPSounds.PLAYER_LEAVE;
+import static jparanoia.shared.JPSounds.PROMOTED;
+import static jparanoia.shared.JPSounds.UNFREEZE;
+import static jparanoia.shared.JPSounds.UNMUTED;
 import jparanoia.shared.JPVersionNumber;
 import jparanoia.shared.JParanoia;
 import jparanoia.shared.TitleClass;
@@ -515,7 +532,7 @@ public class JPClient extends JParanoia {
             numberOfPCs = 0;
             firstCharsheetUpdate = true;
             if ( soundIsOn && soundMenu.connectedDisconnectedMenuItem.isSelected() ) {
-                soundPlayer.play( 2 );
+                soundPlayer.play( DISCONNECTED );
             }
             if ( combatMusicIsPlaying ) {
                 soundPlayer.stopCombatMusic();
@@ -695,7 +712,7 @@ public class JPClient extends JParanoia {
             logger.info( "Connected to server: " + paramString2 );
             System.out.println();
             if ( soundIsOn && soundMenu.connectedDisconnectedMenuItem.isSelected() ) {
-                soundPlayer.play( 1 );
+                soundPlayer.play( CONNECTED );
             }
             connected = true;
             stayConnected = true;
@@ -759,7 +776,7 @@ public class JPClient extends JParanoia {
 
     public static void loginError() {
         if ( soundIsOn && soundMenu.loginBadLoginMenuItem.isSelected() ) {
-            soundPlayer.play( 4 );
+            soundPlayer.play( BAD_LOGIN );
         }
     }
 
@@ -856,7 +873,7 @@ public class JPClient extends JParanoia {
         updateLipArray();
         assignColorsToCharacters();
         if ( soundIsOn && soundMenu.joinLeaveMenuItem.isSelected() ) {
-            soundPlayer.play( 5 );
+            soundPlayer.play( PLAYER_JOIN );
         }
     }
 
@@ -869,7 +886,7 @@ public class JPClient extends JParanoia {
         absoluteChat( "--- " + playerList[i].toString() + " has left ---" );
         updateLipArray();
         if ( soundIsOn && soundMenu.joinLeaveMenuItem.isSelected() ) {
-            soundPlayer.play( 6 );
+            soundPlayer.play( PLAYER_LEAVE );
         }
     }
 
@@ -883,7 +900,7 @@ public class JPClient extends JParanoia {
             frame.setTitle( myTitle.get() );
         }
         if ( soundIsOn && soundMenu.deathAlertMenuItem.isSelected() ) {
-            soundPlayer.play( 14 );
+            soundPlayer.play( DEATH_ALERT );
         }
     }
 
@@ -939,7 +956,7 @@ public class JPClient extends JParanoia {
             }
         }
         if ( soundIsOn && soundMenu.loginBadLoginMenuItem.isSelected() ) {
-            soundPlayer.play( 3 );
+            soundPlayer.play( LOGGED_IN );
         }
         if ( observer ) {
             out.println( "400" + realName );
@@ -966,7 +983,7 @@ public class JPClient extends JParanoia {
             }
         }
         if ( !firstCharsheetUpdate && soundIsOn && soundMenu.charSheetAlertMenuItem.isSelected() ) {
-            soundPlayer.play( 20 );
+            soundPlayer.play( CHARSHEET_ALERT );
         } else if ( firstCharsheetUpdate ) {
             firstCharsheetUpdate = false;
         }
@@ -1018,7 +1035,7 @@ public class JPClient extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1102,7 +1119,7 @@ public class JPClient extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1162,7 +1179,7 @@ public class JPClient extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1213,7 +1230,7 @@ public class JPClient extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1246,7 +1263,7 @@ public class JPClient extends JParanoia {
             System.err.println( "Unhandled exception. (Bad Location)" );
         }
         if ( soundIsOn && soundMenu.newObserverTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1260,7 +1277,7 @@ public class JPClient extends JParanoia {
                     absoluteChat( "(New private message from " + playerList[j].getName() + ")" );
                 }
                 if ( soundIsOn && soundMenu.newPMAlertMenuItem.isSelected() ) {
-                    soundPlayer.play( 19 );
+                    soundPlayer.play( NEW_PM_ALERT );
                 }
                 textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, playerList[j].getChatColor() );
                 PMFrame[j].privateMessageDocument.insertString( PMFrame[j].privateMessageDocument.getLength(), " " +
@@ -1308,7 +1325,7 @@ public class JPClient extends JParanoia {
             turnFrame.setVisible( true );
         }
         if ( soundIsOn && soundMenu.combatAlertMenuItem.isSelected() ) {
-            soundPlayer.play( 21 );
+            soundPlayer.play( COMBAT_ALERT );
         }
         if ( soundIsOn && soundMenu.combatMusicMenuItem.isSelected() ) {
             soundPlayer.startCombatMusic();
@@ -1362,7 +1379,7 @@ public class JPClient extends JParanoia {
                 connectionStatusLabel.setIcon( mutedIcon );
             }
             if ( soundIsOn && soundMenu.mutedUnmutedMenuItem.isSelected() ) {
-                soundPlayer.play( 8 );
+                soundPlayer.play( MUTED );
             }
         }
     }
@@ -1377,7 +1394,7 @@ public class JPClient extends JParanoia {
                 connectionStatusLabel.setIcon( connectedIcon );
             }
             if ( soundIsOn && soundMenu.mutedUnmutedMenuItem.isSelected() ) {
-                soundPlayer.play( 9 );
+                soundPlayer.play( UNMUTED );
             }
         }
     }
@@ -1405,7 +1422,7 @@ public class JPClient extends JParanoia {
                     ( !inCombat ||
                             !soundMenu.combatMusicMenuItem.isSelected() &&
                                     !soundMenu.combatAlertMenuItem.isSelected() ) ) {
-                soundPlayer.play( 10 );
+                soundPlayer.play( FREEZE );
             }
         }
     }
@@ -1419,7 +1436,7 @@ public class JPClient extends JParanoia {
                 connectionStatusLabel.setIcon( connectedIcon );
             }
             if ( soundIsOn && soundMenu.freezeUnfreezeMenuItem.isSelected() ) {
-                soundPlayer.play( 11 );
+                soundPlayer.play( UNFREEZE );
             }
         }
     }
@@ -1458,13 +1475,13 @@ public class JPClient extends JParanoia {
 
     public static void playerPromoted() {
         if ( soundIsOn && soundMenu.promotedDemotedMenuItem.isSelected() ) {
-            soundPlayer.play( 12 );
+            soundPlayer.play( PROMOTED );
         }
     }
 
     public static void playerDemoted() {
         if ( soundIsOn && soundMenu.promotedDemotedMenuItem.isSelected() ) {
-            soundPlayer.play( 13 );
+            soundPlayer.play( DEMOTED );
         }
     }
 
