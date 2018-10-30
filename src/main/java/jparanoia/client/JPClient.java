@@ -74,9 +74,9 @@ import org.slf4j.profiler.Profiler;
 
 public class JPClient extends JParanoia {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
-    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 3 );
+    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 4 );
     public static final String VERSION_NAME = VERSION_NUMBER.toString();
-    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 3 );
+    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 4 );
     static Integer mainFontSize = 99;
     static int computerFontIncrease = 0;
     static int maxNumClones;
@@ -418,11 +418,11 @@ public class JPClient extends JParanoia {
         displayWrite( Color.green, "JParanoia Community Client " + VERSION_NAME + "\n\n" );
         displayWrite( Color.red, "This is an unofficial community edition for JParanoia.\nWe take no credit for the original creation of this program.\nOur only goal is to allow for people to play on the program once again.\n\n" );
         displayWrite( Color.cyan, "New in this community release:\n\n" );
+        displayWrite( Color.white, "- SOUND IS NOW FUNCTIONAL!! MAKE SURE TO UNMUTE PROGRAM.\n" );
+        displayWrite( Color.white, "- Replaced default PreGens, with 'classic' RED CLEARANCE\nPreGens From PARANOIA XP's 'Crash Priority' supplement.\n\n" );
+        displayWrite( Color.cyan, "Previous version's patch notes:\n\n" );
         displayWrite( Color.white, "-ALL https links should work, no more 403 errors.\n" );
         displayWrite( Color.white, "-New text has been added to Combat Mode, this should \nhelp new GMs and Players understand how it works.\n\n" );
-        displayWrite( Color.cyan, "Previous version's patch notes:\n\n" );
-        displayWrite( Color.white, "-https links for sending unplanned images now work.\n" );
-        displayWrite( Color.white, "-Character Sheets now load in without throwing an error.\n\n" );
         displayWrite( Color.white, "Features within JParanoia.\n\n" );
         displayWrite( Color.cyan, "Name Completion:\n" );
         displayWrite( Color.white, "Tab acts as a name completion key. See README for details.\n\n" );
