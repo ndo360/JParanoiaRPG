@@ -36,14 +36,11 @@ public class ParanoiaSelector {
         logger.info( "JPSERVER VERSION: " + getVersionName() );
         logger.info( "JPCLIENT VERSION: " + JPClient.getVersionName() );
         contentPane.setLayout( null );
-        
         Dimension localDimension = getDefaultToolkit().getScreenSize();
         int i = (int) localDimension.getWidth();
         int j = (int) localDimension.getHeight();
-        frame.setSize( 610, 360 );  //Fixed size window.
-        frame.setLocation( i / 2 - frame.getWidth() / 2, j / 2 - frame.getHeight() / 2 );//Center window.
-        
-        //Load Icons via Java toolkit
+        frame.setSize( 610, 360 );
+        frame.setLocation( i / 2 - frame.getWidth() / 2, j / 2 - frame.getHeight() / 2 );
         ImageIcon localImageIcon = null;
         try {
             localImageIcon = new ImageIcon( getDefaultToolkit()
@@ -52,7 +49,6 @@ public class ParanoiaSelector {
             localException1.printStackTrace();
             exit( -1 );
         }
-        //Set up the window.
         JLabel localJLabel = new JLabel( localImageIcon );
         JPanel localJPanel = new JPanel();
         localJPanel.setLayout( new GridLayout( 1, 2, 4, 4 ) );

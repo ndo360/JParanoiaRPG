@@ -15,8 +15,8 @@ public class SendImageMenuItem extends JMenuItem {
         super( paramJPImage.getName() );
         this.imageItem = paramJPImage;
         addActionListener( paramAnonymousActionEvent -> {
-            JPServer.spamString( "404" + this.getImageInfo() );// Custom change: "SendImageMenuItem.this.getImageInfo()" -> "this.getImageInfo()"
-            JParanoia.displayImage( this.getImageInfo() );
+            JPServer.spamString( "404" + SendImageMenuItem.this.getImageInfo() );
+            JParanoia.displayImage( SendImageMenuItem.this.getImageInfo() );
             if ( JPServer.keepLog ) {
                 String str;
                 if ( JPServer.htmlLog ) {
@@ -41,7 +41,7 @@ public class SendImageMenuItem extends JMenuItem {
     }
 
     public String getImageInfo() {
-        return this.imageItem.getName()+ "|" + this.imageItem.getURL();//Custom change: added delimiter to string.
+        return this.imageItem.getName()+ "|" + this.imageItem.getURL();
     }
 }
 

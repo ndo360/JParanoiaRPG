@@ -1,7 +1,6 @@
 package jparanoia.server;
 import java.awt.Color;
 import static java.awt.Color.black;
-import static java.awt.Color.cyan;
 import static java.awt.Color.gray;
 import static java.awt.Color.green;
 import static java.awt.Color.orange;
@@ -85,6 +84,18 @@ import jparanoia.shared.GameLogger;
 import jparanoia.shared.GameRegistrar;
 import static jparanoia.shared.GameRegistrar.addGame;
 import static jparanoia.shared.GameRegistrar.removeGame;
+import static jparanoia.shared.JPSounds.COMBAT_ALERT;
+import static jparanoia.shared.JPSounds.CONNECTED;
+import static jparanoia.shared.JPSounds.DEATH_ALERT;
+import static jparanoia.shared.JPSounds.DISCONNECTED;
+import static jparanoia.shared.JPSounds.FREEZE;
+import static jparanoia.shared.JPSounds.MUTED;
+import static jparanoia.shared.JPSounds.NEW_PM_ALERT;
+import static jparanoia.shared.JPSounds.NEW_TEXT;
+import static jparanoia.shared.JPSounds.PLAYER_JOIN;
+import static jparanoia.shared.JPSounds.PLAYER_LEAVE;
+import static jparanoia.shared.JPSounds.UNFREEZE;
+import static jparanoia.shared.JPSounds.UNMUTED;
 import jparanoia.shared.JPVersionNumber;
 import jparanoia.shared.JParanoia;
 import jparanoia.shared.TitleClass;
@@ -95,9 +106,9 @@ import org.slf4j.profiler.Profiler;
 public class JPServer extends JParanoia {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
-    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 2 );
+    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 4 );
     public static final String VERSION_NAME = VERSION_NUMBER.toString();
-    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 2 );
+    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 4 );
     static final int IDEAL_WIDTH = 770;
     static final int IDEAL_HEIGHT = 540;
     static final String MY_PLAYER_ID = "00";
@@ -616,14 +627,15 @@ public class JPServer extends JParanoia {
         errorPane = new JOptionPane();
         myPlayer = players[0];
         displayWrite( green, "JParanoia Community Server " + VERSION_NAME );
-        displayWrite( orange, "      http://www.byronbarry.com/jparanoia/\n" );
+        displayWrite( orange, "      https://github.com/ndo360/JParanoiaRPG/\n" );
         displayWrite( Color.red, "This is an unofficial community edition for JParanoia.\nWe take no credit for the original creation of this program.\nOur only goal is to allow for people to play on the program once again.\n\n" );
         displayWrite( Color.cyan, "New in this community release:\n\n" );
-        displayWrite( Color.white, "-https links for sending unplanned images now work.\n" );
-        displayWrite( Color.white, "-Character Sheets now load in without throwing an error.\n\n" );
+        displayWrite( Color.white, "- SOUND IS NOW FUNCTIONAL!! MAKE SURE TO UNMUTE PROGRAM.\n" );
+        displayWrite( Color.white, "- Replaced default PreGens, with 'classic' RED CLEARANCE\nPreGens From PARANOIA XP's 'Crash Priority' supplement.\n\n" );
         displayWrite( Color.cyan, "Previous version's patch notes:\n\n" );
-        displayWrite( white, "- Quick Charsheet option (see README).\n- The Computer's text is now large in the logs.\n- The GM's text is now bold in the logs.\n- Unplanned images now appear in the logs.\n- Current passwords appear in Player menu.\n- Other miscellaneous bug fixes.\n\nRead the README.TXT for full details.\nFor a complete version history, visit the JParanoia website.\n\n" );
-        displayWrite( white, "If you are new to running a JParanoia server, or find yourself wondering how to do something, " );
+        displayWrite( Color.white, "-ALL https links should work, no more 403 errors.\n" );
+        displayWrite( Color.white, "-New text has been added to Combat Mode, this should \nhelp new GMs and Players understand how it works.\n\n" );
+        displayWrite( white, "If you are new to running a JParanoia Server, or find yourself wondering how to do something, " );
         displayWrite( yellow, "READ THE README.\n" );
 
         profiler.start( "log init" );
@@ -764,7 +776,7 @@ public class JPServer extends JParanoia {
         }
         localServerPlayer.statusPanel.statusLoggedIn( true );
         if ( soundIsOn && soundMenu.joinLeaveMenuItem.isSelected() ) {
-            soundPlayer.play( 5 );
+            soundPlayer.play( PLAYER_JOIN );
         }
     }
 
@@ -809,7 +821,7 @@ public class JPServer extends JParanoia {
         localServerPlayer.statusPanel.statusLoggedIn( false );
         localServerPlayer.setRealName( "???" );
         if ( soundIsOn && soundMenu.joinLeaveMenuItem.isSelected() ) {
-            soundPlayer.play( 6 );
+            soundPlayer.play( PLAYER_LEAVE );
         }
     }
 
@@ -916,7 +928,7 @@ public class JPServer extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -968,7 +980,7 @@ public class JPServer extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1028,7 +1040,7 @@ public class JPServer extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1079,7 +1091,7 @@ public class JPServer extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1112,7 +1124,7 @@ public class JPServer extends JParanoia {
             System.err.println( "Unhandled exception. (Bad Location)" );
         }
         if ( soundIsOn && soundMenu.newObserverTextMenuItem.isSelected() ) {
-            soundPlayer.play( 7 );
+            soundPlayer.play( NEW_TEXT );
         }
     }
 
@@ -1121,7 +1133,7 @@ public class JPServer extends JParanoia {
         pmTargetPlayer = players[i];
         if ( pmTargetPlayer == myPlayer ) {
             if ( paramBoolean && soundIsOn && soundMenu.newPMAlertMenuItem.isSelected() ) {
-                soundPlayer.play( 19 );
+                soundPlayer.play( NEW_PM_ALERT );
             }
             int j = Integer.parseInt( paramString.substring( 2, 4 ) );
             paramString = paramString.substring( 4 );
@@ -1275,7 +1287,7 @@ public class JPServer extends JParanoia {
                 freezeButton.setEnabled( false );
                 combatButton.setEnabled( false );
                 if ( soundIsOn && soundMenu.combatAlertMenuItem.isSelected() ) {
-                    soundPlayer.play( 21 );
+                    soundPlayer.play( COMBAT_ALERT );
                 }
                 if ( soundIsOn && soundMenu.combatMusicMenuItem.isSelected() ) {
                     soundPlayer.startCombatMusic();
@@ -1304,14 +1316,14 @@ public class JPServer extends JParanoia {
             troubleshooter.statusPanel.freeze();
         }
         if ( soundIsOn && soundMenu.freezeUnfreezeMenuItem.isSelected() ) {
-            soundPlayer.play( 10 );
+            soundPlayer.play( FREEZE );
         }
     }
 
     public static void notifyPlayersOfDeath( ServerPlayer paramServerPlayer ) {
         spamString( "060" + paramServerPlayer.getID() );
         if ( soundIsOn && soundMenu.deathAlertMenuItem.isSelected() ) {
-            soundPlayer.play( 14 );
+            soundPlayer.play( DEATH_ALERT );
         }
     }
 
@@ -1362,14 +1374,14 @@ public class JPServer extends JParanoia {
     public static void mute( String paramString ) {
         spamString( "051" + paramString );
         if ( soundIsOn && soundMenu.mutedUnmutedMenuItem.isSelected() ) {
-            soundPlayer.play( 8 );
+            soundPlayer.play( MUTED );
         }
     }
 
     public static void unmute( String paramString ) {
         spamString( "050" + paramString );
         if ( soundIsOn && soundMenu.mutedUnmutedMenuItem.isSelected() ) {
-            soundPlayer.play( 9 );
+            soundPlayer.play( UNMUTED );
         }
     }
 
@@ -1381,7 +1393,7 @@ public class JPServer extends JParanoia {
             troubleshooter.statusPanel.unfreeze();
         }
         if ( soundIsOn && soundMenu.freezeUnfreezeMenuItem.isSelected() ) {
-            soundPlayer.play( 11 );
+            soundPlayer.play( UNFREEZE );
         }
     }
 
@@ -1458,7 +1470,7 @@ public class JPServer extends JParanoia {
             }
         }
         if ( soundIsOn && soundMenu.connectedDisconnectedMenuItem.isSelected() ) {
-            soundPlayer.play( 1 );
+            soundPlayer.play( CONNECTED );
         }
     }
 
@@ -1471,7 +1483,7 @@ public class JPServer extends JParanoia {
                 GameRegistrar.removeGame();
             }
             if ( soundIsOn && soundMenu.connectedDisconnectedMenuItem.isSelected() ) {
-                soundPlayer.play( 2 );
+                soundPlayer.play( DISCONNECTED );
             }
         } catch ( SocketException localSocketException ) {
             logger.info( "Socket Exception while closing serversocket" );

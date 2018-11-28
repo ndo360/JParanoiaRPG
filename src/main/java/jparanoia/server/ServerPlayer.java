@@ -1,16 +1,11 @@
 package jparanoia.server;
 import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.InputStreamReader;
 import static java.lang.System.exit;
 import static java.lang.System.out;
 import java.lang.invoke.MethodHandles;
-import static java.lang.invoke.MethodHandles.lookup;
-import static java.util.Objects.requireNonNull;
 import java.util.StringTokenizer;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -26,6 +21,9 @@ import static jparanoia.server.JPServer.spamString;
 import static jparanoia.server.JPServer.spareNpcs;
 import static jparanoia.server.JPServer.stripComments;
 import jparanoia.shared.JPPlayer;
+import static jparanoia.shared.JPSounds.CHARSHEET_ALERT;
+import static jparanoia.shared.JPSounds.DEMOTED;
+import static jparanoia.shared.JPSounds.PROMOTED;
 import jparanoia.shared.JParanoia;
 import static jparanoia.shared.JParanoia.errorMessage;
 import static jparanoia.shared.JParanoia.soundIsOn;
@@ -536,13 +534,13 @@ public class ServerPlayer extends JPPlayer {
         if ( i < this.clearanceInt ) {
             str1 = "demoted";
             if ( JPServer.soundIsOn && JPServer.soundMenu.promotedDemotedMenuItem.isSelected() ) {
-                JPServer.soundPlayer.play( 13 );
+                JPServer.soundPlayer.play( DEMOTED );
             }
             JPServer.spamString( "020" );
         } else if ( i > this.clearanceInt ) {
             str1 = "promoted";
             if ( JPServer.soundIsOn && JPServer.soundMenu.promotedDemotedMenuItem.isSelected() ) {
-                JPServer.soundPlayer.play( 12 );
+                JPServer.soundPlayer.play( PROMOTED );
             }
             JPServer.spamString( "021" );
         } else {
@@ -752,7 +750,7 @@ public class ServerPlayer extends JPPlayer {
                 logger.info( "saveCharsheet(...): calling serverPlayer.sendCharsheet(...)" );
                 sendCharsheet();
                 if ( soundIsOn && soundMenu.charSheetAlertMenuItem.isSelected() ) {
-                    soundPlayer.play( 20 );
+                    soundPlayer.play( CHARSHEET_ALERT );
                 }
             }
         } catch ( Exception localException ) {
