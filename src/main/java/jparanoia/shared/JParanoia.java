@@ -6,7 +6,6 @@ import java.awt.Toolkit;
 import static java.lang.System.exit;
 import java.lang.invoke.MethodHandles;
 import static java.lang.invoke.MethodHandles.lookup;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -23,8 +22,6 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-import static jparanoia.shared.JPSounds.STARTUP;
-import static jparanoia.shared.Prefs.PLAY_SOUNDS;
 import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -66,13 +63,13 @@ public abstract class JParanoia {
     static NoTabFocusManager ntfm = new NoTabFocusManager();
 
     public JParanoia() {
-        if ( (Boolean) prefs.getPref( PLAY_SOUNDS ) ) {
+        if ( (Boolean) prefs.getPref( 0 ) ) {
             soundPlayer = new JPSounds();
             soundIsOn = true;
         }
         soundMenu = new SoundMenu( "Sounds", prefs, this );
         if ( soundIsOn && soundMenu.startupMenuItem.isSelected() ) {
-            soundPlayer.play( STARTUP );
+            soundPlayer.play( 0 );
         }
         try {
             aboutIconURL = new URL( "http://www.byronbarry.com/jparanoia/aboutIcon.jpg" );
@@ -118,14 +115,10 @@ public abstract class JParanoia {
 
     public static void displayImage( String descriptionPlusUrl ) {
         try {
-            String description = descriptionPlusUrl.substring( 0, descriptionPlusUrl.indexOf( IMG_DELIMITER ) );
+        	//TODO: Add handle for when the "|" character is not found in 'descriptionPlusUrl'
+            String description = descriptionPlusUrl.substring( 0, descriptionPlusUrl.indexOf( IMG_DELIMITER ) ); 
             String urlSubstring = descriptionPlusUrl.substring( descriptionPlusUrl.indexOf( IMG_DELIMITER ) + IMG_DELIMITER.length() );
             URL url = new URL( urlSubstring );
-            HttpURLConnection connection = (HttpURLConnection) url
-                    .openConnection();
-            connection.setRequestProperty(
-                    "User-Agent",
-                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31");
 
             JTextPane pane = new JTextPane();
             pane.setEnabled( false );
@@ -133,7 +126,7 @@ public abstract class JParanoia {
             window.setResizable( false );
             window.setSize( 200, 200 );
 
-            Image image = ImageIO.read(connection.getInputStream());
+            Image image = ImageIO.read(url.openStream());
             ImageIcon icon = new ImageIcon( image );
             pane.insertIcon( icon );
             window.setSize( icon.getIconWidth() + 8 + 6, icon.getIconHeight() + 26 + 6 );

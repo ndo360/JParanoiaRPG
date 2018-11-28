@@ -127,7 +127,6 @@ public class CombatFrame extends JFrame {
         localGridBagConstraints.weightx = 1.0D;
         localGridBagConstraints.weighty = 1.0D;
         localGridBagLayout.setConstraints( this.proposedPublicTurnScrollPane, localGridBagConstraints );
-            CombatFrame.this.proposedPublicTurn.setText( "Select the first player to act during this combat round, then wait for said player to type and send their turn to you..." );
         this.secretTurnLabel = new JLabel( "Secret Turn:       " );
         this.secretTurnLabelPanel = new JPanel();
         this.secretTurnLabelPanel.add( this.secretTurnLabel, "South" );

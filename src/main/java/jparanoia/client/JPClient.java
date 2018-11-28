@@ -48,23 +48,6 @@ import javax.swing.text.StyleConstants;
 import jparanoia.shared.BrightColorArray;
 import jparanoia.shared.GameLogger;
 import jparanoia.shared.GameRegistrar;
-import static jparanoia.shared.JPSounds.BAD_LOGIN;
-import static jparanoia.shared.JPSounds.CHARSHEET_ALERT;
-import static jparanoia.shared.JPSounds.COMBAT_ALERT;
-import static jparanoia.shared.JPSounds.CONNECTED;
-import static jparanoia.shared.JPSounds.DEATH_ALERT;
-import static jparanoia.shared.JPSounds.DEMOTED;
-import static jparanoia.shared.JPSounds.DISCONNECTED;
-import static jparanoia.shared.JPSounds.FREEZE;
-import static jparanoia.shared.JPSounds.LOGGED_IN;
-import static jparanoia.shared.JPSounds.MUTED;
-import static jparanoia.shared.JPSounds.NEW_PM_ALERT;
-import static jparanoia.shared.JPSounds.NEW_TEXT;
-import static jparanoia.shared.JPSounds.PLAYER_JOIN;
-import static jparanoia.shared.JPSounds.PLAYER_LEAVE;
-import static jparanoia.shared.JPSounds.PROMOTED;
-import static jparanoia.shared.JPSounds.UNFREEZE;
-import static jparanoia.shared.JPSounds.UNMUTED;
 import jparanoia.shared.JPVersionNumber;
 import jparanoia.shared.JParanoia;
 import jparanoia.shared.TitleClass;
@@ -74,9 +57,9 @@ import org.slf4j.profiler.Profiler;
 
 public class JPClient extends JParanoia {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
-    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 4 );
+    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 2 );
     public static final String VERSION_NAME = VERSION_NUMBER.toString();
-    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 4 );
+    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 2 );
     static Integer mainFontSize = 99;
     static int computerFontIncrease = 0;
     static int maxNumClones;
@@ -418,12 +401,12 @@ public class JPClient extends JParanoia {
         displayWrite( Color.green, "JParanoia Community Client " + VERSION_NAME + "\n\n" );
         displayWrite( Color.red, "This is an unofficial community edition for JParanoia.\nWe take no credit for the original creation of this program.\nOur only goal is to allow for people to play on the program once again.\n\n" );
         displayWrite( Color.cyan, "New in this community release:\n\n" );
-        displayWrite( Color.white, "- SOUND IS NOW FUNCTIONAL!! MAKE SURE TO UNMUTE PROGRAM.\n" );
-        displayWrite( Color.white, "- Replaced default PreGens, with 'classic' RED CLEARANCE\nPreGens From PARANOIA XP's 'Crash Priority' supplement.\n\n" );
+        displayWrite( Color.white, "-https links for sending unplanned images now work.\n" );
+        displayWrite( Color.white, "-Character Sheets now load in without throwing an error.\n\n" );
         displayWrite( Color.cyan, "Previous version's patch notes:\n\n" );
-        displayWrite( Color.white, "-ALL https links should work, no more 403 errors.\n" );
-        displayWrite( Color.white, "-New text has been added to Combat Mode, this should \nhelp new GMs and Players understand how it works.\n\n" );
-        displayWrite( Color.white, "Features within JParanoia.\n\n" );
+        displayWrite( Color.white, "- The Computer's text is now large in the log. GM text is bold.\n- Images are now logged.\n- Blank secret combat turns no longer appear in GM PM window.\n- Other miscellaneous bug fixes.\n\n" );
+        displayWrite( Color.yellow, "Read the README.TXT" );
+        displayWrite( Color.white, " for full details.\n\n" );
         displayWrite( Color.cyan, "Name Completion:\n" );
         displayWrite( Color.white, "Tab acts as a name completion key. See README for details.\n\n" );
         displayWrite( Color.cyan, "Expression Keys:\n" );
@@ -439,7 +422,7 @@ public class JPClient extends JParanoia {
         displayWrite( Color.white, ". This is the default password for all players. Good GMs assign passwords for enhanced security.\n\n" );
         displayWrite( Color.white, "For news, bug report forms, a complete version history, or to make a financial contribution, visit the " );
         displayWrite( Color.cyan, "JParanoia website: " );
-        displayWrite( Color.orange, "https://github.com/ndo360/JParanoiaRPG/\n" );
+        displayWrite( Color.orange, "http://www.byronbarry.com/jparanoia/\n" );
         keepLog = (Boolean) prefs.getPref( 20 );
         htmlLog = (Boolean) prefs.getPref( 21 );
         realName = (String) prefs.getPref( 22 );
@@ -532,7 +515,7 @@ public class JPClient extends JParanoia {
             numberOfPCs = 0;
             firstCharsheetUpdate = true;
             if ( soundIsOn && soundMenu.connectedDisconnectedMenuItem.isSelected() ) {
-                soundPlayer.play( DISCONNECTED );
+                soundPlayer.play( 2 );
             }
             if ( combatMusicIsPlaying ) {
                 soundPlayer.stopCombatMusic();
@@ -682,6 +665,9 @@ public class JPClient extends JParanoia {
         return str2 + lastNameCompleted;
     }
 
+    /*The main client class
+     * Starts a paranoia session as a client
+     * */
     public static void main( String[] paramArrayOfString ) {
         logger.info( "\n\nThis is the JParanoia Community client console.\n" );
         logger.info( "Running under Java Runtime Environment version " + getProperty( "java.version" ) );
@@ -712,7 +698,7 @@ public class JPClient extends JParanoia {
             logger.info( "Connected to server: " + paramString2 );
             System.out.println();
             if ( soundIsOn && soundMenu.connectedDisconnectedMenuItem.isSelected() ) {
-                soundPlayer.play( CONNECTED );
+                soundPlayer.play( 1 );
             }
             connected = true;
             stayConnected = true;
@@ -776,7 +762,7 @@ public class JPClient extends JParanoia {
 
     public static void loginError() {
         if ( soundIsOn && soundMenu.loginBadLoginMenuItem.isSelected() ) {
-            soundPlayer.play( BAD_LOGIN );
+            soundPlayer.play( 4 );
         }
     }
 
@@ -873,7 +859,7 @@ public class JPClient extends JParanoia {
         updateLipArray();
         assignColorsToCharacters();
         if ( soundIsOn && soundMenu.joinLeaveMenuItem.isSelected() ) {
-            soundPlayer.play( PLAYER_JOIN );
+            soundPlayer.play( 5 );
         }
     }
 
@@ -886,7 +872,7 @@ public class JPClient extends JParanoia {
         absoluteChat( "--- " + playerList[i].toString() + " has left ---" );
         updateLipArray();
         if ( soundIsOn && soundMenu.joinLeaveMenuItem.isSelected() ) {
-            soundPlayer.play( PLAYER_LEAVE );
+            soundPlayer.play( 6 );
         }
     }
 
@@ -900,7 +886,7 @@ public class JPClient extends JParanoia {
             frame.setTitle( myTitle.get() );
         }
         if ( soundIsOn && soundMenu.deathAlertMenuItem.isSelected() ) {
-            soundPlayer.play( DEATH_ALERT );
+            soundPlayer.play( 14 );
         }
     }
 
@@ -956,7 +942,7 @@ public class JPClient extends JParanoia {
             }
         }
         if ( soundIsOn && soundMenu.loginBadLoginMenuItem.isSelected() ) {
-            soundPlayer.play( LOGGED_IN );
+            soundPlayer.play( 3 );
         }
         if ( observer ) {
             out.println( "400" + realName );
@@ -983,7 +969,7 @@ public class JPClient extends JParanoia {
             }
         }
         if ( !firstCharsheetUpdate && soundIsOn && soundMenu.charSheetAlertMenuItem.isSelected() ) {
-            soundPlayer.play( CHARSHEET_ALERT );
+            soundPlayer.play( 20 );
         } else if ( firstCharsheetUpdate ) {
             firstCharsheetUpdate = false;
         }
@@ -1035,7 +1021,7 @@ public class JPClient extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( NEW_TEXT );
+            soundPlayer.play( 7 );
         }
     }
 
@@ -1119,7 +1105,7 @@ public class JPClient extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( NEW_TEXT );
+            soundPlayer.play( 7 );
         }
     }
 
@@ -1179,7 +1165,7 @@ public class JPClient extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( NEW_TEXT );
+            soundPlayer.play( 7 );
         }
     }
 
@@ -1230,7 +1216,7 @@ public class JPClient extends JParanoia {
             restoreOriginalFont();
         }
         if ( soundIsOn && soundMenu.newTextMenuItem.isSelected() ) {
-            soundPlayer.play( NEW_TEXT );
+            soundPlayer.play( 7 );
         }
     }
 
@@ -1263,7 +1249,7 @@ public class JPClient extends JParanoia {
             System.err.println( "Unhandled exception. (Bad Location)" );
         }
         if ( soundIsOn && soundMenu.newObserverTextMenuItem.isSelected() ) {
-            soundPlayer.play( NEW_TEXT );
+            soundPlayer.play( 7 );
         }
     }
 
@@ -1277,7 +1263,7 @@ public class JPClient extends JParanoia {
                     absoluteChat( "(New private message from " + playerList[j].getName() + ")" );
                 }
                 if ( soundIsOn && soundMenu.newPMAlertMenuItem.isSelected() ) {
-                    soundPlayer.play( NEW_PM_ALERT );
+                    soundPlayer.play( 19 );
                 }
                 textAttributes.addAttribute( StyleConstants.CharacterConstants.Foreground, playerList[j].getChatColor() );
                 PMFrame[j].privateMessageDocument.insertString( PMFrame[j].privateMessageDocument.getLength(), " " +
@@ -1325,7 +1311,7 @@ public class JPClient extends JParanoia {
             turnFrame.setVisible( true );
         }
         if ( soundIsOn && soundMenu.combatAlertMenuItem.isSelected() ) {
-            soundPlayer.play( COMBAT_ALERT );
+            soundPlayer.play( 21 );
         }
         if ( soundIsOn && soundMenu.combatMusicMenuItem.isSelected() ) {
             soundPlayer.startCombatMusic();
@@ -1379,7 +1365,7 @@ public class JPClient extends JParanoia {
                 connectionStatusLabel.setIcon( mutedIcon );
             }
             if ( soundIsOn && soundMenu.mutedUnmutedMenuItem.isSelected() ) {
-                soundPlayer.play( MUTED );
+                soundPlayer.play( 8 );
             }
         }
     }
@@ -1394,7 +1380,7 @@ public class JPClient extends JParanoia {
                 connectionStatusLabel.setIcon( connectedIcon );
             }
             if ( soundIsOn && soundMenu.mutedUnmutedMenuItem.isSelected() ) {
-                soundPlayer.play( UNMUTED );
+                soundPlayer.play( 9 );
             }
         }
     }
@@ -1422,7 +1408,7 @@ public class JPClient extends JParanoia {
                     ( !inCombat ||
                             !soundMenu.combatMusicMenuItem.isSelected() &&
                                     !soundMenu.combatAlertMenuItem.isSelected() ) ) {
-                soundPlayer.play( FREEZE );
+                soundPlayer.play( 10 );
             }
         }
     }
@@ -1436,7 +1422,7 @@ public class JPClient extends JParanoia {
                 connectionStatusLabel.setIcon( connectedIcon );
             }
             if ( soundIsOn && soundMenu.freezeUnfreezeMenuItem.isSelected() ) {
-                soundPlayer.play( UNFREEZE );
+                soundPlayer.play( 11 );
             }
         }
     }
@@ -1475,13 +1461,13 @@ public class JPClient extends JParanoia {
 
     public static void playerPromoted() {
         if ( soundIsOn && soundMenu.promotedDemotedMenuItem.isSelected() ) {
-            soundPlayer.play( PROMOTED );
+            soundPlayer.play( 12 );
         }
     }
 
     public static void playerDemoted() {
         if ( soundIsOn && soundMenu.promotedDemotedMenuItem.isSelected() ) {
-            soundPlayer.play( DEMOTED );
+            soundPlayer.play( 13 );
         }
     }
 
