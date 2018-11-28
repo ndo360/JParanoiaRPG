@@ -41,7 +41,7 @@ public class SendImageMenuItem extends JMenuItem {
     }
 
     public String getImageInfo() {
-        return this.imageItem.getName()+ "|" + this.imageItem.getURL();
+        return this.imageItem.getName() + this.imageItem.getURL();
     }
 }
 
