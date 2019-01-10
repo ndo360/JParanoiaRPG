@@ -13,6 +13,7 @@ import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import static java.lang.System.getProperty;
 import java.lang.invoke.MethodHandles;
@@ -20,6 +21,7 @@ import static java.lang.invoke.MethodHandles.lookup;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -716,7 +718,7 @@ public class JPClient extends JParanoia {
             }
             connected = true;
             stayConnected = true;
-            out = new PrintWriter( mySock.getOutputStream(), true );
+            out = new PrintWriter( new OutputStreamWriter(mySock.getOutputStream(), StandardCharsets.UTF_8), true );
             in = new BufferedReader( new InputStreamReader( mySock.getInputStream() ) );
             myListener = new ChatListenerThread();
             myListener.setDaemon( true );
