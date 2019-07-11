@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="JParanoia(1.31.2).jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -20,7 +21,6 @@
 	<classpathentry exported="true" kind="lib" path="libs/slf4j-jcl-1.7.25.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/slf4j-migrator-1.7.25.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/slf4j-nop-1.7.25.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Brice/Desktop/JParanoia(1.31.2)-DEV/JParanoia(1.31.2).jar"/>
 	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>

@@ -633,7 +633,7 @@ public class JPClient extends JParanoia {
         	if (paramString.substring(0,1) == "Â") {
         		chatDocument.insertString( chatDocument.getLength(), paramString.substring(1) + "\n", localSimpleAttributeSet );	
         	} else {
-            chatDocument.insertString( chatDocument.getLength(), paramString) + "\n", localSimpleAttributeSet );
+            chatDocument.insertString( chatDocument.getLength(), paramString + "\n", localSimpleAttributeSet );
         	}
             displayArea.setDocument( chatDocument );
             if ( autoScroll ) {
