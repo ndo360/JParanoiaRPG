@@ -106,9 +106,9 @@ import org.slf4j.profiler.Profiler;
 public class JPServer extends JParanoia {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
-    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 4 );
+    public static final JPVersionNumber VERSION_NUMBER = new JPVersionNumber( 1, 31, 5 );
     public static final String VERSION_NAME = VERSION_NUMBER.toString();
-    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 4 );
+    public static final JPVersionNumber MIN_COMPATIBLE_VERSION_NUMBER = new JPVersionNumber( 1, 31, 5 );
     static final int IDEAL_WIDTH = 770;
     static final int IDEAL_HEIGHT = 540;
     static final String MY_PLAYER_ID = "00";
@@ -630,11 +630,12 @@ public class JPServer extends JParanoia {
         displayWrite( orange, "      https://github.com/ndo360/JParanoiaRPG/\n" );
         displayWrite( Color.red, "This is an unofficial community edition for JParanoia.\nWe take no credit for the original creation of this program.\nOur only goal is to allow for people to play on the program once again.\n\n" );
         displayWrite( Color.cyan, "New in this community release:\n\n" );
+        displayWrite( Color.white, "- UTF-8 IS NOW FULLY SUPPROTED!! Use funny symbols at\nyour heart's content. Special Thanks to Stormbot!\n\n" );
+        displayWrite( Color.white, "- Planned Images have been fixed! Have fun planning\nyour sessions!\n\n" );
+        displayWrite( Color.white, "- Pregen Characters from 'Crash Priority' have been\nbetter formatted! Enjoy!\n\n" );
+        displayWrite( Color.cyan, "Previous version's patch notes:\n\n" );
         displayWrite( Color.white, "- SOUND IS NOW FUNCTIONAL!! MAKE SURE TO UNMUTE PROGRAM.\n" );
         displayWrite( Color.white, "- Replaced default PreGens, with 'classic' RED CLEARANCE\nPreGens From PARANOIA XP's 'Crash Priority' supplement.\n\n" );
-        displayWrite( Color.cyan, "Previous version's patch notes:\n\n" );
-        displayWrite( Color.white, "-ALL https links should work, no more 403 errors.\n" );
-        displayWrite( Color.white, "-New text has been added to Combat Mode, this should \nhelp new GMs and Players understand how it works.\n\n" );
         displayWrite( white, "If you are new to running a JParanoia Server, or find yourself wondering how to do something, " );
         displayWrite( yellow, "READ THE README.\n" );
 
