@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import static java.lang.System.exit;
 import static java.lang.System.out;
 import java.lang.invoke.MethodHandles;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.StringTokenizer;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -91,8 +94,12 @@ public class ServerPlayer extends JPPlayer {
     }
 
     public void readCharacterSheetFile() {
-        try {
-            this.reader = new BufferedReader( new FileReader( dataFile ) );
+    	
+    	
+    	try {
+        	
+    		this.reader = Files.newBufferedReader(Paths.get(dataFile), StandardCharsets.UTF_8);
+            //this.reader = new BufferedReader( new FileReader( dataFile, StandardCharsets.UTF_8) );
         } catch ( Exception localException1 ) {
             logger.info( "An exception occured while attemping to access " + this.dataFile );
             localException1.printStackTrace();
