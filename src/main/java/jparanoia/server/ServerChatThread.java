@@ -1,5 +1,7 @@
 package jparanoia.server;
 import java.io.BufferedReader;
+import java.nio.charset.StandardCharsets;
+import java.io.OutputStreamWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -62,8 +64,8 @@ class ServerChatThread extends Thread {
 
     public void run() {
         try {
-            this.out = new PrintWriter( this.socket.getOutputStream(), true );
-            this.in = new BufferedReader( new InputStreamReader( this.socket.getInputStream() ) );
+            this.out = new PrintWriter( new OutputStreamWriter( this.socket.getOutputStream(), StandardCharsets.UTF_8), true );
+            this.in = new BufferedReader( new InputStreamReader( this.socket.getInputStream(), StandardCharsets.UTF_8 ) );
             this.listening = true;
             playerLogin();
             if ( !this.acceptedLogin ) {

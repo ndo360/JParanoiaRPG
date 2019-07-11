@@ -3,9 +3,17 @@ import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
+import java.io.Writer;
+import java.io.BufferedWriter;
+import java.nio.charset.StandardCharsets;
 import static java.lang.System.exit;
 import static java.lang.System.out;
 import java.lang.invoke.MethodHandles;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.StringTokenizer;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -36,7 +44,7 @@ public class ServerPlayer extends JPPlayer {
     private final static Logger logger = getLogger( MethodHandles.lookup().lookupClass());
 
     static int numUnsavedCharsheets = 0;
-    static FileWriter writer;
+    static OutputStreamWriter writer;
     static SimpleAttributeSet sas;
     static StringTokenizer st;
     final int PLAYER_NUMBER;
@@ -91,8 +99,12 @@ public class ServerPlayer extends JPPlayer {
     }
 
     public void readCharacterSheetFile() {
+
+
         try {
-            this.reader = new BufferedReader( new FileReader( dataFile ) );
+
+            this.reader = Files.newBufferedReader(Paths.get(dataFile), StandardCharsets.UTF_8);
+            //this.reader = new BufferedReader( new FileReader( dataFile, StandardCharsets.UTF_8) );
         } catch ( Exception localException1 ) {
             logger.info( "An exception occured while attemping to access " + this.dataFile );
             localException1.printStackTrace();
@@ -733,6 +745,8 @@ public class ServerPlayer extends JPPlayer {
     }
     //The above code within the fuction, that isn't commented, is copied from 'public void sendCharsheet()' as that code still works.
     public void saveCharsheet( boolean paramBoolean ) {
+        //Writer fstream = null;
+        //BufferedWriter out = null;
         String str = null;
         try {
             str = this.dataFile;
@@ -740,7 +754,9 @@ public class ServerPlayer extends JPPlayer {
             while ( ( i = str.indexOf( "%20" ) ) != -1 ) {
                 str = str.substring( 0, i ) + " " + str.substring( i + 3 );
             }
-            writer = new FileWriter( str );
+            writer = new OutputStreamWriter(new FileOutputStream(str), StandardCharsets.UTF_8);
+
+            //writer = new FileWriter( str );
             writer.write( toString() + "\n" );
             writer.write( this.characterSheet.getText( 0, this.characterSheet.getLength() ) );
             writer.flush();

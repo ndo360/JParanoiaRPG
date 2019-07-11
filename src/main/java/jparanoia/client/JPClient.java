@@ -719,7 +719,7 @@ public class JPClient extends JParanoia {
             connected = true;
             stayConnected = true;
             out = new PrintWriter( new OutputStreamWriter(mySock.getOutputStream(), StandardCharsets.UTF_8), true );
-            in = new BufferedReader( new InputStreamReader( mySock.getInputStream() ) );
+            in = new BufferedReader( new InputStreamReader( mySock.getInputStream(), StandardCharsets.UTF_8 ) );
             myListener = new ChatListenerThread();
             myListener.setDaemon( true );
             myListener.start();
